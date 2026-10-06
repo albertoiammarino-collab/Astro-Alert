@@ -17,35 +17,18 @@
   --amber:#f2b84b;--cyan:#51a0d5;--green:#2ecc71;--red:#e74c3c;
   --mono:ui-monospace,"SF Mono","Roboto Mono",Consolas,monospace;
   --sans:Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --pad-x:clamp(8px,2.5vw,14px);
-  --pad-y:clamp(8px,2vw,12px);
-  --gap:clamp(6px,2vw,10px);
-  --radius:clamp(6px,1.6vw,8px);
-  --fs-xs:clamp(9.5px,2.6vw,11px);
-  --fs-sm:clamp(10.5px,2.9vw,12px);
-  --fs-base:clamp(11.5px,3.2vw,12.5px);
-  --fs-md:clamp(12.5px,3.4vw,13.5px);
-  --fs-lg:clamp(14px,3.8vw,16.5px);
-  --fs-xl:clamp(16px,4.4vw,19px);
-  --fs-2xl:clamp(19px,5.2vw,23px);
-  --fs-3xl:clamp(20px,5.6vw,24px);
+  --pad-x:clamp(8px,2.5vw,14px);--pad-y:clamp(8px,2vw,12px);--gap:clamp(6px,2vw,10px);--radius:clamp(6px,1.6vw,8px);
+  --fs-xs:clamp(9.5px,2.6vw,11px);--fs-sm:clamp(10.5px,2.9vw,12px);--fs-base:clamp(11.5px,3.2vw,12.5px);
+  --fs-md:clamp(12.5px,3.4vw,13.5px);--fs-lg:clamp(14px,3.8vw,16.5px);--fs-xl:clamp(16px,4.4vw,19px);
+  --fs-2xl:clamp(19px,5.2vw,23px);--fs-3xl:clamp(20px,5.6vw,24px);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior-y:contain}
-body{
-  background:var(--bg);color:var(--text);font-family:var(--sans);
-  font-size:var(--fs-base);line-height:1.5;
-  padding:calc(var(--pad-y) + env(safe-area-inset-top)) var(--pad-x) calc(40px + env(safe-area-inset-bottom));
-  max-width:520px;margin:0 auto;
-  -webkit-font-smoothing:antialiased;touch-action:manipulation;
-  user-select:none;-webkit-user-select:none;
-  overflow-wrap:break-word;word-break:break-word;
-}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:var(--fs-base);line-height:1.5;padding:calc(var(--pad-y) + env(safe-area-inset-top)) var(--pad-x) calc(40px + env(safe-area-inset-bottom));max-width:520px;margin:0 auto;-webkit-font-smoothing:antialiased;touch-action:manipulation;user-select:none;-webkit-user-select:none;overflow-wrap:break-word;word-break:break-word}
 body.modal-open{overflow:hidden}
 img,svg,video{max-width:100%;height:auto;display:block}
 button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit}
 a{color:var(--cyan);text-decoration:none}
-
 header{border-bottom:2px solid var(--line);padding-bottom:var(--gap);margin-bottom:var(--gap)}
 .loc-bar{font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:var(--gap);margin-bottom:6px;flex-wrap:wrap}
 .loc-bar span{min-width:0;overflow:hidden;text-overflow:ellipsis;flex:1 1 auto}
@@ -54,7 +37,6 @@ header{border-bottom:2px solid var(--line);padding-bottom:var(--gap);margin-bott
 .btn-ui{background:var(--panel-2);border:1px solid var(--line);color:var(--cyan);font-size:var(--fs-sm);padding:8px 12px;border-radius:6px;font-family:var(--mono);min-height:38px;display:inline-flex;align-items:center;justify-content:center}
 .btn-ui:active{background:var(--line);transform:scale(0.97)}
 .btn-ui:disabled{opacity:0.4;cursor:not-allowed}
-
 .loc-search-box{display:flex;gap:var(--gap);margin:var(--gap) 0 6px}
 .loc-search-box input{flex:1;min-width:0;background:var(--panel-2);border:1px solid var(--line);color:var(--text);padding:10px 12px;border-radius:6px;font-size:16px;font-family:var(--sans);outline:none}
 .loc-search-box input:focus{border-color:var(--cyan)}
@@ -62,35 +44,30 @@ header{border-bottom:2px solid var(--line);padding-bottom:var(--gap);margin-bott
 .loc-results{margin-bottom:var(--gap)}
 .loc-item{padding:10px 12px;border:1px solid var(--line);background:var(--panel-2);border-radius:6px;margin-top:5px;font-size:var(--fs-base);cursor:pointer;line-height:1.4}
 .loc-item span{color:var(--muted-2);font-size:var(--fs-xs)}
-
 .navrow{display:flex;gap:var(--gap);margin-bottom:var(--gap)}
 .navrow button{flex:1;background:var(--panel);border:1px solid var(--line);color:var(--text);padding:10px 6px;border-radius:6px;font-size:var(--fs-sm);min-height:44px;line-height:1.2;min-width:0}
 .navrow button.primary{border-color:var(--amber);color:var(--amber);font-weight:600}
 .navrow button:disabled{opacity:0.35;cursor:not-allowed}
 .navrow button:active:not(:disabled){background:var(--line);transform:scale(0.97)}
-
 .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:var(--pad-y) var(--pad-x);margin-bottom:var(--gap)}
 .card-head{font-size:var(--fs-sm);font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.03em;margin-bottom:var(--gap);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-
 .astro-debug{font-family:var(--mono);font-size:11px;color:var(--muted);background:var(--panel-2);border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin-bottom:var(--gap);line-height:1.55;white-space:pre;overflow-x:auto}
 .astro-debug .dbg-title{color:var(--amber);font-weight:700;display:block;margin-bottom:6px;font-size:11px;letter-spacing:0.05em}
 .astro-debug .up{color:var(--green);font-weight:700}
 .astro-debug .down{color:var(--red);font-weight:700}
 .astro-debug .day{color:#f2b84b;font-weight:700}
-
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);font-size:var(--fs-base)}
 .grid > div{min-width:0;overflow:hidden}
 .row-full{grid-column:1 / -1}
 .label{color:var(--muted);display:block;font-size:var(--fs-xs);line-height:1.3}
 .val{font-family:var(--mono);font-weight:600;color:var(--text);display:block;margin-top:2px;line-height:1.3}
 @media (max-width:380px){.grid{grid-template-columns:1fr}}
-
 .tag{display:inline-block;padding:2px 6px;border-radius:4px;font-size:var(--fs-xs);font-family:var(--mono);border:1px solid;vertical-align:middle;white-space:nowrap;line-height:1.3}
 .tag.good{color:var(--green);border-color:var(--green);background:rgba(46,204,113,0.12)}
 .tag.low{color:var(--amber);border-color:var(--amber);background:rgba(242,184,75,0.12)}
 .tag.no{color:var(--red);border-color:var(--red);background:rgba(231,76,60,0.12)}
 .tag.wait{color:var(--muted-2);border-color:var(--line);background:transparent}
-
+.tag.day{color:#7f93ad;border-color:var(--line);background:rgba(127,147,173,0.1)}
 .pmag{font-family:var(--mono);font-size:var(--fs-sm);color:var(--muted);white-space:nowrap;display:inline-block;line-height:1.3}
 .pmag .mag-value{margin-left:2px}
 .pmag.mag-super{color:#fff8d0}
@@ -107,13 +84,11 @@ header{border-bottom:2px solid var(--line);padding-bottom:var(--gap);margin-bott
 .pmag.mag-dim .mag-value{font-weight:500;text-shadow:0 0 3px rgba(186,148,72,0.4)}
 .pmag.mag-faint{color:#9c8248}
 .pmag.mag-faint .mag-value{font-weight:500;text-shadow:0 0 3px rgba(156,130,72,0.35)}
-
 .metrics-block{display:flex;flex-direction:column;gap:8px;margin:10px 0 6px;font-family:var(--mono);line-height:1.35}
 .metric-line{display:flex;align-items:baseline;gap:8px;font-size:14px;min-width:0}
 .metric-k{color:var(--muted);flex:0 0 auto;white-space:nowrap;font-weight:500}
 .metric-v{color:var(--text);font-weight:800;flex:0 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:clip;letter-spacing:-0.01em}
 .metric-n{color:var(--muted-2);font-size:0.9em;flex:0 0 auto;white-space:nowrap;margin-left:auto;text-align:right}
-
 .moon-card{background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius);padding:12px;margin:var(--gap) 0;cursor:pointer}
 .moon-card-top{display:flex;align-items:flex-start;gap:10px}
 .moon-svg{flex:0 0 auto}
@@ -123,7 +98,6 @@ header{border-bottom:2px solid var(--line);padding-bottom:var(--gap);margin-bott
 .moon-badges{display:flex;flex-wrap:wrap;gap:4px}
 .moon-mag{flex:0 0 auto;align-self:flex-start;padding-top:2px;text-align:right}
 .moon-card-sub{margin-top:10px;padding-top:8px;border-top:1px solid rgba(28,45,70,0.6);font-size:var(--fs-sm);color:var(--muted);font-family:var(--mono);line-height:1.4}
-
 .planet-box{border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);padding:var(--pad-y) var(--pad-x);margin-bottom:var(--gap);cursor:pointer}
 .planet-box.dim{opacity:0.65}
 .prow1{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;gap:var(--gap);flex-wrap:wrap}
@@ -146,12 +120,10 @@ header{border-bottom:2px solid var(--line);padding-bottom:var(--gap);margin-bott
 .beginner-guide{font-size:var(--fs-base);color:var(--text);background:var(--panel-2);border-left:3px solid var(--amber);padding:8px 10px;margin-top:8px;border-radius:0 4px 4px 0;line-height:1.5}
 .beginner-guide b{color:var(--amber)}
 .section-note{font-size:var(--fs-sm);color:var(--muted);margin:-2px 0 10px;line-height:1.45}
-
 .toolbar{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 var(--gap)}
 .toolbar button{flex:1 1 calc(50% - 3px);background:var(--panel-2);border:1px solid var(--line);color:var(--text);padding:9px 8px;border-radius:6px;font-size:var(--fs-sm);font-family:var(--mono);min-height:40px;white-space:nowrap}
 .toolbar button.active{border-color:var(--amber);color:var(--amber);font-weight:600}
 @media (min-width:420px){.toolbar button{flex:1 1 20%}}
-
 .target-card{border:1px solid var(--line);background:var(--panel-2);border-radius:6px;padding:10px 12px;margin-bottom:8px;cursor:pointer;transition:border-color 0.15s}
 .target-card:active{border-color:var(--amber)}
 .target-card.hidden-target{display:none}
@@ -169,24 +141,20 @@ header{border-bottom:2px solid var(--line);padding-bottom:var(--gap);margin-bott
 .astrolinks a,.btn-ar-inline{font-family:var(--mono);font-size:var(--fs-xs);color:var(--cyan);text-decoration:none;border:1px solid var(--line);background:var(--panel-2);padding:7px 10px;border-radius:5px;min-height:34px;display:inline-flex;align-items:center;cursor:pointer;line-height:1.2;white-space:nowrap}
 .btn-ar-inline.radar{color:var(--green);border-color:rgba(46,204,113,0.45)}
 .btn-ar-inline.ar{color:var(--amber);border-color:rgba(242,184,75,0.45)}
-
 table.eyepiece-table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);font-family:var(--mono);margin:6px 0;table-layout:auto}
 table.eyepiece-table th{text-align:left;color:var(--muted);border-bottom:1px solid var(--line);padding:6px 3px;font-size:var(--fs-xs);line-height:1.3}
 table.eyepiece-table td{padding:7px 3px;border-bottom:1px solid rgba(29,46,71,0.5);line-height:1.35;vertical-align:top}
 table.eyepiece-table tr.ep-row.warn-row td{background:rgba(242,184,75,0.06)}
 .ep-badge{display:inline-block;font-size:9px;font-family:var(--mono);padding:1px 5px;border-radius:3px;margin-left:4px;color:var(--amber);border:1px solid var(--amber);background:rgba(242,184,75,0.12);white-space:nowrap;line-height:1.3}
-
 details.collapse{border:1px solid var(--line);background:var(--panel);border-radius:6px;margin-bottom:var(--gap);overflow:hidden}
 details.collapse summary{font-size:var(--fs-base);font-weight:700;color:var(--amber);padding:12px var(--pad-x);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:46px;gap:8px;line-height:1.3}
 details.collapse summary::-webkit-details-marker{display:none}
 details.collapse summary::after{content:"+";color:var(--muted);font-size:15px;font-family:var(--mono);flex-shrink:0}
 details.collapse[open] summary::after{content:"-"}
 details.collapse > div{padding:10px var(--pad-x);border-top:1px solid var(--line)}
-
 .note{font-size:var(--fs-sm);color:var(--muted);background:var(--panel-2);border-left:3px solid var(--cyan);padding:9px 12px;margin-top:8px;border-radius:0 4px 4px 0;line-height:1.5}
 .note b{color:var(--text)}
 .note.err{border-left-color:var(--red);color:var(--red)}
-
 .modal-backdrop{position:fixed;inset:0;background:rgba(4,8,14,0.85);z-index:50;display:flex;align-items:flex-end;justify-content:center}
 .modal-sheet{width:100%;max-width:520px;max-height:88vh;overflow-y:auto;background:var(--bg);border:1px solid var(--line);border-bottom:none;border-radius:14px 14px 0 0;padding:18px var(--pad-x) calc(30px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch}
 .modal-sheet .mtop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;gap:8px}
@@ -204,14 +172,12 @@ details.collapse > div{padding:10px var(--pad-x);border-top:1px solid var(--line
 .moon-phase-svg-wrap{display:flex;justify-content:center;margin:4px 0 8px}
 .moon-phase-svg-wrap svg{width:min(170px,55vw);height:min(170px,55vw)}
 .moon-phase-caption{text-align:center;font-size:var(--fs-xs);color:var(--muted);margin-bottom:12px;font-family:var(--mono)}
-
 .moon-tabs{display:flex;gap:4px;margin:14px 0 10px;flex-wrap:wrap}
 .moon-tab{flex:1 1 auto;min-width:calc(50% - 2px);background:var(--panel-2);border:1px solid var(--line);color:var(--muted);padding:10px 6px;border-radius:6px;font-size:var(--fs-xs);font-family:var(--mono);min-height:40px;white-space:nowrap;transition:all 0.15s;line-height:1.2}
 .moon-tab:active{transform:scale(0.97)}
 .moon-tab.active{border-color:var(--amber);color:var(--amber);font-weight:600;background:rgba(242,184,75,0.08)}
 .moon-tab-content{animation:fadeIn 0.22s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
-
 #moonGlobeContainer{width:100%;height:min(500px,70vh);border-radius:8px;overflow:hidden;border:1px solid var(--line);background:#000;position:relative;touch-action:none}
 .globe-tooltip{background:rgba(15,24,40,0.96)!important;border:1px solid #1c2d46!important;border-radius:6px!important;padding:8px 12px!important;font-family:var(--mono)!important;font-size:12px!important;color:#e7edf6!important;max-width:260px!important;line-height:1.4!important}
 .globe-tooltip b{color:#f2b84b}
@@ -222,9 +188,11 @@ details.collapse > div{padding:10px var(--pad-x);border-top:1px solid var(--line
 .globe-compass-overlay .gc-coords{margin-top:6px;font-size:10px;color:var(--amber);text-align:center;letter-spacing:0.02em;white-space:nowrap}
 .globe-compass-overlay .gc-note{margin-top:4px;font-size:8.5px;color:var(--muted-2);text-align:center;letter-spacing:0.02em}
 .globe-controls-overlay{position:absolute;bottom:10px;right:10px;z-index:5;display:flex;flex-direction:column;gap:6px}
-.globe-ctrl-btn{width:40px;height:40px;border-radius:50%;background:rgba(7,12,22,0.85);border:1px solid rgba(242,184,75,0.45);color:var(--amber);font-family:var(--mono);font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1;cursor:pointer;transition:transform 0.12s,background 0.12s;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
-.globe-ctrl-btn:active{transform:scale(0.92);background:rgba(242,184,75,0.15)}
+.globe-ctrl-btn{width:44px;height:44px;border-radius:50%;background:rgba(7,12,22,0.92);border:2px solid var(--amber);color:var(--amber);font-family:var(--mono);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1;cursor:pointer;transition:transform 0.12s,background 0.12s;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.globe-ctrl-btn:active{transform:scale(0.92);background:rgba(242,184,75,0.25)}
 .globe-ctrl-btn.playing{background:rgba(46,204,113,0.18);border-color:var(--green);color:var(--green)}
+.globe-ctrl-btn.reset-btn{background:rgba(231,76,60,0.25);border-color:var(--red);color:#fff}
+.globe-ctrl-btn.reset-btn:active{background:rgba(231,76,60,0.5)}
 .moon-map-info{margin-top:10px;padding:11px 13px;background:var(--panel-2);border:1px solid var(--line);border-radius:6px;font-size:var(--fs-sm);color:var(--text);line-height:1.55}
 .moon-map-info.empty{color:var(--muted);font-style:italic}
 .moon-map-info .info-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
@@ -232,7 +200,6 @@ details.collapse > div{padding:10px var(--pad-x);border-top:1px solid var(--line
 .moon-map-info .info-name{font-size:var(--fs-md);font-weight:700;color:var(--text);line-height:1.3}
 .moon-map-info .info-line{color:var(--muted);margin-top:3px}
 .moon-map-info .info-coord{font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted-2);margin-top:6px}
-
 .arview{position:fixed;inset:0;z-index:60;background:#000;overflow:hidden}
 .arview video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .arview .arclose{position:absolute;top:calc(16px + env(safe-area-inset-top));right:16px;background:rgba(0,0,0,0.65);border:1px solid rgba(255,255,255,0.4);color:#fff;width:44px;height:44px;border-radius:50%;font-size:22px;z-index:5;line-height:1;display:flex;align-items:center;justify-content:center}
@@ -252,10 +219,7 @@ details.collapse > div{padding:10px var(--pad-x);border-top:1px solid var(--line
 .arview .arcalib{position:absolute;bottom:calc(150px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:linear-gradient(160deg,rgba(46,204,113,0.32),rgba(46,204,113,0.12));border:1px solid var(--green);color:#fff;padding:11px 20px;border-radius:24px;font-family:var(--mono);font-size:13px;font-weight:700;z-index:5;box-shadow:0 4px 14px rgba(0,0,0,0.6);white-space:nowrap}
 .arview .arcalib:active{transform:translateX(-50%) scale(0.96)}
 .arview .arcalibreset{position:absolute;bottom:calc(150px + env(safe-area-inset-bottom));right:12px;background:rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.4);color:#fff;width:44px;height:44px;border-radius:50%;font-size:18px;z-index:5;line-height:1;display:flex;align-items:center;justify-content:center}
-@media (orientation: landscape){
-  .arview::after{content:"Ruota il telefono in verticale per usare l'AR";position:absolute;inset:0;background:rgba(7,12,22,0.97);color:var(--amber);font-size:17px;font-family:var(--mono);font-weight:700;display:flex;align-items:center;justify-content:center;padding:32px;text-align:center;z-index:999;letter-spacing:0.02em;line-height:1.5}
-}
-
+@media (orientation: landscape){.arview::after{content:"Ruota il telefono in verticale per usare l'AR";position:absolute;inset:0;background:rgba(7,12,22,0.97);color:var(--amber);font-size:17px;font-family:var(--mono);font-weight:700;display:flex;align-items:center;justify-content:center;padding:32px;text-align:center;z-index:999;letter-spacing:0.02em;line-height:1.5}}
 .radar-sheet{max-height:94vh}
 .radar-wrap{display:flex;justify-content:center;margin:6px 0 10px}
 .radar-wrap svg{width:min(420px,90vw);height:auto;max-width:100%;display:block;touch-action:manipulation}
@@ -263,9 +227,7 @@ details.collapse > div{padding:10px var(--pad-x);border-top:1px solid var(--line
 .radar-legend span{display:inline-flex;align-items:center;gap:6px}
 .radar-legend i{display:inline-block;width:11px;height:11px;border-radius:50%;border:1px solid rgba(255,255,255,0.25)}
 .radar-hint{text-align:center;font-size:var(--fs-sm);color:var(--muted);font-family:var(--mono);margin-top:4px}
-
 footer{margin-top:20px;padding-top:12px;border-top:1px solid var(--line);font-size:var(--fs-xs);color:var(--muted-2);font-family:var(--mono);line-height:1.6}
-
 .perm-backdrop{position:fixed;inset:0;background:linear-gradient(180deg,#070c16 0%,#0a111d 100%);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
 .perm-card{width:100%;max-width:420px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 18px;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
 .perm-card h2{font-size:var(--fs-xl);font-weight:700;color:var(--amber);margin-bottom:6px}
@@ -283,7 +245,6 @@ footer{margin-top:20px;padding-top:12px;border-top:1px solid var(--line);font-si
 .perm-btn{width:100%;background:linear-gradient(160deg,rgba(242,184,75,0.2),rgba(242,184,75,0.08));border:1px solid var(--amber);color:var(--amber);padding:14px;border-radius:8px;font-size:var(--fs-md);font-weight:700;margin-top:16px;font-family:var(--mono);min-height:50px}
 .perm-btn:disabled{opacity:0.4}
 .perm-skip{width:100%;background:transparent;border:none;color:var(--muted);font-size:var(--fs-sm);padding:12px;margin-top:6px;font-family:var(--mono);text-decoration:underline}
-
 .online-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:4px;vertical-align:middle;box-shadow:0 0 6px currentColor;flex-shrink:0}
 .online-dot.off{background:var(--red)}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--panel);border:1px solid var(--amber);color:var(--text);padding:11px 16px;border-radius:8px;font-size:var(--fs-sm);font-family:var(--mono);z-index:90;box-shadow:0 8px 24px rgba(0,0,0,0.5);max-width:calc(100vw - 24px);text-align:center;line-height:1.4;transition:opacity 0.3s}
@@ -293,6 +254,12 @@ footer{margin-top:20px;padding-top:12px;border-top:1px solid var(--line);font-si
 .point-card .point-name{font-size:var(--fs-2xl);font-weight:700;margin:6px 0;line-height:1.2}
 .point-card .point-main{font-size:var(--fs-md);line-height:1.5}
 .point-card .point-meta{font-size:var(--fs-sm);color:var(--muted);margin-top:6px;line-height:1.45}
+.globe-link:hover, .globe-link:active{border-color:var(--amber) !important;background:rgba(242,184,75,0.06) !important}
+.globe-legend{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:6px 0 8px;font-size:var(--fs-xs);font-family:var(--mono);color:var(--muted);line-height:1.4}
+.globe-legend span{display:inline-flex;align-items:center;gap:5px}
+.globe-legend i{display:inline-block;width:11px;height:11px;border-radius:50%;border:1px solid rgba(255,255,255,0.35);flex-shrink:0}
+.btn-deselect{display:block;width:100%;margin:0 0 10px;background:linear-gradient(160deg,rgba(231,76,60,0.28),rgba(231,76,60,0.12));border:2px solid var(--red);color:#fff;font-family:var(--mono);font-size:13px;font-weight:700;padding:12px 20px;border-radius:6px;cursor:pointer;min-height:46px;letter-spacing:0.03em}
+.btn-deselect:active{background:rgba(231,76,60,0.5);transform:scale(0.98)}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
 </head>
@@ -397,7 +364,7 @@ footer{margin-top:20px;padding-top:12px;border-top:1px solid var(--line);font-si
   </div>
 
   <div class="moon-tab-content" data-mtab-content="globo" style="display:none">
-    <div class="section-note" style="margin-top:0">Trascina per ruotare, pinch per zoomare, tocca un punto colorato per i dettagli. La rotazione automatica è <b>disattivata</b>: usa il pulsante ▶ per attivarla.</div>
+    <div class="section-note" style="margin-top:0">Trascina per ruotare, pinch per zoomare, tocca un punto colorato per i dettagli. Il punto selezionato viene contornato da un <b>anello bianco pulsante</b> con il nome sopra. Cliccando un altro punto o "Deseleziona" tutto torna alla normalità.</div>
 
     <div class="moon-filter-bar" id="moonFilterBar">
       <button type="button" class="moon-filter active" data-mfilter="all">Tutti</button>
@@ -406,6 +373,15 @@ footer{margin-top:20px;padding-top:12px;border-top:1px solid var(--line);font-si
       <button type="button" class="moon-filter" data-mfilter="maria">🌊 Mari</button>
       <button type="button" class="moon-filter" data-mfilter="mountain">⛰ Monti</button>
     </div>
+
+    <div class="globe-legend">
+      <span><i style="background:#f2b84b"></i>Siti</span>
+      <span><i style="background:#51a0d5"></i>Crateri</span>
+      <span><i style="background:#2ecc71"></i>Mari</span>
+      <span><i style="background:#c77dff"></i>Monti</span>
+    </div>
+
+    <button type="button" class="btn-deselect" id="btnDeselect">✕ DESELEZIONA TUTTO</button>
 
     <div id="moonGlobeContainer">
       <div class="globe-compass-overlay" id="globeCompassOverlay">
@@ -427,12 +403,12 @@ footer{margin-top:20px;padding-top:12px;border-top:1px solid var(--line);font-si
       <div class="globe-controls-overlay">
         <button type="button" class="globe-ctrl-btn" id="globeZoomIn" title="Zoom avanti">+</button>
         <button type="button" class="globe-ctrl-btn" id="globeZoomOut" title="Zoom indietro">−</button>
-        <button type="button" class="globe-ctrl-btn" id="globeReset" title="Vista iniziale">⟲</button>
+        <button type="button" class="globe-ctrl-btn reset-btn" id="globeReset" title="Reset vista e deseleziona">RST</button>
         <button type="button" class="globe-ctrl-btn" id="globeAutoRotate" title="Rotazione automatica">▶</button>
       </div>
     </div>
 
-    <div class="moon-map-info empty" id="moonGlobeInfo">Tocca un punto sul globo per vedere i dettagli.</div>
+    <div class="moon-map-info empty" id="moonGlobeInfo">Tocca un punto sul globo o clicca una voce dalle tab Siti / Crateri per vedere i dettagli.</div>
 
     <div class="astrolinks" style="justify-content:center;margin-top:12px">
       <a href="https://trek.nasa.gov/moon/" target="_blank" rel="noopener">NASA Moon Trek ↗</a>
@@ -441,12 +417,12 @@ footer{margin-top:20px;padding-top:12px;border-top:1px solid var(--line);font-si
   </div>
 
   <div class="moon-tab-content" data-mtab-content="siti" style="display:none">
-    <div class="section-note" style="margin-top:0">Siti di atterraggio confermati sulla Luna visibili dal lato near-side, con coordinate ufficiali (IAU).</div>
+    <div class="section-note" style="margin-top:0">Tocca una card per aprire il <b>Globo 3D</b> sulla posizione esatta.</div>
     <div id="landingSitesList"></div>
   </div>
 
   <div class="moon-tab-content" data-mtab-content="crateri" style="display:none">
-    <div class="section-note" style="margin-top:0">Principali formazioni lunari con coordinate selenografiche e nomi italiani.</div>
+    <div class="section-note" style="margin-top:0">Tocca una card per aprire il <b>Globo 3D</b> sulla posizione esatta.</div>
     <div id="cratersList"></div>
   </div>
 </div>
@@ -524,7 +500,6 @@ footer{margin-top:20px;padding-top:12px;border-top:1px solid var(--line);font-si
 (function(){
 "use strict";
 var A = (typeof Astronomy !== 'undefined') ? Astronomy : null;
-
 var loc = {lat:40.6947, lon:14.4803, elev:6, name:"Castellammare di Stabia"};
 var activeDate = (function(){var d=new Date();if(d.getHours()<12)d.setDate(d.getDate()-1);return d;})();
 var weatherLoaded = false;
@@ -536,22 +511,16 @@ var currentWeatherContext = {clouds:0, jetSpeed:80, jetAvailable:false, seeingQu
 var KM_PER_LY = 9.460730472e12;
 var KM_PER_AU = 149597870.7;
 var COMPASS = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSO","SO","OSO","O","ONO","NO","NNO"];
-
 var arState = {stream:null, headingHandler:null, timer:null};
-var phonePitch = null;
-var phoneHeading = null;
+var phonePitch = null, phoneHeading = null;
 var phoneRawAlpha = null, phoneRawBeta = null, phoneRawGamma = null;
-
 function safeGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
 function safeSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
-
 var arCalibAz  = parseFloat(safeGet('astroalert_ar_calib_az')  || '0') || 0;
 var arCalibAlt = parseFloat(safeGet('astroalert_ar_calib_alt') || '0') || 0;
 var MAGNETIC_DECLINATION = 3.4;
 (function(){var c = safeGet('astroalert_decl'); if(c !== null){var v=parseFloat(c); if(isFinite(v)) MAGNETIC_DECLINATION = v;}})();
-
 var activeRadarCleanup = null;
-
 function compassDir(az){var i=Math.round(az/22.5)%16;if(i<0)i+=16;return COMPASS[i];}
 function fmtTime(d){if(!d)return"--:--";return new Intl.DateTimeFormat('it-IT',{timeZone:'Europe/Rome',hour:'2-digit',minute:'2-digit'}).format(d);}
 function hoursBetween(a,b){return (b.getTime()-a.getTime())/3600000;}
@@ -564,50 +533,25 @@ function toast(msg,ms){
   setTimeout(function(){el.style.opacity='0';}, (ms||3000)-300);
   setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);}, (ms||3000));
 }
-function padLabel(label, width){
-  var w = width || 22;
-  var s = String(label);
-  while(s.length < w) s += ' ';
-  return s;
-}
-function fmtSystemUTC(d){
-  var y=d.getUTCFullYear();
-  var mo=String(d.getUTCMonth()+1).padStart(2,'0');
-  var da=String(d.getUTCDate()).padStart(2,'0');
-  var hh=String(d.getUTCHours()).padStart(2,'0');
-  var mm=String(d.getUTCMinutes()).padStart(2,'0');
-  var ss=String(d.getUTCSeconds()).padStart(2,'0');
-  return da+'/'+mo+'/'+y+' '+hh+':'+mm+':'+ss+' UTC';
-}
+function padLabel(label, width){var w=width||22;var s=String(label);while(s.length<w)s+=' ';return s;}
+function fmtSystemUTC(d){var y=d.getUTCFullYear();var mo=String(d.getUTCMonth()+1).padStart(2,'0');var da=String(d.getUTCDate()).padStart(2,'0');var hh=String(d.getUTCHours()).padStart(2,'0');var mm=String(d.getUTCMinutes()).padStart(2,'0');var ss=String(d.getUTCSeconds()).padStart(2,'0');return da+'/'+mo+'/'+y+' '+hh+':'+mm+':'+ss+' UTC';}
 function magBrightnessClass(mag){if(mag<=-2)return"mag-super";if(mag<=0)return"mag-bright";if(mag<=2)return"mag-mid";if(mag<=4.5)return"mag-low";if(mag<=6)return"mag-dim";return"mag-faint";}
 function magHTML(mag){return '<span class="mag-label">Mag</span> <span class="mag-value">'+Number(mag).toFixed(1)+'</span>';}
 function magSpan(mag){return '<span class="pmag '+magBrightnessClass(mag)+'">'+magHTML(mag)+'</span>';}
 function isAndroid(){return /Android/i.test(navigator.userAgent);}
 function dateToIsoHourStr(d){var y=d.getFullYear();var mo=String(d.getMonth()+1).padStart(2,'0');var da=String(d.getDate()).padStart(2,'0');var hh=String(d.getHours()).padStart(2,'0');return y+'-'+mo+'-'+da+'T'+hh+':00';}
 function daysFromToday(d){var today=new Date();today.setHours(12,0,0,0);var dd=new Date(d);dd.setHours(12,0,0,0);return Math.round((dd-today)/86400000);}
-function escapeHtml(s){
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-}
-
-var METRIC_MIN_PX = 11, METRIC_MAX_PX = 20, _fitScheduled = false;
-function lineOverflows(line){var v=line.querySelector('.metric-v');if(!v)return false;return v.scrollWidth > v.clientWidth+1;}
-function fitOneLine(line){
-  line.style.fontSize = METRIC_MAX_PX+'px';
-  if(!lineOverflows(line)){line.dataset.fitPx = METRIC_MAX_PX; return;}
-  var lo=METRIC_MIN_PX, hi=METRIC_MAX_PX, best=METRIC_MIN_PX, iter=0;
-  while(hi-lo>0.4 && iter<12){iter++;var mid=(lo+hi)/2;line.style.fontSize=mid+'px';if(lineOverflows(line))hi=mid;else{lo=mid;best=mid;}}
-  line.style.fontSize = best.toFixed(1)+'px';
-  line.dataset.fitPx = best.toFixed(1);
-}
+function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+var METRIC_MIN_PX=11,METRIC_MAX_PX=20,_fitScheduled=false;
+function lineOverflows(line){var v=line.querySelector('.metric-v');if(!v)return false;return v.scrollWidth>v.clientWidth+1;}
+function fitOneLine(line){line.style.fontSize=METRIC_MAX_PX+'px';if(!lineOverflows(line)){line.dataset.fitPx=METRIC_MAX_PX;return;}var lo=METRIC_MIN_PX,hi=METRIC_MAX_PX,best=METRIC_MIN_PX,iter=0;while(hi-lo>0.4&&iter<12){iter++;var mid=(lo+hi)/2;line.style.fontSize=mid+'px';if(lineOverflows(line))hi=mid;else{lo=mid;best=mid;}}line.style.fontSize=best.toFixed(1)+'px';line.dataset.fitPx=best.toFixed(1);}
 function fitMetrics(){var lines=document.querySelectorAll('.metric-line');if(!lines.length)return;for(var i=0;i<lines.length;i++){try{fitOneLine(lines[i]);}catch(e){}}}
 function scheduleFitMetrics(){if(_fitScheduled)return;_fitScheduled=true;requestAnimationFrame(function(){requestAnimationFrame(function(){_fitScheduled=false;try{fitMetrics();}catch(e){}});});}
 var _resizeTimer=null;
 window.addEventListener('resize',function(){if(_resizeTimer)clearTimeout(_resizeTimer);_resizeTimer=setTimeout(scheduleFitMetrics,120);});
-
 function formatDistanceLines(km, isFarDeepSky, fixedLy){
   if(isFarDeepSky || (typeof fixedLy === 'number' && fixedLy > 0.05)){
-    var lyVal = fixedLy || (km/KM_PER_LY);
-    var lyStr;
+    var lyVal = fixedLy || (km/KM_PER_LY);var lyStr;
     if(lyVal >= 1e9)      lyStr = (lyVal/1e9).toFixed(2).replace('.',',') + " MILIARDI di Anni Luce";
     else if(lyVal >= 1e6) lyStr = (lyVal/1e6).toFixed(2).replace('.',',') + " Milioni di Anni Luce";
     else if(lyVal >= 1000)lyStr = Math.round(lyVal).toLocaleString('it-IT') + " Anni Luce";
@@ -617,38 +561,15 @@ function formatDistanceLines(km, isFarDeepSky, fixedLy){
   var kmStr;
   if(km < 1e6)      kmStr = Math.round(km).toLocaleString('it-IT') + " km";
   else if(km < 1e9) kmStr = (km/1e6).toFixed(1).replace('.',',') + " Milioni di km";
-  else {
-    var mldVal = km/1e9;
-    if(Math.abs(mldVal - 1.0) < 0.05) kmStr = "1 MILIARDO di km";
-    else kmStr = mldVal.toFixed(2).replace('.',',') + " MILIARDI di km";
-  }
-  var minLight = (km/299792.458)/60;
-  var lightStr;
-  if(minLight < 1){
-    var secLight = minLight * 60;
-    lightStr = secLight.toFixed(1).replace('.',',') + " Secondi Luce";
-  } else {
-    lightStr = minLight.toFixed(1).replace('.',',') + " Minuti Luce";
-  }
+  else {var mldVal = km/1e9;if(Math.abs(mldVal - 1.0) < 0.05) kmStr = "1 MILIARDO di km";else kmStr = mldVal.toFixed(2).replace('.',',') + " MILIARDI di km";}
+  var minLight = (km/299792.458)/60;var lightStr;
+  if(minLight < 1){var secLight = minLight * 60;lightStr = secLight.toFixed(1).replace('.',',') + " Secondi Luce";}
+  else {lightStr = minLight.toFixed(1).replace('.',',') + " Minuti Luce";}
   return {value: kmStr, note: "(" + lightStr + ")"};
 }
-function formatMassLines(massStr){
-  if(!massStr) return {value:"--", note:""};
-  var m = massStr.match(/^(.+?)\s*\((.+)\)\s*$/);
-  if(m) return {value: m[1].trim(), note: "(" + m[2].trim() + ")"};
-  return {value: massStr, note: ""};
-}
-function metricLineHTML(k, v, n){
-  var noteHTML = n ? '<span class="metric-n">'+n+'</span>' : '';
-  return '<div class="metric-line"><span class="metric-k">'+k+'</span><span class="metric-v">'+v+'</span>'+noteHTML+'</div>';
-}
-function metricsBlockHTML(distObj, massObj){
-  return '<div class="metrics-block">'
-    + metricLineHTML("Distanza:", distObj.value, distObj.note)
-    + metricLineHTML("Massa:", massObj.value, massObj.note)
-    + '</div>';
-}
-
+function formatMassLines(massStr){if(!massStr) return {value:"--", note:""};var m = massStr.match(/^(.+?)\s*\((.+)\)\s*$/);if(m) return {value: m[1].trim(), note: "(" + m[2].trim() + ")"};return {value: massStr, note: ""};}
+function metricLineHTML(k, v, n){var noteHTML = n ? '<span class="metric-n">'+n+'</span>' : '';return '<div class="metric-line"><span class="metric-k">'+k+'</span><span class="metric-v">'+v+'</span>'+noteHTML+'</div>';}
+function metricsBlockHTML(distObj, massObj){return '<div class="metrics-block">'+ metricLineHTML("Distanza:", distObj.value, distObj.note) + metricLineHTML("Massa:", massObj.value, massObj.note) + '</div>';}
 var PLANET_DATA = {
   Mercury:{name:"Mercurio", radius:2440.5, url:"https://edu.inaf.it/rubriche/schede-pianeti/mercurio/", massRatio:"0,055 volte la Terra (1/18)", facts:"Il pianeta più piccolo del sistema solare interno.", guide:"Non aspettarti colori o dettagli: apparirà come una piccolissima 'mezzaluna' o disco giallino che ribolle per la bassa elevazione."},
   Venus:{name:"Venere", radius:6051.8, url:"https://edu.inaf.it/rubriche/schede-pianeti/venere/", massRatio:"0,815 volte la Terra (quasi gemello)", facts:"Pianeta più caldo del sistema solare per via dell'effetto serra.", guide:"Così splendente che all'oculare rischia di abbagliare. Ammirane la fase (da sottile falce a gibbosa), meglio al crepuscolo."},
@@ -688,7 +609,6 @@ var SHOWERS = [
   {name:"Leonidi", s:[10,6], e:[10,30], zhr:15},{name:"Geminidi", s:[11,4], e:[11,17], zhr:150},
   {name:"Ursidi", s:[11,17], e:[11,26], zhr:10}
 ];
-
 var LUNAR_LANDING_SITES = [
   {name:'Apollo 11', lat:0.674, lon:23.473, year:1969, country:'USA', mission:'Primo uomo sulla Luna (Armstrong, Aldrin)', desc:'Mare della Tranquillità'},
   {name:'Apollo 12', lat:-3.012, lon:-23.422, year:1969, country:'USA', mission:'Secondo sbarco, recupero Surveyor 3', desc:'Oceanus Procellarum'},
@@ -740,7 +660,6 @@ var LUNAR_MOUNTAINS = [
   {name:'Montes Recti', nameIt:'Monti Diritti', lat:48.3, lon:-19.5, length:90, desc:'Catena rettilinea'},
   {name:'Montes Riphaeus', nameIt:'Rifei', lat:7.7, lon:-28.1, length:190, desc:'Resti di anelli di bacino'}
 ];
-
 function getSunState(obs, t){
   var eq = A.Equator(A.Body.Sun, t, obs, true, true);
   var hor = A.Horizon(t, obs, eq.ra, eq.dec, 'normal');
@@ -788,9 +707,7 @@ function sparkSVG(pts,now,win,riseDate,peakDate,setDate,isVisibleNow,isToday){
   var t0=win.start.getTime(),t1=win.end.getTime();
   function x(t){return padX+(W-2*padX)*((t-t0)/(t1-t0));}
   var maxAlt=0;for(var k=0;k<pts.length;k++){if(pts[k].alt>maxAlt)maxAlt=pts[k].alt;}
-  var altMin=-20;
-  var altMax=maxAlt<30?40:90;
-  var plotH=H-padTop-padBottom;
+  var altMin=-20;var altMax=maxAlt<30?40:90;var plotH=H-padTop-padBottom;
   function y(alt){return (padTop+plotH)-plotH*((alt-altMin)/(altMax-altMin));}
   var horizonY=y(0);
   var d=pts.map(function(p,i){return (i===0?"M":"L")+x(p.t.getTime()).toFixed(1)+","+y(p.alt).toFixed(1);}).join(" ");
@@ -799,34 +716,16 @@ function sparkSVG(pts,now,win,riseDate,peakDate,setDate,isVisibleNow,isToday){
   for(var i=0;i<pts.length-1;i++){
     var p1=pts[i],p2=pts[i+1];
     var x1=x(p1.t.getTime()),x2=x(p2.t.getTime());
-    if(p1.alt>=0&&p2.alt>=0){
-      solidSegs+='<line x1="'+x1.toFixed(1)+'" y1="'+horizonY.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+horizonY.toFixed(1)+'" stroke="var(--green)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>';
-    } else if(p1.alt<0&&p2.alt<0){
-      dashSegs+='<line x1="'+x1.toFixed(1)+'" y1="'+horizonY.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+horizonY.toFixed(1)+'" stroke="var(--green)" stroke-width="1.4" stroke-dasharray="4,3" vector-effect="non-scaling-stroke"/>';
-    } else {
-      var frac=(0-p1.alt)/(p2.alt-p1.alt);
-      var xC=x1+(x2-x1)*frac;
-      if(p1.alt>=0){
-        solidSegs+='<line x1="'+x1.toFixed(1)+'" y1="'+horizonY.toFixed(1)+'" x2="'+xC.toFixed(1)+'" y2="'+horizonY.toFixed(1)+'" stroke="var(--green)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>';
-        dashSegs+='<line x1="'+xC.toFixed(1)+'" y1="'+horizonY.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+horizonY.toFixed(1)+'" stroke="var(--green)" stroke-width="1.4" stroke-dasharray="4,3" vector-effect="non-scaling-stroke"/>';
-      } else {
-        dashSegs+='<line x1="'+x1.toFixed(1)+'" y1="'+horizonY.toFixed(1)+'" x2="'+xC.toFixed(1)+'" y2="'+horizonY.toFixed(1)+'" stroke="var(--green)" stroke-width="1.4" stroke-dasharray="4,3" vector-effect="non-scaling-stroke"/>';
-        solidSegs+='<line x1="'+xC.toFixed(1)+'" y1="'+horizonY.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+horizonY.toFixed(1)+'" stroke="var(--green)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>';
-      }
+    if(p1.alt>=0&&p2.alt>=0){solidSegs+='<line x1="'+x1.toFixed(1)+'" y1="'+horizonY.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+horizonY.toFixed(1)+'" stroke="var(--green)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>';}
+    else if(p1.alt<0&&p2.alt<0){dashSegs+='<line x1="'+x1.toFixed(1)+'" y1="'+horizonY.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+horizonY.toFixed(1)+'" stroke="var(--green)" stroke-width="1.4" stroke-dasharray="4,3" vector-effect="non-scaling-stroke"/>';}
+    else{var frac=(0-p1.alt)/(p2.alt-p1.alt);var xC=x1+(x2-x1)*frac;
+      if(p1.alt>=0){solidSegs+='<line x1="'+x1.toFixed(1)+'" y1="'+horizonY.toFixed(1)+'" x2="'+xC.toFixed(1)+'" y2="'+horizonY.toFixed(1)+'" stroke="var(--green)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>';dashSegs+='<line x1="'+xC.toFixed(1)+'" y1="'+horizonY.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+horizonY.toFixed(1)+'" stroke="var(--green)" stroke-width="1.4" stroke-dasharray="4,3" vector-effect="non-scaling-stroke"/>';}
+      else{dashSegs+='<line x1="'+x1.toFixed(1)+'" y1="'+horizonY.toFixed(1)+'" x2="'+xC.toFixed(1)+'" y2="'+horizonY.toFixed(1)+'" stroke="var(--green)" stroke-width="1.4" stroke-dasharray="4,3" vector-effect="non-scaling-stroke"/>';solidSegs+='<line x1="'+xC.toFixed(1)+'" y1="'+horizonY.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+horizonY.toFixed(1)+'" stroke="var(--green)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>';}
     }
   }
   var eventTicks="";
-  function addTick(dObj,color){
-    if(!dObj)return;
-    var tTime=dObj.getTime();
-    if(tTime>=t0&&tTime<=t1){
-      var tx=x(tTime).toFixed(1);
-      eventTicks+='<line x1="'+tx+'" y1="'+(padTop+plotH-3)+'" x2="'+tx+'" y2="'+(padTop+plotH+4)+'" stroke="'+color+'" stroke-width="1.5"/>';
-    }
-  }
-  addTick(riseDate,"var(--green)");
-  addTick(peakDate,"var(--cyan)");
-  addTick(setDate,"var(--red)");
+  function addTick(dObj,color){if(!dObj)return;var tTime=dObj.getTime();if(tTime>=t0&&tTime<=t1){var tx=x(tTime).toFixed(1);eventTicks+='<line x1="'+tx+'" y1="'+(padTop+plotH-3)+'" x2="'+tx+'" y2="'+(padTop+plotH+4)+'" stroke="'+color+'" stroke-width="1.5"/>';}}
+  addTick(riseDate,"var(--green)");addTick(peakDate,"var(--cyan)");addTick(setDate,"var(--red)");
   var nowMark="";
   if(isToday){
     var nowX=x(now.getTime());
@@ -865,11 +764,8 @@ function getDynamicEyepieceAdvice(key,alt){
     if(alt<15)return"Bersaglio basso: resta sul 25mm (81x).";
     return"Dati meteo in caricamento — inizia prudente con 15mm (135x).";
   }
-  var jet=currentWeatherContext.jetSpeed;
-  var jetAvail=currentWeatherContext.jetAvailable;
-  var badSeeing=jetAvail&&jet>=115;
-  var fairSeeing=jetAvail&&jet>=65&&jet<115;
-  var unknownSeeing=!jetAvail;
+  var jet=currentWeatherContext.jetSpeed;var jetAvail=currentWeatherContext.jetAvailable;
+  var badSeeing=jetAvail&&jet>=115;var fairSeeing=jetAvail&&jet>=65&&jet<115;var unknownSeeing=!jetAvail;
   if(key==="Moon"){
     if(alt<18)return"Luna bassa: usa 25mm (81x) per ridurre il tremolio.";
     if(unknownSeeing)return"Jet stream n.d.: seeing presunto medio, 15mm (135x).";
@@ -905,80 +801,46 @@ function bestFixed(obj,tStart,tEnd,obs){
 function findTransitTime(bodyKey,ra,obs,tStart,tEnd){
   var candidate=null;
   if(bodyKey&&A.Body[bodyKey]){
-    try{
-      var evt=A.SearchHourAngle(A.Body[bodyKey],obs,0,tStart,1);
-      if(evt&&evt.time&&evt.time.date>=tStart&&evt.time.date<=tEnd) candidate=evt.time.date;
-    }catch(e){}
-  } else {
+    try{var evt=A.SearchHourAngle(A.Body[bodyKey],obs,0,tStart,1);if(evt&&evt.time&&evt.time.date>=tStart&&evt.time.date<=tEnd) candidate=evt.time.date;}catch(e){}
+  }else{
     var stepMs=3*60*1000,prevDiff=null;
     for(var t=tStart.getTime();t<=tEnd.getTime();t+=stepMs){
-      var d=new Date(t);
-      var gast=A.SiderealTime(d);
-      var lst=((gast+obs.longitude/15)%24+24)%24;
-      var diff=lst-ra;
-      while(diff>12)diff-=24;
-      while(diff<-12)diff+=24;
-      if(prevDiff!==null&&prevDiff<0&&diff>=0){
-        var frac=-prevDiff/(diff-prevDiff);
-        candidate=new Date(t-stepMs+frac*stepMs);
-        break;
-      }
+      var d=new Date(t);var gast=A.SiderealTime(d);var lst=((gast+obs.longitude/15)%24+24)%24;var diff=lst-ra;
+      while(diff>12)diff-=24;while(diff<-12)diff+=24;
+      if(prevDiff!==null&&prevDiff<0&&diff>=0){var frac=-prevDiff/(diff-prevDiff);candidate=new Date(t-stepMs+frac*stepMs);break;}
       prevDiff=diff;
     }
   }
   if(!candidate)return null;
-  if(bodyKey&&A.Body[bodyKey]){
-    try{
-      var eqA=A.Equator(A.Body[bodyKey],candidate,obs,true,true);
-      var horA=A.Horizon(candidate,obs,eqA.ra,eqA.dec,'normal');
-      if(horA.altitude<0)return null;
-    }catch(e){}
-  }
+  if(bodyKey&&A.Body[bodyKey]){try{var eqA=A.Equator(A.Body[bodyKey],candidate,obs,true,true);var horA=A.Horizon(candidate,obs,eqA.ra,eqA.dec,'normal');if(horA.altitude<0)return null;}catch(e){}}
   return candidate;
 }
 function compareTargets(a,b){
   if(a.isUpNow!==b.isUpNow)return a.isUpNow?-1:1;
-  var magA=(typeof a.mag==='number')?a.mag:99;
-  var magB=(typeof b.mag==='number')?b.mag:99;
+  var magA=(typeof a.mag==='number')?a.mag:99;var magB=(typeof b.mag==='number')?b.mag:99;
   if(magA!==magB)return magA-magB;
   return (b.alt||0)-(a.alt||0);
 }
-function applyFilterToTargets(f){
-  document.querySelectorAll('#nightTargets .target-card').forEach(function(c){
-    c.classList.toggle('hidden-target',f!=='all'&&c.dataset.kind!==f);
-  });
-}
+function applyFilterToTargets(f){document.querySelectorAll('#nightTargets .target-card').forEach(function(c){c.classList.toggle('hidden-target',f!=='all'&&c.dataset.kind!==f);});}
 function computeMoonPenalty(target,obs,moonIllumFrac){
   if(!moonIllumFrac||moonIllumFrac<=0.4)return 0;
-  var t=target.time;
-  if(!t)return 0;
+  var t=target.time;if(!t)return 0;
   var eqM=A.Equator(A.Body.Moon,t,obs,true,true);
   var horM=A.Horizon(t,obs,eqM.ra,eqM.dec,'normal');
   if(horM.altitude<25)return 0;
-  var raT=target.raH*15*Math.PI/180;
-  var decT=target.decDeg*Math.PI/180;
-  var raM=eqM.ra*15*Math.PI/180;
-  var decM=eqM.dec*Math.PI/180;
+  var raT=target.raH*15*Math.PI/180;var decT=target.decDeg*Math.PI/180;
+  var raM=eqM.ra*15*Math.PI/180;var decM=eqM.dec*Math.PI/180;
   var cosSep=Math.sin(decT)*Math.sin(decM)+Math.cos(decT)*Math.cos(decM)*Math.cos(raT-raM);
   var sepDeg=Math.acos(Math.max(-1,Math.min(1,cosSep)))*180/Math.PI;
   return sepDeg<30?1:0;
 }
-
 function resolveTarget(arg){
   if(typeof arg === 'string'){
-    if(arg === 'Moon'){
-      return {kind:'moon', name:'Luna', body:A.Body.Moon, key:'Moon',
-              url:null, simbad:null, mag:null, distLy:null, massRatio:MOON_MASS_RATIO};
-    }
-    if(PLANET_DATA[arg]){
-      return {kind:'planet', name:PLANET_DATA[arg].name, body:A.Body[arg], key:arg,
-              url:PLANET_DATA[arg].url, simbad:null, mag:null, distLy:null,
-              massRatio:PLANET_DATA[arg].massRatio};
-    }
+    if(arg === 'Moon')return {kind:'moon', name:'Luna', body:A.Body.Moon, key:'Moon', url:null, simbad:null, mag:null, distLy:null, massRatio:MOON_MASS_RATIO};
+    if(PLANET_DATA[arg])return {kind:'planet', name:PLANET_DATA[arg].name, body:A.Body[arg], key:arg, url:PLANET_DATA[arg].url, simbad:null, mag:null, distLy:null, massRatio:PLANET_DATA[arg].massRatio};
   }
   return arg;
 }
-
 function renderNightTargets(obs,tStart,tEnd,planetCandidates,moonInfo,sunState){
   var el=document.getElementById('nightTargets');
   if(!el)return;
@@ -988,8 +850,7 @@ function renderNightTargets(obs,tStart,tEnd,planetCandidates,moonInfo,sunState){
     var cur=currentAltAz(A.Body[p.key],obs,now);
     var observableNow=cur.isUp&&!sunState.isDay;
     out.push({kind:'planet', name:p.name, alt:p.maxAlt, az:p.maxAz, time:p.maxTime, mag:p.mag,
-      distObj:formatDistanceLines(p.distKm,false),
-      massObj:formatMassLines(PLANET_DATA[p.key].massRatio),
+      distObj:formatDistanceLines(p.distKm,false), massObj:formatMassLines(PLANET_DATA[p.key].massRatio),
       url:p.url, extra:getDynamicEyepieceAdvice(p.key,p.maxAlt), source:'Astronomy Engine + EduINAF',
       transit:transit, isUpNow:observableNow, isGeomUp:cur.isUp, raH:0, decDeg:0, desc:resolveTarget(p.key)});
   });
@@ -1000,12 +861,10 @@ function renderNightTargets(obs,tStart,tEnd,planetCandidates,moonInfo,sunState){
       var horNow=A.Horizon(now,obs,s.ra,s.dec,'normal');
       var observNow=horNow.altitude>0&&!sunState.isDay;
       out.push({kind:'star', name:s.name, alt:b.alt, az:b.az, time:b.time, mag:s.mag,
-        distObj:formatDistanceLines(0,true,s.distLy),
-        massObj:formatMassLines(s.massRatio),
+        distObj:formatDistanceLines(0,true,s.distLy), massObj:formatMassLines(s.massRatio),
         url:s.url, extra:'25 mm (81x) per centrare, 15 mm (135x) per osservare', simbad:s.simbad,
         source:'J2000 + SIMBAD', transit:transit, isUpNow:observNow, isGeomUp:horNow.altitude>0, raH:s.ra, decDeg:s.dec,
-        desc:{kind:'star', name:s.name, ra:s.ra, dec:s.dec, mag:s.mag, distLy:s.distLy,
-              massRatio:s.massRatio, url:s.url, simbad:s.simbad}});
+        desc:{kind:'star', name:s.name, ra:s.ra, dec:s.dec, mag:s.mag, distLy:s.distLy, massRatio:s.massRatio, url:s.url, simbad:s.simbad}});
     }
   });
   MESSIER.forEach(function(m){
@@ -1016,12 +875,10 @@ function renderNightTargets(obs,tStart,tEnd,planetCandidates,moonInfo,sunState){
       var observNow=horNow.altitude>0&&!sunState.isDay;
       var simbadUrl='https://simbad.cds.unistra.fr/simbad/sim-id?Ident='+encodeURIComponent(m.id);
       var rec={kind:'deep', name:m.name, alt:b.alt, az:b.az, time:b.time, mag:m.mag,
-        distObj:formatDistanceLines(0,true,m.distLy),
-        massObj:formatMassLines(m.massRatio),
+        distObj:formatDistanceLines(0,true,m.distLy), massObj:formatMassLines(m.massRatio),
         url:m.url, extra:m.mag<=5?'25 mm (81x), poi 15 mm (135x)':'25 mm (81x), cielo buio e visione distolta',
         simbad:simbadUrl, source:'J2000 + SIMBAD', transit:transit, isUpNow:observNow, isGeomUp:horNow.altitude>0, raH:m.ra, decDeg:m.dec,
-        desc:{kind:'deep', name:m.name, ra:m.ra, dec:m.dec, mag:m.mag, distLy:m.distLy,
-              massRatio:m.massRatio, url:m.url, simbad:simbadUrl}};
+        desc:{kind:'deep', name:m.name, ra:m.ra, dec:m.dec, mag:m.mag, distLy:m.distLy, massRatio:m.massRatio, url:m.url, simbad:simbadUrl}};
       rec.moonPenalty=computeMoonPenalty(rec,obs,moonInfo?moonInfo.illumFrac:0);
       out.push(rec);
     }
@@ -1038,11 +895,8 @@ function renderNightTargets(obs,tStart,tEnd,planetCandidates,moonInfo,sunState){
     var transitLine = x.transit ? '<div class="compact-metric">Culmina alle <b>'+fmtTime(x.transit)+'</b></div>' : '';
     return '<div class="target-card" data-kind="'+x.kind+'" data-tidx="'+idx+'">'
       +'<div class="target-head"><span class="target-name">'+escapeHtml(x.name)+'</span><span class="target-score">max '+Math.round(x.alt)+'°</span></div>'
-      +'<div class="target-info">'+infoText+'</div>'
-      + metricsBlockHTML(x.distObj, x.massObj)
-      + transitLine
-      +'<div class="target-c8">C8: '+x.extra+'</div>'
-      + moonWarn
+      +'<div class="target-info">'+infoText+'</div>'+ metricsBlockHTML(x.distObj, x.massObj) + transitLine
+      +'<div class="target-c8">C8: '+x.extra+'</div>'+ moonWarn
       +'<div class="astrolinks">'
       +   '<a href="'+x.url+'" target="_blank" rel="noopener">Scheda ↗</a>'
       +   (x.simbad?'<a href="'+x.simbad+'" target="_blank" rel="noopener">SIMBAD ↗</a>':'')
@@ -1051,24 +905,16 @@ function renderNightTargets(obs,tStart,tEnd,planetCandidates,moonInfo,sunState){
       +'</div>'
       +'<span class="source-pill">'+x.source+'</span></div>';
   }).join('')||'<div class="section-note">Nessun bersaglio del catalogo selezionato supera la quota minima.</div>';
-
   document.querySelectorAll('#nightTargets .target-card').forEach(function(card){
     var idx = parseInt(card.dataset.tidx,10);
-    var item = out[idx];
-    if(!item || !item.desc) return;
-    card.addEventListener('click', function(e){
-      if(e.target.closest('a,button')) return;
-      openCelestialModal(item.desc);
-    });
-    var arBtn = card.querySelector('[data-ar-t]');
-    if(arBtn) arBtn.addEventListener('click', function(e){ e.stopPropagation(); e.preventDefault(); startAR(item.desc); });
-    var radarBtn = card.querySelector('[data-radar-t]');
-    if(radarBtn) radarBtn.addEventListener('click', function(e){ e.stopPropagation(); e.preventDefault(); openRadar(item.desc); });
+    var item = out[idx];if(!item || !item.desc) return;
+    card.addEventListener('click', function(e){if(e.target.closest('a,button')) return;openCelestialModal(item.desc);});
+    var arBtn = card.querySelector('[data-ar-t]');if(arBtn) arBtn.addEventListener('click', function(e){ e.stopPropagation(); e.preventDefault(); startAR(item.desc); });
+    var radarBtn = card.querySelector('[data-radar-t]');if(radarBtn) radarBtn.addEventListener('click', function(e){ e.stopPropagation(); e.preventDefault(); openRadar(item.desc); });
   });
   applyFilterToTargets(activeFilter);
   scheduleFitMetrics();
 }
-
 function compassSVG(azNow,altNow,size){
   var R=size/2-16,cx=size/2,cy=size/2;
   var rings=[0,30,60,90];
@@ -1080,9 +926,7 @@ function compassSVG(azNow,altNow,size){
     var px=cx+r*Math.sin(ang2),py=cy-r*Math.cos(ang2);
     svg+='<line x1="'+cx+'" y1="'+cy+'" x2="'+px.toFixed(1)+'" y2="'+py.toFixed(1)+'" stroke="var(--amber)" stroke-width="1.2" opacity="0.6"/>';
     svg+='<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="7" fill="var(--amber)"/>';
-  } else {
-    svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="rgba(231,76,60,0.08)"/>';
-  }
+  } else {svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="rgba(231,76,60,0.08)"/>';}
   svg+='<circle cx="'+cx+'" cy="'+cy+'" r="2" fill="var(--muted-2)"/></svg>';
   return svg;
 }
@@ -1091,114 +935,54 @@ function moonPhaseSVG(f,waxing,size){
   var svg='<svg width="'+size+'" height="'+size+'" viewBox="0 0 '+size+' '+size+'">';
   svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="#141f30" stroke="var(--line)"/>';
   if(f>0.008){
-    var rx=r*Math.abs(1-2*f);
-    var sweep1=waxing?1:0;
-    var sweep2=(f<0.5)?(1-sweep1):sweep1;
+    var rx=r*Math.abs(1-2*f);var sweep1=waxing?1:0;var sweep2=(f<0.5)?(1-sweep1):sweep1;
     var path='M '+cx+' '+(cy-r)+' A '+r+' '+r+' 0 0 '+sweep1+' '+cx+' '+(cy+r)+' A '+rx.toFixed(2)+' '+r+' 0 0 '+sweep2+' '+cx+' '+(cy-r)+' Z';
     svg+='<path d="'+path+'" fill="var(--amber)"/>';
   }
   svg+='</svg>';
   return svg;
 }
-
-function cleanupRadarIfActive(){
-  if(typeof activeRadarCleanup === 'function'){
-    try{ activeRadarCleanup(); }catch(e){}
-    activeRadarCleanup = null;
-  }
-}
-function closeModal(){
-  cleanupRadarIfActive();
-  var mr=document.getElementById('modalRoot');
-  if(mr)mr.innerHTML='';
-  document.body.classList.remove('modal-open');
-}
+function cleanupRadarIfActive(){if(typeof activeRadarCleanup === 'function'){try{ activeRadarCleanup(); }catch(e){} activeRadarCleanup = null;}}
+function closeModal(){cleanupRadarIfActive();var mr=document.getElementById('modalRoot');if(mr)mr.innerHTML='';document.body.classList.remove('modal-open');}
 function openCelestialModal(arg){
   cleanupRadarIfActive();
   var desc = resolveTarget(arg);
   var obs=new A.Observer(loc.lat,loc.lon,loc.elev);
   var now=new Date();
   var sunState = getSunState(obs, now);
-
   var title = desc.name;
   var facts, guide, radiusKm=null, massText=desc.massRatio||null, url=desc.url||null, simbad=desc.simbad||null;
-  var mag=null, distObj, angDiamStr='--';
-  var cons, horNow, eqNow;
-  var isMoon = (desc.kind==='moon');
-
+  var mag=null, distObj, angDiamStr='--';var cons, horNow, eqNow;var isMoon = (desc.kind==='moon');
   if(desc.body){
     eqNow = A.Equator(desc.body, now, obs, true, true);
     horNow = A.Horizon(now, obs, eqNow.ra, eqNow.dec, 'normal');
     var eqJ2000 = A.Equator(desc.body, now, obs, false, true);
     cons = A.Constellation(eqJ2000.ra, eqJ2000.dec);
-    var illum = A.Illumination(desc.body, now);
-    mag = illum.mag;
-    var kmDist = illum.geo_dist * KM_PER_AU;
-    distObj = formatDistanceLines(kmDist, false);
-    if(isMoon){
-      facts = "Il satellite naturale della Terra.";
-      guide = "Usa il telescopio lungo il terminatore.";
-      radiusKm = 1737.4;
-      var angDiamArcsecMoon = 206264.8*(2*radiusKm)/kmDist;
-      angDiamStr = (angDiamArcsecMoon/60).toFixed(1) + "'";
-    } else {
-      var pd = PLANET_DATA[desc.key];
-      facts = pd.facts;
-      guide = pd.guide;
-      radiusKm = pd.radius;
-      massText = pd.massRatio;
-      url = pd.url;
-      var angDiamArcsec = 206264.8*(2*radiusKm)/kmDist;
-      angDiamStr = angDiamArcsec.toFixed(1) + '"';
-    }
+    var illum = A.Illumination(desc.body, now);mag = illum.mag;
+    var kmDist = illum.geo_dist * KM_PER_AU;distObj = formatDistanceLines(kmDist, false);
+    if(isMoon){facts = "Il satellite naturale della Terra.";guide = "Usa il telescopio lungo il terminatore.";radiusKm = 1737.4;var angDiamArcsecMoon = 206264.8*(2*radiusKm)/kmDist;angDiamStr = (angDiamArcsecMoon/60).toFixed(1) + "'";}
+    else{var pd = PLANET_DATA[desc.key];facts = pd.facts;guide = pd.guide;radiusKm = pd.radius;massText = pd.massRatio;url = pd.url;var angDiamArcsec = 206264.8*(2*radiusKm)/kmDist;angDiamStr = angDiamArcsec.toFixed(1) + '"';}
   } else {
     eqNow = { ra: desc.ra, dec: desc.dec };
     horNow = A.Horizon(now, obs, eqNow.ra, eqNow.dec, 'normal');
-    cons = A.Constellation(desc.ra, desc.dec);
-    mag = desc.mag;
-    distObj = formatDistanceLines(0, true, desc.distLy);
-    if(desc.kind === 'star'){
-      facts = "Stella del catalogo.";
-      guide = "Inizia col 25mm (81x) per centrare, poi passa a 135x se il seeing lo permette.";
-    } else {
-      facts = "Oggetto del catalogo Messier.";
-      guide = "Usa bassi ingrandimenti (25mm, 81x) per il campo, alza solo se il cielo è buio e trasparente.";
-    }
+    cons = A.Constellation(desc.ra, desc.dec);mag = desc.mag;distObj = formatDistanceLines(0, true, desc.distLy);
+    if(desc.kind === 'star'){facts = "Stella del catalogo.";guide = "Inizia col 25mm (81x) per centrare, poi passa a 135x se il seeing lo permette.";}
+    else{facts = "Oggetto del catalogo Messier.";guide = "Usa bassi ingrandimenti (25mm, 81x) per il campo, alza solo se il cielo è buio e trasparente.";}
   }
-
   var massObj = formatMassLines(massText);
   var win = getNightWindow(obs, activeDate);
   var transit;
-  if(desc.body){
-    var bodyKey = isMoon ? 'Moon' : desc.key;
-    transit = findTransitTime(bodyKey, 0, obs, win.start, win.end);
-  } else {
-    transit = findTransitTime(null, desc.ra, obs, win.start, win.end);
-  }
-
-  var observableNow = horNow.altitude > 0 && !sunState.isDay;
+  if(desc.body){var bodyKey = isMoon ? 'Moon' : desc.key;transit = findTransitTime(bodyKey, 0, obs, win.start, win.end);}
+  else {transit = findTransitTime(null, desc.ra, obs, win.start, win.end);}
   var posTxt;
-  if(horNow.altitude <= 0){
-    posTxt = 'In questo momento si trova <b>sotto l\'orizzonte</b> (azimut '+compassDir(horNow.azimuth)+' '+Math.round(horNow.azimuth)+'°).';
-  } else if(sunState.isDay){
-    posTxt = 'Geometricamente è a <b>'+Math.round(horNow.altitude)+'°</b> sopra l\'orizzonte verso <b>'+compassDir(horNow.azimuth)+'</b>, ma <b>in pieno giorno non è osservabile</b>.';
-  } else {
-    posTxt = 'In questo momento è a <b>'+compassDir(horNow.azimuth)+'</b> ('+Math.round(horNow.azimuth)+'°), a <b>'+Math.round(horNow.altitude)+'°</b> sopra l\'orizzonte ed è <b>osservabile</b>.';
-  }
-
+  if(horNow.altitude <= 0)posTxt = 'In questo momento si trova <b>sotto l\'orizzonte</b> (azimut '+compassDir(horNow.azimuth)+' '+Math.round(horNow.azimuth)+'°).';
+  else if(sunState.isDay)posTxt = 'Geometricamente è a <b>'+Math.round(horNow.altitude)+'°</b> sopra l\'orizzonte verso <b>'+compassDir(horNow.azimuth)+'</b>, ma <b>in pieno giorno non è osservabile</b>.';
+  else posTxt = 'In questo momento è a <b>'+compassDir(horNow.azimuth)+'</b> ('+Math.round(horNow.azimuth)+'°), a <b>'+Math.round(horNow.altitude)+'°</b> sopra l\'orizzonte ed è <b>osservabile</b>.';
   var moonImg="",moonCap="";
-  if(isMoon){
-    var phaseAngle=A.MoonPhase(now);
-    var illumM = A.Illumination(A.Body.Moon, now);
-    var fMoon=illumM.phase_fraction;
-    moonImg='<div class="moon-phase-svg-wrap">'+moonPhaseSVG(fMoon,phaseAngle<180,170)+'</div>';
-    moonCap='<div class="moon-phase-caption">Fase attuale · '+Math.round(fMoon*100)+'% illuminata</div>';
-  }
-
+  if(isMoon){var phaseAngle=A.MoonPhase(now);var illumM = A.Illumination(A.Body.Moon, now);var fMoon=illumM.phase_fraction;moonImg='<div class="moon-phase-svg-wrap">'+moonPhaseSVG(fMoon,phaseAngle<180,170)+'</div>';moonCap='<div class="moon-phase-caption">Fase attuale · '+Math.round(fMoon*100)+'% illuminata</div>';}
   var distLine = distObj.value + (distObj.note ? ' <span style="color:var(--muted-2);font-size:0.9em">'+distObj.note+'</span>' : '');
   var massLine = massObj.value + (massObj.note ? ' <span style="color:var(--muted-2);font-size:0.9em">'+massObj.note+'</span>' : '');
   var simbadRow = simbad ? '<div class="datarow"><span>SIMBAD</span><b><a href="'+simbad+'" target="_blank" rel="noopener" style="color:var(--cyan)">Apri ↗</a></b></div>' : '';
-
   var html='<div class="modal-backdrop" id="modalBackdrop"><div class="modal-sheet">'
     +'<div class="mtop"><h3>'+escapeHtml(title)+'</h3><button type="button" class="mclose" id="modalClose">&times;</button></div>'
     +moonImg+moonCap
@@ -1212,8 +996,7 @@ function openCelestialModal(arg){
     +'<div class="datarow"><span>Diametro apparente</span><b>'+angDiamStr+'</b></div>'
     +'<div class="datarow"><span>Distanza</span><b>'+distLine+'</b></div>'
     +'<div class="datarow"><span>Massa rispetto alla Terra</span><b>'+massLine+'</b></div>'
-    +'<div class="datarow"><span>Culminazione</span><b>'+(transit?fmtTime(transit):'--:--')+'</b></div>'
-    +simbadRow
+    +'<div class="datarow"><span>Culminazione</span><b>'+(transit?fmtTime(transit):'--:--')+'</b></div>'+simbadRow
     +'</div>'
     +'<button type="button" class="arbtn" id="btnAR">📷 PUNTA CON LA FOTOCAMERA (AR)</button>'
     +'<button type="button" class="radarbtn" id="btnRadarFromModal">🧭 APRI RADAR</button>'
@@ -1226,14 +1009,9 @@ function openCelestialModal(arg){
   document.getElementById('btnAR').addEventListener('click',function(){startAR(desc);});
   document.getElementById('btnRadarFromModal').addEventListener('click',function(){openRadar(desc);});
 }
-
 function stopAR(){
   if(arState.stream){arState.stream.getTracks().forEach(function(t){t.stop();});arState.stream=null;}
-  if(arState.headingHandler){
-    window.removeEventListener('deviceorientationabsolute',arState.headingHandler,true);
-    window.removeEventListener('deviceorientation',arState.headingHandler,true);
-    arState.headingHandler=null;
-  }
+  if(arState.headingHandler){window.removeEventListener('deviceorientationabsolute',arState.headingHandler,true);window.removeEventListener('deviceorientation',arState.headingHandler,true);arState.headingHandler=null;}
   if(arState.timer){clearInterval(arState.timer);arState.timer=null;}
   var v=document.getElementById('arRoot');if(v)v.remove();
 }
@@ -1250,175 +1028,81 @@ function startAR(arg){
     +'<div class="ar-arrow" id="arArrow" style="display:none"></div>';
   document.body.appendChild(root);
   document.getElementById('arClose').addEventListener('click',stopAR);
-  document.getElementById('arDebugToggle').addEventListener('click',function(){
-    var d=document.getElementById('arDebug'); if(d) d.classList.toggle('hidden');
-  });
+  document.getElementById('arDebugToggle').addEventListener('click',function(){var d=document.getElementById('arDebug'); if(d) d.classList.toggle('hidden');});
   phonePitch=null; phoneHeading=null;
   phoneRawAlpha=null; phoneRawBeta=null; phoneRawGamma=null;
-
   function onOrientation(e){
     phoneRawAlpha = (typeof e.alpha==='number')?e.alpha:null;
     phoneRawBeta  = (typeof e.beta ==='number')?e.beta :null;
     phoneRawGamma = (typeof e.gamma==='number')?e.gamma:null;
-    if(e.webkitCompassHeading!==undefined && e.webkitCompassHeading!==null){
-      phoneHeading=(e.webkitCompassHeading + MAGNETIC_DECLINATION + 360) % 360;
-    } else if(e.alpha!==null && e.alpha!==undefined){
-      if(phoneHeading===null || e.absolute){
-        phoneHeading=((360-e.alpha) + MAGNETIC_DECLINATION + 360) % 360;
-      }
-    }
-    if(typeof e.beta==='number' && !isNaN(e.beta)){
-      var p = Math.abs(e.beta) - 90;
-      if(p<-90) p=-90;
-      if(p>90)  p=90;
-      phonePitch=p;
-    }
+    if(e.webkitCompassHeading!==undefined && e.webkitCompassHeading!==null){phoneHeading=(e.webkitCompassHeading + MAGNETIC_DECLINATION + 360) % 360;}
+    else if(e.alpha!==null && e.alpha!==undefined){if(phoneHeading===null || e.absolute){phoneHeading=((360-e.alpha) + MAGNETIC_DECLINATION + 360) % 360;}}
+    if(typeof e.beta==='number' && !isNaN(e.beta)){var p = Math.abs(e.beta) - 90;if(p<-90) p=-90;if(p>90)  p=90;phonePitch=p;}
   }
   function setMsg(txt){var m=document.getElementById('arMsg');if(m){m.style.display='block';m.innerHTML=txt;}}
-
   document.getElementById('arCalibBtn').addEventListener('click',function(){
     if(phoneHeading===null || phonePitch===null){toast('Sensori non ancora pronti.',2000);return;}
-    var obs=new A.Observer(loc.lat,loc.lon,loc.elev);
-    var now=new Date();
-    var hor;
+    var obs=new A.Observer(loc.lat,loc.lon,loc.elev);var now=new Date();var hor;
     if(desc.body){var eq=A.Equator(desc.body,now,obs,true,true);hor=A.Horizon(now,obs,eq.ra,eq.dec,'normal');}
     else{hor=A.Horizon(now,obs,desc.ra,desc.dec,'normal');}
-    var rawDiffAz = ((hor.azimuth - phoneHeading + 540)%360)-180;
-    var rawDiffAlt = hor.altitude - phonePitch;
-    arCalibAz = rawDiffAz;
-    arCalibAlt = rawDiffAlt;
-    safeSet('astroalert_ar_calib_az', arCalibAz.toFixed(3));
-    safeSet('astroalert_ar_calib_alt', arCalibAlt.toFixed(3));
+    var rawDiffAz = ((hor.azimuth - phoneHeading + 540)%360)-180;var rawDiffAlt = hor.altitude - phonePitch;
+    arCalibAz = rawDiffAz;arCalibAlt = rawDiffAlt;
+    safeSet('astroalert_ar_calib_az', arCalibAz.toFixed(3));safeSet('astroalert_ar_calib_alt', arCalibAlt.toFixed(3));
     toast('Calibrazione: az '+arCalibAz.toFixed(1)+'° · alt '+arCalibAlt.toFixed(1)+'°',2800);
   });
-  document.getElementById('arCalibResetBtn').addEventListener('click',function(){
-    arCalibAz=0; arCalibAlt=0;
-    safeSet('astroalert_ar_calib_az','0');
-    safeSet('astroalert_ar_calib_alt','0');
-    toast('Calibrazione azzerata.',2000);
-  });
-
+  document.getElementById('arCalibResetBtn').addEventListener('click',function(){arCalibAz=0; arCalibAlt=0;safeSet('astroalert_ar_calib_az','0');safeSet('astroalert_ar_calib_alt','0');toast('Calibrazione azzerata.',2000);});
   function startSensorsAndCamera(){
     if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){setMsg('Accesso alla fotocamera non disponibile.');return;}
     setMsg('Richiesta autorizzazione fotocamera...');
     navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false})
     .then(function(stream){
-      arState.stream=stream;
-      setMsg('Puntamento attivo. Inquadra il cielo...');
-      var video=document.createElement('video');
-      video.setAttribute('playsinline','');video.autoplay=true;video.muted=true;video.srcObject=stream;
-      root.insertBefore(video,root.firstChild);
-      video.play().catch(function(){});
-      var label=document.createElement('div');label.className='arlabel';
-      root.appendChild(label);
-      var searchEl=document.getElementById('arSearch');
-      var arrowEl=document.getElementById('arArrow');
+      arState.stream=stream;setMsg('Puntamento attivo. Inquadra il cielo...');
+      var video=document.createElement('video');video.setAttribute('playsinline','');video.autoplay=true;video.muted=true;video.srcObject=stream;
+      root.insertBefore(video,root.firstChild);video.play().catch(function(){});
+      var label=document.createElement('div');label.className='arlabel';root.appendChild(label);
+      var searchEl=document.getElementById('arSearch');var arrowEl=document.getElementById('arArrow');
       if(searchEl)searchEl.style.display='block';
-
       arState.headingHandler=onOrientation;
-      window.addEventListener('deviceorientationabsolute',onOrientation,true);
-      window.addEventListener('deviceorientation',onOrientation,true);
-
-      var HFOV=65, VFOV=50, ticks=0;
-      var LOCK_TOL=6;
-      var targetName=desc.name;
-
+      window.addEventListener('deviceorientationabsolute',onOrientation,true);window.addEventListener('deviceorientation',onOrientation,true);
+      var HFOV=65, VFOV=50, ticks=0;var LOCK_TOL=6;var targetName=desc.name;
       arState.timer=setInterval(function(){
         ticks++;
-        var obs=new A.Observer(loc.lat,loc.lon,loc.elev);
-        var now=new Date();
-        var hor;
+        var obs=new A.Observer(loc.lat,loc.lon,loc.elev);var now=new Date();var hor;
         if(desc.body){var eq=A.Equator(desc.body,now,obs,true,true);hor=A.Horizon(now,obs,eq.ra,eq.dec,'normal');}
         else{hor=A.Horizon(now,obs,desc.ra,desc.dec,'normal');}
-
-        if(phoneHeading===null){
-          if(ticks>8)setMsg('In attesa della bussola... Calibra muovendo il telefono a forma di 8.');
-          if(searchEl)searchEl.style.display='none';
-          if(arrowEl)arrowEl.style.display='none';
-          label.innerHTML='';
-          return;
-        }
-        if(hor.altitude<0){
-          setMsg('<b>'+targetName+'</b> è sotto l\'orizzonte.');
-          if(searchEl)searchEl.style.display='none';
-          if(arrowEl)arrowEl.style.display='none';
-          label.innerHTML='';
-          return;
-        }
-        var effHeading = ((phoneHeading + arCalibAz) % 360 + 360) % 360;
-        var effPitch = (phonePitch!==null ? phonePitch : 0) + arCalibAlt;
-        var diffAz = ((hor.azimuth - effHeading + 540) % 360) - 180;
-        var diffAlt = hor.altitude - effPitch;
-        var HALF_H=HFOV/2, HALF_V=VFOV/2;
-        var cosAlt=Math.cos(hor.altitude*Math.PI/180);
-        if(cosAlt<0.05)cosAlt=0.05;
-        var diffAzScaled=diffAz*cosAlt;
-        var errTotal=Math.sqrt(diffAzScaled*diffAzScaled + diffAlt*diffAlt);
-        var inFov=(errTotal < LOCK_TOL);
-
+        if(phoneHeading===null){if(ticks>8)setMsg('In attesa della bussola... Calibra muovendo il telefono a forma di 8.');if(searchEl)searchEl.style.display='none';if(arrowEl)arrowEl.style.display='none';label.innerHTML='';return;}
+        if(hor.altitude<0){setMsg('<b>'+targetName+'</b> è sotto l\'orizzonte.');if(searchEl)searchEl.style.display='none';if(arrowEl)arrowEl.style.display='none';label.innerHTML='';return;}
+        var effHeading = ((phoneHeading + arCalibAz) % 360 + 360) % 360;var effPitch = (phonePitch!==null ? phonePitch : 0) + arCalibAlt;
+        var diffAz = ((hor.azimuth - effHeading + 540) % 360) - 180;var diffAlt = hor.altitude - effPitch;
+        var HALF_H=HFOV/2, HALF_V=VFOV/2;var cosAlt=Math.cos(hor.altitude*Math.PI/180);if(cosAlt<0.05)cosAlt=0.05;
+        var diffAzScaled=diffAz*cosAlt;var errTotal=Math.sqrt(diffAzScaled*diffAzScaled + diffAlt*diffAlt);var inFov=(errTotal < LOCK_TOL);
         var dbgEl=document.getElementById('arDebug');
         if(dbgEl && !dbgEl.classList.contains('hidden')){
           var f1=function(v){return (v===null||v===undefined||isNaN(v))?'--':(v*1).toFixed(1);};
-          dbgEl.textContent =
-            'heading   '+f1(phoneHeading)+'°  (raw α '+f1(phoneRawAlpha)+')'+'\n'+
-            'pitch     '+f1(phonePitch)+'°  (raw β '+f1(phoneRawBeta)+', γ '+f1(phoneRawGamma)+')'+'\n'+
-            'target    az '+f1(hor.azimuth)+'°  alt '+f1(hor.altitude)+'°'+'\n'+
-            'diffAz    '+f1(diffAz)+'°  (scaled '+f1(diffAzScaled)+'°)'+'\n'+
-            'diffAlt   '+f1(diffAlt)+'°'+'\n'+
-            'errTotal  '+f1(errTotal)+'°  (LOCK '+LOCK_TOL+'°)'+'\n'+
-            'calib     az '+f1(arCalibAz)+'°  alt '+f1(arCalibAlt)+'°'+'\n'+
-            'decl      '+MAGNETIC_DECLINATION.toFixed(2)+'°';
+          dbgEl.textContent ='heading   '+f1(phoneHeading)+'°  (raw α '+f1(phoneRawAlpha)+')\n'+'pitch     '+f1(phonePitch)+'°  (raw β '+f1(phoneRawBeta)+', γ '+f1(phoneRawGamma)+')\n'+'target    az '+f1(hor.azimuth)+'°  alt '+f1(hor.altitude)+'°\n'+'diffAz    '+f1(diffAz)+'°  (scaled '+f1(diffAzScaled)+'°)\n'+'diffAlt   '+f1(diffAlt)+'°\n'+'errTotal  '+f1(errTotal)+'°  (LOCK '+LOCK_TOL+'°)\n'+'calib     az '+f1(arCalibAz)+'°  alt '+f1(arCalibAlt)+'°\n'+'decl      '+MAGNETIC_DECLINATION.toFixed(2)+'°';
         }
-
-        var rawX=50+(diffAzScaled/HALF_H)*45;
-        var rawY=50-(diffAlt/HALF_V)*45;
-        var cx=Math.max(12,Math.min(88,rawX));
-        var cy=Math.max(14,Math.min(86,rawY));
-
-        if(searchEl){
-          searchEl.style.display='block';
-          searchEl.style.left=cx+'%';
-          searchEl.style.top=cy+'%';
-          if(inFov)searchEl.classList.add('locked');
-          else searchEl.classList.remove('locked');
-        }
+        var rawX=50+(diffAzScaled/HALF_H)*45;var rawY=50-(diffAlt/HALF_V)*45;
+        var cx=Math.max(12,Math.min(88,rawX));var cy=Math.max(14,Math.min(86,rawY));
+        if(searchEl){searchEl.style.display='block';searchEl.style.left=cx+'%';searchEl.style.top=cy+'%';if(inFov)searchEl.classList.add('locked');else searchEl.classList.remove('locked');}
         var msgEl=document.getElementById('arMsg');
-        if(inFov){
-          if(msgEl)msgEl.style.display='none';
-          if(arrowEl)arrowEl.style.display='none';
-          label.innerHTML=targetName+' · '+Math.round(hor.altitude)+'°  <span style="color:var(--green);font-size:13px">OK ±'+Math.round(errTotal)+'°</span>';
-        } else {
-          if(msgEl)msgEl.style.display='none';
-          var hints=[];
+        if(inFov){if(msgEl)msgEl.style.display='none';if(arrowEl)arrowEl.style.display='none';label.innerHTML=targetName+' · '+Math.round(hor.altitude)+'°  <span style="color:var(--green);font-size:13px">OK ±'+Math.round(errTotal)+'°</span>';}
+        else{ if(msgEl)msgEl.style.display='none';var hints=[];
           if(Math.abs(diffAz)>=HALF_H)hints.push(diffAz>0?'Gira a destra →':'← Gira a sinistra');
           else if(Math.abs(diffAz)>=LOCK_TOL)hints.push(diffAz>0?'→ destra':'← sinistra');
           if(Math.abs(diffAlt)>=HALF_V)hints.push(diffAlt>0?'↑ Alza':'↓ Abbassa');
           else if(Math.abs(diffAlt)>=LOCK_TOL)hints.push(diffAlt>0?'↑ alza':'↓ abbassa');
-          if(arrowEl){
-            arrowEl.style.display=hints.length?'block':'none';
-            arrowEl.textContent=hints.join('   ');
-          }
+          if(arrowEl){arrowEl.style.display=hints.length?'block':'none';arrowEl.textContent=hints.join('   ');}
           label.innerHTML='';
         }
       },300);
-    }).catch(function(){
-      setMsg('Permesso fotocamera non concesso o dispositivo occupato.');
-    });
+    }).catch(function(){setMsg('Permesso fotocamera non concesso o dispositivo occupato.');});
   }
-
   if(typeof DeviceOrientationEvent!=='undefined' && typeof DeviceOrientationEvent.requestPermission==='function'){
-    DeviceOrientationEvent.requestPermission().then(function(res){
-      if(res==='granted')startSensorsAndCamera();
-      else setMsg('Permesso bussola negato.');
-    }).catch(startSensorsAndCamera);
-  } else {
-    startSensorsAndCamera();
-  }
+    DeviceOrientationEvent.requestPermission().then(function(res){if(res==='granted')startSensorsAndCamera();else setMsg('Permesso bussola negato.');}).catch(startSensorsAndCamera);
+  } else {startSensorsAndCamera();}
 }
-
 function radarSVG(size, targets, phoneHeading, highlightName){
-  var cx = size/2, cy = size/2;
-  var R = size/2 - 30;
+  var cx = size/2, cy = size/2;var R = size/2 - 30;
   var svg = '<svg viewBox="0 0 '+size+' '+size+'" width="'+size+'" height="'+size+'">';
   svg += '<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="rgba(15,24,40,0.75)" stroke="var(--line)" stroke-width="1.5"/>';
   var altRings = [{alt:0},{alt:30},{alt:60}];
@@ -1430,43 +1114,27 @@ function radarSVG(size, targets, phoneHeading, highlightName){
   svg += '<circle cx="'+cx+'" cy="'+cy+'" r="2" fill="var(--muted-2)"/>';
   var cards = [['N',0],['E',90],['S',180],['O',270]];
   cards.forEach(function(c){
-    var ang = c[1] * Math.PI / 180;
-    var x1 = cx + (R-4) * Math.sin(ang);
-    var y1 = cy - (R-4) * Math.cos(ang);
-    var x2 = cx + R * Math.sin(ang);
-    var y2 = cy - R * Math.cos(ang);
+    var ang = c[1] * Math.PI / 180;var x1 = cx + (R-4) * Math.sin(ang);var y1 = cy - (R-4) * Math.cos(ang);
+    var x2 = cx + R * Math.sin(ang);var y2 = cy - R * Math.cos(ang);
     svg += '<line x1="'+x1.toFixed(1)+'" y1="'+y1.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'" stroke="var(--muted)" stroke-width="1.5"/>';
-    var tx = cx + (R+16) * Math.sin(ang);
-    var ty = cy - (R+16) * Math.cos(ang) + 5;
+    var tx = cx + (R+16) * Math.sin(ang);var ty = cy - (R+16) * Math.cos(ang) + 5;
     svg += '<text x="'+tx.toFixed(1)+'" y="'+ty.toFixed(1)+'" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="var(--amber)">'+c[0]+'</text>';
   });
   if(phoneHeading !== null && phoneHeading !== undefined && isFinite(phoneHeading)){
-    var hAng = phoneHeading * Math.PI / 180;
-    var hx = cx + (R-2) * Math.sin(hAng);
-    var hy = cy - (R-2) * Math.cos(hAng);
+    var hAng = phoneHeading * Math.PI / 180;var hx = cx + (R-2) * Math.sin(hAng);var hy = cy - (R-2) * Math.cos(hAng);
     svg += '<line x1="'+cx+'" y1="'+cy+'" x2="'+hx.toFixed(1)+'" y2="'+hy.toFixed(1)+'" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-dasharray="4,3"/>';
     svg += '<circle cx="'+hx.toFixed(1)+'" cy="'+hy.toFixed(1)+'" r="5" fill="rgba(255,255,255,0.55)" stroke="#fff" stroke-width="1.5"/>';
   }
   targets.forEach(function(t, idx){
     if(t.alt <= 0) return;
-    var rr = R * (1 - Math.min(90, t.alt)/90);
-    var ang = t.az * Math.PI / 180;
-    var px = cx + rr * Math.sin(ang);
-    var py = cy - rr * Math.cos(ang);
-    var color = t.kind==='planet'?'var(--amber)'
-              : t.kind==='moon'?'#ffffff'
-              : t.kind==='star'?'var(--cyan)'
-              : 'var(--green)';
+    var rr = R * (1 - Math.min(90, t.alt)/90);var ang = t.az * Math.PI / 180;
+    var px = cx + rr * Math.sin(ang);var py = cy - rr * Math.cos(ang);
+    var color = t.kind==='planet'?'var(--amber)':t.kind==='moon'?'#ffffff':t.kind==='star'?'var(--cyan)':'var(--green)';
     var r = t.kind==='moon'?7:(t.mag!==null&&t.mag<=1?6:5);
     var isHi = highlightName && t.name===highlightName;
     svg += '<g class="radar-dot" data-idx="'+idx+'" style="cursor:pointer">';
     svg += '<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="'+(r+10)+'" fill="transparent"/>';
-    if(isHi){
-      svg += '<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="'+(r+4)+'" fill="none" stroke="'+color+'" stroke-width="2" opacity="0.9">'
-          +  '<animate attributeName="r" values="'+(r+3)+';'+(r+11)+';'+(r+3)+'" dur="1.6s" repeatCount="indefinite"/>'
-          +  '<animate attributeName="opacity" values="0.95;0.15;0.95" dur="1.6s" repeatCount="indefinite"/>'
-          +  '</circle>';
-    }
+    if(isHi){svg += '<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="'+(r+4)+'" fill="none" stroke="'+color+'" stroke-width="2" opacity="0.9"><animate attributeName="r" values="'+(r+3)+';'+(r+11)+';'+(r+3)+'" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.95;0.15;0.95" dur="1.6s" repeatCount="indefinite"/></circle>';}
     svg += '<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="'+r+'" fill="'+color+'" stroke="#070c16" stroke-width="1.5"/>';
     if(t.kind==='moon' || t.kind==='planet' || isHi){
       var lblY = (py < cy) ? (py - r - 4) : (py + r + 12);
@@ -1479,99 +1147,43 @@ function radarSVG(size, targets, phoneHeading, highlightName){
 }
 function openRadar(highlightDesc){
   cleanupRadarIfActive();
-  var obs = new A.Observer(loc.lat, loc.lon, loc.elev);
-  var now = new Date();
-  var targets = [];
-  try{
-    var moonEq = A.Equator(A.Body.Moon, now, obs, true, true);
-    var moonHor = A.Horizon(now, obs, moonEq.ra, moonEq.dec, 'normal');
-    var moonIllum = A.Illumination(A.Body.Moon, now);
-    targets.push({kind:'moon', name:'Luna', az:moonHor.azimuth, alt:moonHor.altitude, mag:moonIllum.mag, desc:resolveTarget('Moon')});
-  }catch(e){}
-  Object.keys(PLANET_DATA).forEach(function(k){
-    try{
-      var eq = A.Equator(A.Body[k], now, obs, true, true);
-      var hor = A.Horizon(now, obs, eq.ra, eq.dec, 'normal');
-      var illum = A.Illumination(A.Body[k], now);
-      targets.push({kind:'planet', name:PLANET_DATA[k].name, az:hor.azimuth, alt:hor.altitude, mag:illum.mag, desc:resolveTarget(k)});
-    }catch(e){}
-  });
-  STAR_CATALOG.forEach(function(s){
-    try{
-      var hor = A.Horizon(now, obs, s.ra, s.dec, 'normal');
-      targets.push({kind:'star', name:s.name, az:hor.azimuth, alt:hor.altitude, mag:s.mag,
-        desc:{kind:'star', name:s.name, ra:s.ra, dec:s.dec, mag:s.mag, distLy:s.distLy,
-              massRatio:s.massRatio, url:s.url, simbad:s.simbad}});
-    }catch(e){}
-  });
-  MESSIER.forEach(function(m){
-    try{
-      var hor = A.Horizon(now, obs, m.ra, m.dec, 'normal');
-      var simbadUrl='https://simbad.cds.unistra.fr/simbad/sim-id?Ident='+encodeURIComponent(m.id);
-      targets.push({kind:'deep', name:m.name, az:hor.azimuth, alt:hor.altitude, mag:m.mag,
-        desc:{kind:'deep', name:m.name, ra:m.ra, dec:m.dec, mag:m.mag, distLy:m.distLy,
-              massRatio:m.massRatio, url:m.url, simbad:simbadUrl}});
-    }catch(e){}
-  });
+  var obs = new A.Observer(loc.lat, loc.lon, loc.elev);var now = new Date();var targets = [];
+  try{var moonEq = A.Equator(A.Body.Moon, now, obs, true, true);var moonHor = A.Horizon(now, obs, moonEq.ra, moonEq.dec, 'normal');var moonIllum = A.Illumination(A.Body.Moon, now);targets.push({kind:'moon', name:'Luna', az:moonHor.azimuth, alt:moonHor.altitude, mag:moonIllum.mag, desc:resolveTarget('Moon')});}catch(e){}
+  Object.keys(PLANET_DATA).forEach(function(k){try{var eq = A.Equator(A.Body[k], now, obs, true, true);var hor = A.Horizon(now, obs, eq.ra, eq.dec, 'normal');var illum = A.Illumination(A.Body[k], now);targets.push({kind:'planet', name:PLANET_DATA[k].name, az:hor.azimuth, alt:hor.altitude, mag:illum.mag, desc:resolveTarget(k)});}catch(e){}});
+  STAR_CATALOG.forEach(function(s){try{var hor = A.Horizon(now, obs, s.ra, s.dec, 'normal');targets.push({kind:'star', name:s.name, az:hor.azimuth, alt:hor.altitude, mag:s.mag, desc:{kind:'star', name:s.name, ra:s.ra, dec:s.dec, mag:s.mag, distLy:s.distLy, massRatio:s.massRatio, url:s.url, simbad:s.simbad}});}catch(e){}});
+  MESSIER.forEach(function(m){try{var hor = A.Horizon(now, obs, m.ra, m.dec, 'normal');var simbadUrl='https://simbad.cds.unistra.fr/simbad/sim-id?Ident='+encodeURIComponent(m.id);targets.push({kind:'deep', name:m.name, az:hor.azimuth, alt:hor.altitude, mag:m.mag, desc:{kind:'deep', name:m.name, ra:m.ra, dec:m.dec, mag:m.mag, distLy:m.distLy, massRatio:m.massRatio, url:m.url, simbad:simbadUrl}});}catch(e){}});
   var highlightName = highlightDesc ? highlightDesc.name : null;
   var html = '<div class="modal-backdrop" id="radarBackdrop"><div class="modal-sheet radar-sheet">'
     + '<div class="mtop"><h3>🧭 Radar del cielo</h3><button type="button" class="mclose" id="radarClose">&times;</button></div>'
     + '<div class="section-note" style="margin-top:0">Centro = <b>zenit</b> (90°). Bordo = <b>orizzonte</b> (0°). Tocca un pallino per la scheda.</div>'
     + '<div class="radar-wrap" id="radarWrap"></div>'
-    + '<div class="radar-legend">'
-    +   '<span><i style="background:#fff"></i>Luna</span>'
-    +   '<span><i style="background:var(--amber)"></i>Pianeti</span>'
-    +   '<span><i style="background:var(--cyan)"></i>Stelle</span>'
-    +   '<span><i style="background:var(--green)"></i>Deep sky</span>'
-    + '</div>'
+    + '<div class="radar-legend"><span><i style="background:#fff"></i>Luna</span><span><i style="background:var(--amber)"></i>Pianeti</span><span><i style="background:var(--cyan)"></i>Stelle</span><span><i style="background:var(--green)"></i>Deep sky</span></div>'
     + '<div class="radar-hint" id="radarCount"></div>'
     + '</div></div>';
   document.getElementById('modalRoot').innerHTML = html;
   document.body.classList.add('modal-open');
-
   var lastRenderedHeading = null;
   function radarOrientation(e){
-    if(e.webkitCompassHeading!==undefined && e.webkitCompassHeading!==null){
-      phoneHeading=(e.webkitCompassHeading + MAGNETIC_DECLINATION + 360) % 360;
-    } else if(e.alpha!==null && e.alpha!==undefined){
-      if(phoneHeading===null || e.absolute){
-        phoneHeading=((360-e.alpha) + MAGNETIC_DECLINATION + 360) % 360;
-      }
-    }
+    if(e.webkitCompassHeading!==undefined && e.webkitCompassHeading!==null){phoneHeading=(e.webkitCompassHeading + MAGNETIC_DECLINATION + 360) % 360;}
+    else if(e.alpha!==null && e.alpha!==undefined){if(phoneHeading===null || e.absolute){phoneHeading=((360-e.alpha) + MAGNETIC_DECLINATION + 360) % 360;}}
   }
-  window.addEventListener('deviceorientationabsolute', radarOrientation, true);
-  window.addEventListener('deviceorientation', radarOrientation, true);
-
+  window.addEventListener('deviceorientationabsolute', radarOrientation, true);window.addEventListener('deviceorientation', radarOrientation, true);
   function render(){
-    var w = document.getElementById('radarWrap');
-    if(!w) return;
+    var w = document.getElementById('radarWrap');if(!w) return;
     var size = Math.min(window.innerWidth - 24, 440);
     var heading = (phoneHeading !== null) ? ((phoneHeading + arCalibAz) % 360 + 360) % 360 : null;
     if(heading !== null && lastRenderedHeading !== null && Math.abs(heading - lastRenderedHeading) < 2) return;
     lastRenderedHeading = heading;
     w.innerHTML = radarSVG(size, targets, heading, highlightName);
     var visCount = targets.filter(function(t){return t.alt>0;}).length;
-    var countEl = document.getElementById('radarCount');
-    if(countEl) countEl.textContent = visCount + ' bersagli sopra l\'orizzonte · ' + targets.length + ' totali';
-    w.querySelectorAll('.radar-dot').forEach(function(el){
-      el.addEventListener('click', function(){
-        var idx = parseInt(el.dataset.idx,10);
-        var t = targets[idx];
-        if(t && t.desc){
-          closeRadar();
-          openCelestialModal(t.desc);
-        }
-      });
-    });
+    var countEl = document.getElementById('radarCount');if(countEl) countEl.textContent = visCount + ' bersagli sopra l\'orizzonte · ' + targets.length + ' totali';
+    w.querySelectorAll('.radar-dot').forEach(function(el){el.addEventListener('click', function(){var idx = parseInt(el.dataset.idx,10);var t = targets[idx];if(t && t.desc){closeRadar();openCelestialModal(t.desc);}});});
   }
-
   var timer = null;
   function closeRadar(){
     if(timer) clearInterval(timer);
-    window.removeEventListener('deviceorientationabsolute', radarOrientation, true);
-    window.removeEventListener('deviceorientation', radarOrientation, true);
-    var mr = document.getElementById('modalRoot');
-    if(mr) mr.innerHTML='';
+    window.removeEventListener('deviceorientationabsolute', radarOrientation, true);window.removeEventListener('deviceorientation', radarOrientation, true);
+    var mr = document.getElementById('modalRoot');if(mr) mr.innerHTML='';
     document.body.classList.remove('modal-open');
     activeRadarCleanup = null;
   }
@@ -1579,25 +1191,18 @@ function openRadar(highlightDesc){
   render();
   timer = setInterval(render, 700);
   document.getElementById('radarClose').addEventListener('click', closeRadar);
-  document.getElementById('radarBackdrop').addEventListener('click', function(e){
-    if(e.target.id === 'radarBackdrop') closeRadar();
-  });
+  document.getElementById('radarBackdrop').addEventListener('click', function(e){if(e.target.id === 'radarBackdrop') closeRadar();});
 }
-
 function initMoonTabs(){
   if(document.body.dataset.moonTabsBound === '1') return;
   document.body.dataset.moonTabsBound = '1';
   document.addEventListener('click', function(e){
-    var tab = e.target.closest('.moon-tab');
-    if(!tab) return;
+    var tab = e.target.closest('.moon-tab');if(!tab) return;
     e.preventDefault();
-    var target = tab.getAttribute('data-mtab');
-    if(!target) return;
+    var target = tab.getAttribute('data-mtab');if(!target) return;
     document.querySelectorAll('.moon-tab').forEach(function(t){ t.classList.remove('active'); });
     tab.classList.add('active');
-    document.querySelectorAll('.moon-tab-content').forEach(function(c){
-      c.style.display = (c.getAttribute('data-mtab-content') === target) ? 'block' : 'none';
-    });
+    document.querySelectorAll('.moon-tab-content').forEach(function(c){c.style.display = (c.getAttribute('data-mtab-content') === target) ? 'block' : 'none';});
     try {
       if(target === 'globo'){ setTimeout(initMoonGlobe, 100); }
       else if(target === 'siti'){ renderLandingSites(); }
@@ -1609,240 +1214,183 @@ function renderLandingSites(){
   var el = document.getElementById('landingSitesList');
   if(!el || el.dataset.rendered === '1') return;
   el.dataset.rendered = '1';
-  var sCard = 'border:1px solid var(--line);background:var(--panel-2);border-radius:6px;padding:10px 12px;margin-bottom:6px';
+  var sCard = 'border:1px solid var(--line);background:var(--panel-2);border-radius:6px;padding:10px 12px;margin-bottom:6px;cursor:pointer;transition:border-color 0.15s,background 0.15s';
   var sName = 'font-size:var(--fs-md);font-weight:700;color:var(--text);line-height:1.3';
   var sMeta = 'font-size:var(--fs-sm);color:var(--muted);margin-top:4px;line-height:1.4';
   var sCoord = 'font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted);margin-top:3px';
-  el.innerHTML = LUNAR_LANDING_SITES.map(function(s){
+  var sGo = 'float:right;color:var(--amber);font-size:11px;font-weight:600';
+  el.innerHTML = LUNAR_LANDING_SITES.map(function(s, idx){
     var flag = s.country === 'USA' ? '🇺🇸' : s.country === 'URSS' ? '🇷🇺' : s.country === 'Cina' ? '🇨🇳' : s.country === 'India' ? '🇮🇳' : s.country === 'Giappone' ? '🇯🇵' : '🌍';
-    return '<div style="'+sCard+'">'
-      + '<div style="'+sName+'">' + flag + ' ' + escapeHtml(s.name) + ' <span style="font-size:var(--fs-sm);color:var(--muted);font-weight:400">(' + s.year + ')</span></div>'
+    return '<div class="globe-link site-link" style="'+sCard+'" data-globe-idx="'+idx+'">'
+      + '<div style="'+sName+'">' + flag + ' ' + escapeHtml(s.name) + ' <span style="font-size:var(--fs-sm);color:var(--muted);font-weight:400">(' + s.year + ')</span> <span style="'+sGo+'">🌕 Vai al globo</span></div>'
       + '<div style="'+sCoord+'">Lat ' + s.lat.toFixed(2) + '° · Lon ' + s.lon.toFixed(2) + '°</div>'
       + '<div style="'+sMeta+'">' + escapeHtml(s.mission) + '</div>'
       + '<div style="'+sMeta+';color:var(--muted-2);font-size:var(--fs-xs)">' + escapeHtml(s.desc) + '</div>'
       + '</div>';
   }).join('');
+  el.querySelectorAll('.site-link').forEach(function(card){
+    card.addEventListener('click', function(){var idx = parseInt(card.dataset.globeIdx, 10);var s = LUNAR_LANDING_SITES[idx];if(s) focusGlobeOn(s.name, s.lat, s.lon);});
+  });
 }
 function renderCratersAndMaria(){
   var el = document.getElementById('cratersList');
   if(!el || el.dataset.rendered === '1') return;
   el.dataset.rendered = '1';
   var sLbl = 'font-family:var(--mono);font-size:var(--fs-xs);color:var(--amber);font-weight:700;letter-spacing:0.05em;margin:14px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--line)';
-  var sCard = 'border:1px solid var(--line);background:var(--panel-2);border-radius:6px;padding:10px 12px;margin-bottom:6px';
+  var sCard = 'border:1px solid var(--line);background:var(--panel-2);border-radius:6px;padding:10px 12px;margin-bottom:6px;cursor:pointer;transition:border-color 0.15s,background 0.15s';
   var sName = 'font-size:var(--fs-md);font-weight:700;color:var(--text);line-height:1.3';
   var sCoord = 'font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted);margin-top:3px';
   var sMeta = 'font-size:var(--fs-sm);color:var(--muted);margin-top:4px;line-height:1.4';
-
-  var html = '<div style="'+sLbl+'">CRATERI PRINCIPALI</div>';
-  LUNAR_CRATERS.forEach(function(c){
-    html += '<div style="'+sCard+'">'
-      + '<div style="'+sName+'">' + escapeHtml(c.name) + ' <span style="font-size:var(--fs-xs);color:var(--muted);font-weight:400">Ø ' + c.diameter + ' km</span></div>'
+  var sGo = 'float:right;color:var(--amber);font-size:11px;font-weight:600';
+  var html = '<div style="'+sLbl+'">CRATERI PRINCIPALI <span style="color:#51a0d5">●</span></div>';
+  LUNAR_CRATERS.forEach(function(c, idx){
+    html += '<div class="globe-link crater-link" style="'+sCard+'" data-globe-idx="'+idx+'">'
+      + '<div style="'+sName+'">' + escapeHtml(c.name) + ' <span style="font-size:var(--fs-xs);color:var(--muted);font-weight:400">Ø ' + c.diameter + ' km</span> <span style="'+sGo+'">🌕 Vai al globo</span></div>'
       + '<div style="'+sCoord+'">Lat ' + c.lat + '° · Lon ' + c.lon + '°</div>'
       + '<div style="'+sMeta+'">' + escapeHtml(c.desc) + '</div>'
       + '</div>';
   });
-  html += '<div style="'+sLbl+'">MARI E OCEANI</div>';
-  LUNAR_MARIA.forEach(function(m){
-    html += '<div style="'+sCard+'">'
-      + '<div style="'+sName+'">' + escapeHtml(m.nameIt) + ' <span style="font-size:var(--fs-xs);color:var(--muted);font-weight:400">(' + escapeHtml(m.name) + ')</span></div>'
+  html += '<div style="'+sLbl+'">MARI E OCEANI <span style="color:#2ecc71">●</span></div>';
+  LUNAR_MARIA.forEach(function(m, idx){
+    html += '<div class="globe-link maria-link" style="'+sCard+'" data-globe-idx="'+idx+'">'
+      + '<div style="'+sName+'">' + escapeHtml(m.nameIt) + ' <span style="font-size:var(--fs-xs);color:var(--muted);font-weight:400">(' + escapeHtml(m.name) + ')</span> <span style="'+sGo+'">🌕 Vai al globo</span></div>'
       + '<div style="'+sCoord+'">Lat ' + m.lat + '° · Lon ' + m.lon + '° · ' + Math.round(m.area/1000) + '.000 km²</div>'
       + '<div style="'+sMeta+'">' + escapeHtml(m.desc) + '</div>'
       + '</div>';
   });
-  html += '<div style="'+sLbl+'">CATENE MONTUOSE</div>';
-  LUNAR_MOUNTAINS.forEach(function(m){
-    html += '<div style="'+sCard+'">'
-      + '<div style="'+sName+'">' + escapeHtml(m.nameIt) + ' <span style="font-size:var(--fs-xs);color:var(--muted);font-weight:400">(' + escapeHtml(m.name) + ')</span></div>'
+  html += '<div style="'+sLbl+'">CATENE MONTUOSE <span style="color:#c77dff">●</span></div>';
+  LUNAR_MOUNTAINS.forEach(function(m, idx){
+    html += '<div class="globe-link mountain-link" style="'+sCard+'" data-globe-idx="'+idx+'">'
+      + '<div style="'+sName+'">' + escapeHtml(m.nameIt) + ' <span style="font-size:var(--fs-xs);color:var(--muted);font-weight:400">(' + escapeHtml(m.name) + ')</span> <span style="'+sGo+'">🌕 Vai al globo</span></div>'
       + '<div style="'+sCoord+'">Lat ' + m.lat + '° · Lon ' + m.lon + '° · ' + m.length + ' km</div>'
       + '<div style="'+sMeta+'">' + escapeHtml(m.desc) + '</div>'
       + '</div>';
   });
   el.innerHTML = html;
+  el.querySelectorAll('.crater-link').forEach(function(card){card.addEventListener('click', function(){var idx = parseInt(card.dataset.globeIdx, 10);var c = LUNAR_CRATERS[idx];if(c) focusGlobeOn(c.name, c.lat, c.lon);});});
+  el.querySelectorAll('.maria-link').forEach(function(card){card.addEventListener('click', function(){var idx = parseInt(card.dataset.globeIdx, 10);var m = LUNAR_MARIA[idx];if(m) focusGlobeOn(m.nameIt, m.lat, m.lon);});});
+  el.querySelectorAll('.mountain-link').forEach(function(card){card.addEventListener('click', function(){var idx = parseInt(card.dataset.globeIdx, 10);var m = LUNAR_MOUNTAINS[idx];if(m) focusGlobeOn(m.nameIt, m.lat, m.lon);});});
 }
-
 var moonGlobeInstance = null;
 var _moonGlobeFilter = 'all';
 var _moonGlobeItems = [];
 var _moonGlobeViewPOV = {lat:0, lng:0, altitude:2.2};
 var _moonGlobeAutoRotate = false;
+var _moonGlobeHighlight = null;
 
 function buildMoonGlobeData(){
   var items = [];
-  LUNAR_LANDING_SITES.forEach(function(s){
-    items.push({type:'landing',name:s.name,lat:s.lat,lon:s.lon,color:'#f2b84b',size:1.1,subtitle:s.mission,desc:s.desc+' ('+s.year+')'});
-  });
-  LUNAR_CRATERS.forEach(function(c){
-    items.push({type:'crater',name:c.name,lat:c.lat,lon:c.lon,color:'#51a0d5',size:0.9,subtitle:'Cratere · Ø '+c.diameter+' km',desc:c.desc});
-  });
-  LUNAR_MARIA.forEach(function(m){
-    items.push({type:'maria',name:m.nameIt,lat:m.lat,lon:m.lon,color:'#2ecc71',size:1.3,subtitle:'Mare · '+m.name,desc:m.desc});
-  });
-  LUNAR_MOUNTAINS.forEach(function(m){
-    items.push({type:'mountain',name:m.nameIt,lat:m.lat,lon:m.lon,color:'#e74c3c',size:1.0,subtitle:'Catena montuosa · '+m.name,desc:m.desc+' ('+m.length+' km)'});
-  });
+  LUNAR_LANDING_SITES.forEach(function(s){items.push({type:'landing',name:s.name,lat:s.lat,lng:s.lon,color:'#f2b84b',size:1.1,subtitle:s.mission,desc:s.desc+' ('+s.year+')'});});
+  LUNAR_CRATERS.forEach(function(c){items.push({type:'crater',name:c.name,lat:c.lat,lng:c.lon,color:'#51a0d5',size:0.9,subtitle:'Cratere · Ø '+c.diameter+' km',desc:c.desc});});
+  LUNAR_MARIA.forEach(function(m){items.push({type:'maria',name:m.nameIt,lat:m.lat,lng:m.lon,color:'#2ecc71',size:1.3,subtitle:'Mare · '+m.name,desc:m.desc});});
+  LUNAR_MOUNTAINS.forEach(function(m){items.push({type:'mountain',name:m.nameIt,lat:m.lat,lng:m.lon,color:'#c77dff',size:1.0,subtitle:'Catena montuosa · '+m.name,desc:m.desc+' ('+m.length+' km)'});});
   return items;
+}
+function focusGlobeOn(name, lat, lon){
+  _moonGlobeHighlight = name;
+  var tabs = document.querySelectorAll('.moon-tab');
+  for(var i=0; i<tabs.length; i++){if(tabs[i].getAttribute('data-mtab') === 'globo'){tabs[i].click();break;}}
+  var tries = 0;
+  function tryFocus(){
+    tries++;
+    if(moonGlobeInstance){
+      try {moonGlobeInstance.pointOfView({ lat: lat, lng: lon, altitude: 1.4 }, 900);} catch(e){}
+      refreshHighlight();
+      var item = null;
+      for(var k=0; k<_moonGlobeItems.length; k++){if(_moonGlobeItems[k].name === name){ item = _moonGlobeItems[k]; break; }}
+      if(item) showMoonGlobeInfo(item);
+      toast('🎯 ' + name, 2500);
+    } else if(tries < 40){setTimeout(tryFocus, 100);}
+  }
+  setTimeout(tryFocus, 250);
 }
 function updateGlobeCompass(){
   var coordEl = document.getElementById('globeCompassCoords');
   if(!coordEl) return;
-  var lat = Math.round(_moonGlobeViewPOV.lat);
-  var lon = Math.round(_moonGlobeViewPOV.lng);
-  var lonTxt;
-  if(lon === 0) lonTxt = "0°";
-  else if(lon > 0) lonTxt = "+" + lon + "°";
-  else lonTxt = lon + "°";
+  var lat = Math.round(_moonGlobeViewPOV.lat);var lon = Math.round(_moonGlobeViewPOV.lng);var lonTxt;
+  if(lon === 0) lonTxt = "0°"; else if(lon > 0) lonTxt = "+" + lon + "°"; else lonTxt = lon + "°";
   coordEl.textContent = "lat " + lat + "° · lon " + lonTxt;
 }
 function initMoonGlobe(){
   if(moonGlobeInstance) return;
   var container = document.getElementById('moonGlobeContainer');
   if(!container) return;
-
   _moonGlobeItems = buildMoonGlobeData();
 
   if(!document.body.dataset.moonGlobeFiltersBound){
     document.body.dataset.moonGlobeFiltersBound = '1';
     document.addEventListener('click', function(e){
-      var btn = e.target.closest('.moon-filter');
-      if(!btn) return;
+      var btn = e.target.closest('.moon-filter');if(!btn) return;
       e.preventDefault();
       document.querySelectorAll('.moon-filter').forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
       _moonGlobeFilter = btn.getAttribute('data-mfilter') || 'all';
-      updateMoonGlobePoints();
+      applyMoonFilter();
     }, false);
   }
-
   if(!document.body.dataset.moonGlobeControlsBound){
     document.body.dataset.moonGlobeControlsBound = '1';
-
     document.addEventListener('click', function(e){
       var btnZoomIn = e.target.closest('#globeZoomIn');
-      if(btnZoomIn && moonGlobeInstance){
-        var pov = moonGlobeInstance.pointOfView();
-        var newAlt = Math.max(0.6, (pov.altitude || 2.2) * 0.75);
-        moonGlobeInstance.pointOfView({ altitude: newAlt }, 300);
-        return;
-      }
+      if(btnZoomIn && moonGlobeInstance){var pov = moonGlobeInstance.pointOfView();var newAlt = Math.max(0.6, (pov.altitude || 2.2) * 0.75);moonGlobeInstance.pointOfView({ altitude: newAlt }, 300);return;}
       var btnZoomOut = e.target.closest('#globeZoomOut');
-      if(btnZoomOut && moonGlobeInstance){
-        var pov2 = moonGlobeInstance.pointOfView();
-        var newAlt2 = Math.min(5.0, (pov2.altitude || 2.2) * 1.33);
-        moonGlobeInstance.pointOfView({ altitude: newAlt2 }, 300);
-        return;
-      }
+      if(btnZoomOut && moonGlobeInstance){var pov2 = moonGlobeInstance.pointOfView();var newAlt2 = Math.min(5.0, (pov2.altitude || 2.2) * 1.33);moonGlobeInstance.pointOfView({ altitude: newAlt2 }, 300);return;}
       var btnReset = e.target.closest('#globeReset');
       if(btnReset && moonGlobeInstance){
+        deselectAll();
         moonGlobeInstance.pointOfView({ lat: 0, lng: 0, altitude: 2.2 }, 500);
+        toast('Vista resettata', 1500);
         return;
       }
+      var btnDeselect = e.target.closest('#btnDeselect');
+      if(btnDeselect){deselectAll();toast('Selezione rimossa', 1500);return;}
       var btnAuto = e.target.closest('#globeAutoRotate');
       if(btnAuto && moonGlobeInstance){
         _moonGlobeAutoRotate = !_moonGlobeAutoRotate;
         var controls = moonGlobeInstance.controls();
-        controls.autoRotate = _moonGlobeAutoRotate;
-        controls.autoRotateSpeed = 0.08;
-        if(_moonGlobeAutoRotate){
-          btnAuto.classList.add('playing');
-          btnAuto.textContent = '⏸';
-          btnAuto.title = 'Ferma rotazione';
-        } else {
-          btnAuto.classList.remove('playing');
-          btnAuto.textContent = '▶';
-          btnAuto.title = 'Rotazione automatica';
-        }
+        controls.autoRotate = _moonGlobeAutoRotate;controls.autoRotateSpeed = 0.08;
+        if(_moonGlobeAutoRotate){btnAuto.classList.add('playing');btnAuto.textContent = '⏸';btnAuto.title = 'Ferma rotazione';}
+        else {btnAuto.classList.remove('playing');btnAuto.textContent = '▶';btnAuto.title = 'Rotazione automatica';}
         return;
       }
     }, false);
   }
-
   try {
     moonGlobeInstance = new Globe(container)
       .globeImageUrl('https://cdn.jsdelivr.net/gh/mrdoob/three.js@r160/examples/textures/planets/moon_1024.jpg')
-      .backgroundColor('#000')
-      .showAtmosphere(false)
-      .showGraticules(false)
-      .width(container.clientWidth)
-      .height(container.clientHeight);
-  } catch(err){
-    console.error('[MoonGlobe] Init error', err);
-    return;
-  }
-
+      .backgroundColor('#000').showAtmosphere(false).showGraticules(false)
+      .width(container.clientWidth).height(container.clientHeight);
+  } catch(err){console.error('[MoonGlobe] Init error', err);return;}
   try{
     if(typeof THREE !== 'undefined'){
       var scene = moonGlobeInstance.scene();
-      var ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
-      scene.add(ambientLight);
-      var dirLight = new THREE.DirectionalLight(0xffffff, 1.4);
-      dirLight.position.set(1, 1, 1);
-      scene.add(dirLight);
-      var dirLight2 = new THREE.DirectionalLight(0xffffff, 0.5);
-      dirLight2.position.set(-1, -0.5, -1);
-      scene.add(dirLight2);
+      var ambientLight = new THREE.AmbientLight(0xffffff, 1.0);scene.add(ambientLight);
+      var dirLight = new THREE.DirectionalLight(0xffffff, 1.4);dirLight.position.set(1, 1, 1);scene.add(dirLight);
+      var dirLight2 = new THREE.DirectionalLight(0xffffff, 0.5);dirLight2.position.set(-1, -0.5, -1);scene.add(dirLight2);
     }
   }catch(e){ console.log('[MoonGlobe] Luce non aggiunta:', e); }
-
   try {
     var controls = moonGlobeInstance.controls();
-    controls.autoRotate = _moonGlobeAutoRotate;
-    controls.autoRotateSpeed = 0.08;
-    controls.enableZoom = true;
-    controls.enablePan = false;
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.08;
-    controls.minDistance = 150;
-    controls.maxDistance = 800;
-
+    controls.autoRotate = _moonGlobeAutoRotate;controls.autoRotateSpeed = 0.08;
+    controls.enableZoom = true;controls.enablePan = false;controls.enableDamping = true;
+    controls.dampingFactor = 0.08;controls.minDistance = 150;controls.maxDistance = 800;
     var compassUpdateScheduled = false;
     controls.addEventListener('change', function(){
       if(compassUpdateScheduled) return;
       compassUpdateScheduled = true;
       requestAnimationFrame(function(){
         compassUpdateScheduled = false;
-        try {
-          var pov = moonGlobeInstance.pointOfView();
-          _moonGlobeViewPOV.lat = pov.lat || 0;
-          _moonGlobeViewPOV.lng = pov.lng || 0;
-          _moonGlobeViewPOV.altitude = pov.altitude || 2.2;
-          updateGlobeCompass();
-        } catch(e) {}
+        try {var pov = moonGlobeInstance.pointOfView();_moonGlobeViewPOV.lat = pov.lat || 0;_moonGlobeViewPOV.lng = pov.lng || 0;_moonGlobeViewPOV.altitude = pov.altitude || 2.2;updateGlobeCompass();} catch(e) {}
       });
     });
   }catch(e){ console.log('[MoonGlobe] Controls error', e); }
+  try {moonGlobeInstance.pointOfView({ lat: 0, lng: 0, altitude: 2.2 }, 0);_moonGlobeViewPOV = { lat:0, lng:0, altitude:2.2 };updateGlobeCompass();}catch(e){}
 
-  try {
-    moonGlobeInstance.pointOfView({ lat: 0, lng: 0, altitude: 2.2 }, 0);
-    _moonGlobeViewPOV = { lat:0, lng:0, altitude:2.2 };
-    updateGlobeCompass();
-  }catch(e){}
-
-  setTimeout(function(){
-    updateMoonGlobePoints();
-    try {
-      var pov = moonGlobeInstance.pointOfView();
-      _moonGlobeViewPOV.lat = pov.lat || 0;
-      _moonGlobeViewPOV.lng = pov.lng || 0;
-      updateGlobeCompass();
-    } catch(e){}
-  }, 250);
-
-  window.addEventListener('resize', function(){
-    if(moonGlobeInstance && container.clientWidth > 0){
-      moonGlobeInstance.width(container.clientWidth);
-      moonGlobeInstance.height(container.clientHeight);
-    }
-  });
-}
-function updateMoonGlobePoints(){
-  if(!moonGlobeInstance) return;
-  var filtered = _moonGlobeItems.filter(function(it){
-    return _moonGlobeFilter === 'all' || it.type === _moonGlobeFilter;
-  });
+  // Setup iniziale dei punti — UNA SOLA VOLTA, MAI più ricostruiti
   moonGlobeInstance
-    .pointsData(filtered)
+    .pointsData(_moonGlobeItems)
     .pointLat('lat')
-    .pointLng('lon')
+    .pointLng('lng')
     .pointColor(function(d){ return d.color; })
     .pointAltitude(0.04)
     .pointRadius(function(d){ return d.size; })
@@ -1850,18 +1398,99 @@ function updateMoonGlobePoints(){
     .pointsMerge(false)
     .pointsTransitionDuration(0)
     .pointLabel(function(d){
-      return '<div class="globe-tooltip">'
-        + '<b>' + escapeHtml(d.name) + '</b><br>'
+      return '<div class="globe-tooltip"><b>' + escapeHtml(d.name) + '</b><br>'
         + '<span class="tooltip-desc">' + escapeHtml(d.subtitle) + '</span><br>'
-        + '<span class="tooltip-desc">' + escapeHtml(d.desc) + '</span>'
-        + '</div>';
+        + '<span class="tooltip-desc">' + escapeHtml(d.desc) + '</span></div>';
     })
     .onPointClick(function(d){
+      _moonGlobeHighlight = d.name;
       showMoonGlobeInfo(d);
       toast(d.name + ' · ' + d.subtitle, 3000);
-      try { moonGlobeInstance.pointOfView({ lat: d.lat, lng: d.lon, altitude: 1.6 }, 700); } catch(e) {}
+      refreshHighlight();
+      try { moonGlobeInstance.pointOfView({ lat: d.lat, lng: d.lng, altitude: 1.4 }, 700); } catch(e) {}
     });
+
+  // Setup ring e label layers (inizialmente vuoti)
+  moonGlobeInstance
+    .ringsData([])
+    .ringLat('lat').ringLng('lng')
+    .ringColor(function(){ return 'rgba(255,255,255,0.95)'; })
+    .ringMaxRadius(5)
+    .ringPropagationSpeed(3)
+    .ringRepeatPeriod(700)
+    .ringResolution(64);
+
+  moonGlobeInstance
+    .labelsData([])
+    .labelLat('lat').labelLng('lng')
+    .labelText('text')
+    .labelSize(function(d){ return d.size || 0.8; })
+    .labelDotRadius(0.25)
+    .labelColor(function(d){ return d.color || '#fff'; })
+    .labelResolution(2)
+    .labelAltitude(0.06);
+
+  setTimeout(function(){
+    updateGlobeCompass();
+  }, 250);
+
+  window.addEventListener('resize', function(){
+    if(moonGlobeInstance && container.clientWidth > 0){moonGlobeInstance.width(container.clientWidth);moonGlobeInstance.height(container.clientHeight);}
+  });
 }
+
+/* ★★★ SOLUZIONE DEFINITIVA: i punti NON cambiano MAI. La selezione è SOLO ring + label. ★★★ */
+function refreshHighlight(){
+  if(!moonGlobeInstance) return;
+  var hl = _moonGlobeHighlight;
+
+  // Filtra per capire quali oggetti sono visibili
+  var visible = _moonGlobeItems.filter(function(it){
+    return _moonGlobeFilter === 'all' || it.type === _moonGlobeFilter;
+  });
+
+  var rings = [];
+  var labels = [];
+  if(hl){
+    for(var i=0;i<visible.length;i++){
+      if(visible[i].name === hl){
+        rings.push({lat:visible[i].lat, lng:visible[i].lng});
+        labels.push({
+          lat: visible[i].lat,
+          lng: visible[i].lng,
+          text: visible[i].name,
+          color: visible[i].color
+        });
+        break;
+      }
+    }
+  }
+
+  moonGlobeInstance.ringsData(rings);
+  moonGlobeInstance.labelsData(labels);
+}
+
+/* Applica il filtro: nasconde/mostra i punti, poi aggiorna highlight */
+function applyMoonFilter(){
+  if(!moonGlobeInstance) return;
+  var filtered = _moonGlobeItems.filter(function(it){
+    return _moonGlobeFilter === 'all' || it.type === _moonGlobeFilter;
+  });
+  moonGlobeInstance.pointsData(filtered);
+  refreshHighlight();
+}
+
+/* Deseleziona tutto: rimuove anello e label */
+function deselectAll(){
+  _moonGlobeHighlight = null;
+  refreshHighlight();
+  var infoEl = document.getElementById('moonGlobeInfo');
+  if(infoEl){
+    infoEl.classList.add('empty');
+    infoEl.textContent = 'Tocca un punto sul globo o clicca una voce dalle tab Siti / Crateri per vedere i dettagli.';
+  }
+}
+
 function showMoonGlobeInfo(item){
   var infoEl = document.getElementById('moonGlobeInfo');
   if(!infoEl) return;
@@ -1872,29 +1501,18 @@ function showMoonGlobeInfo(item){
     + '</div>'
     + '<div class="info-line">' + escapeHtml(item.subtitle) + '</div>'
     + '<div class="info-line">' + escapeHtml(item.desc) + '</div>'
-    + '<div class="info-coord">Lat ' + item.lat.toFixed(2) + '° · Lon ' + item.lon.toFixed(2) + '°</div>';
+    + '<div class="info-coord">Lat ' + item.lat.toFixed(2) + '° · Lon ' + item.lng.toFixed(2) + '°</div>';
 }
-
 function updateEyepieceAdvice(){
   var q=currentWeatherContext.seeingQuality;
   var rows=document.querySelectorAll('table.eyepiece-table tr.ep-row');
-  var warning=currentWeatherContext.clouds>70;
-  var unknown=!weatherLoaded;
+  var warning=currentWeatherContext.clouds>70;var unknown=!weatherLoaded;
   rows.forEach(function(row){
     var minQ=parseInt(row.dataset.minQuality||"0",10);
     var disabled=warning||unknown||(q<minQ);
     row.classList.toggle('warn-row',disabled);
-    var oldBadge=row.querySelector('.ep-badge');
-    if(oldBadge)oldBadge.remove();
-    if(disabled){
-      var lastTd=row.querySelector('td:last-child');
-      if(lastTd){
-        var badge=document.createElement('span');
-        badge.className='ep-badge';
-        badge.textContent='SCONS.';
-        lastTd.appendChild(badge);
-      }
-    }
+    var oldBadge=row.querySelector('.ep-badge');if(oldBadge)oldBadge.remove();
+    if(disabled){var lastTd=row.querySelector('td:last-child');if(lastTd){var badge=document.createElement('span');badge.className='ep-badge';badge.textContent='SCONS.';lastTd.appendChild(badge);}}
   });
   var note=document.getElementById('eyepieceLiveNote');
   if(note){
@@ -1908,12 +1526,10 @@ function updateEyepieceAdvice(){
 function canGoPrev(){return daysFromToday(activeDate) > -1;}
 function canGoNext(){return daysFromToday(activeDate) < 3;}
 function updateNavButtons(){
-  var bp=document.getElementById('btnPrev');
-  var bn=document.getElementById('btnNext');
+  var bp=document.getElementById('btnPrev');var bn=document.getElementById('btnNext');
   if(bp){bp.disabled=navBusy||!canGoPrev();}
   if(bn){bn.disabled=navBusy||!canGoNext();}
 }
-
 function updateAstroDebug(obs){
   var el=document.getElementById('astroDebugContent');
   if(!el)return;
@@ -1944,9 +1560,7 @@ function updateAstroDebug(obs){
       else state='<span class="up">OSSERVABILE</span>';
       var pad=(k+'        ').slice(0,8);
       lines.push(pad+' alt='+hor.altitude.toFixed(2).padStart(7)+'°  az='+hor.azimuth.toFixed(2).padStart(7)+'°  '+state);
-    }catch(e){
-      lines.push(k+': errore '+e.message);
-    }
+    }catch(e){lines.push(k+': errore '+e.message);}
   });
   try{
     var eqM=A.Equator(A.Body.Moon, now, obs, true, true);
@@ -1956,15 +1570,11 @@ function updateAstroDebug(obs){
   }catch(e){}
   el.innerHTML='\n'+lines.join('\n');
 }
-
 function updateAstro(){
   if(typeof Astronomy==='undefined')return;
-  var obs=new A.Observer(loc.lat,loc.lon,loc.elev);
-  var now=new Date();
+  var obs=new A.Observer(loc.lat,loc.lon,loc.elev);var now=new Date();
   var sunState = getSunState(obs, now);
-
   updateAstroDebug(obs);
-
   var win=getNightWindow(obs,activeDate);
   var tonightBase=new Date();
   if(tonightBase.getHours()<12)tonightBase.setDate(tonightBase.getDate()-1);
@@ -1996,7 +1606,6 @@ function updateAstro(){
   var moonDiamArcmin=((206264.8*(2*1737.4)/moonDistKm)/60).toFixed(1);
   var moonEqRef=A.Equator(A.Body.Moon,graphRef,obs,true,true);
   var moonCons=A.Constellation(moonEqRef.ra,moonEqRef.dec);
-
   document.getElementById('moonSvgWrap').innerHTML=moonPhaseSVG(fMoon,waxing,44);
   document.getElementById('moonNameTxt').textContent=phaseName+' ('+Math.round(fMoon*100)+'%)';
   var visTag=document.getElementById('moonVisTag');
@@ -2008,7 +1617,6 @@ function updateAstro(){
   var moonMagBox=document.getElementById('moonMagBox');
   moonMagBox.className='pmag moon-mag '+magBrightnessClass(moonMag);
   moonMagBox.innerHTML=magHTML(moonMag);
-
   var moonDistObj=formatDistanceLines(moonDistKm,false);
   var moonMassObj=formatMassLines(MOON_MASS_RATIO);
   document.getElementById('moonMetricsWrap').innerHTML=metricsBlockHTML(moonDistObj,moonMassObj);
@@ -2018,14 +1626,12 @@ function updateAstro(){
   var moonTransit=findTransitTime('Moon',0,obs,moonData.win.start,moonData.win.end);
   document.getElementById('moonTransitLine').innerHTML=moonTransit?'Culmina alle <b>'+fmtTime(moonTransit)+'</b>':'';
   document.getElementById('moonEyepieceTxt').textContent=getDynamicEyepieceAdvice("Moon",moonData.peak.alt);
-
   var mh=document.getElementById('moonHeaderBox');
   if(mh) mh.onclick=function(){openCelestialModal("Moon");};
   var bmAR=document.getElementById('btnMoonAR');
   if(bmAR) bmAR.onclick=function(e){e.stopPropagation();startAR("Moon");};
   var bmR=document.getElementById('btnMoonRadar');
   if(bmR) bmR.onclick=function(e){e.stopPropagation();openRadar(resolveTarget('Moon'));};
-
   var container=document.getElementById('planetCards');
   if(!container)return;
   container.innerHTML="";
@@ -2033,8 +1639,7 @@ function updateAstro(){
   var planetsList=["Venus","Mars","Jupiter","Saturn","Uranus","Neptune","Mercury"];
   var planetRenderQueue=[];
   planetsList.forEach(function(pKey){
-    var body=A.Body[pKey];
-    var data=PLANET_DATA[pKey];
+    var body=A.Body[pKey];var data=PLANET_DATA[pKey];
     var pData=getBodyCycle(body,obs,graphRef,1);
     var illum=A.Illumination(body,pData.peak.t);
     var kmDist=illum.geo_dist*KM_PER_AU;
@@ -2062,9 +1667,7 @@ function updateAstro(){
     else if(isGeomUpNow) visBadge='<span class="tag low">SOPRA (LUCE SOLARE)</span>';
     else visBadge='<span class="tag no">SOTTO ORIZZONTE</span>';
     var html='<div class="prow1"><div class="pname">'+data.name+' <span class="cost">· '+cons.name+'</span></div><div class="pmag '+magBrightnessClass(magNow)+'">'+magHTML(magNow)+'</div></div>'
-      +'<div style="margin:4px 0 6px">'+visBadge+'</div>'
-      + metricsHTMLBlock
-      + nowRow
+      +'<div style="margin:4px 0 6px">'+visBadge+'</div>'+ metricsHTMLBlock + nowRow
       +'<div class="ptrack">'+sparkSVG(pData.pts,now,pData.win,pData.rise,pData.peak.t,pData.set,isObservableNow,isTonight)+'</div>'
       +'<div class="prow2"><span>Sorge: '+fmtTime(pData.rise)+'</span><span>Picco: '+Math.round(pData.peak.alt)+'° ('+fmtTime(pData.peak.t)+')</span><span>Tramonta: '+fmtTime(pData.set)+'</span></div>'
       +(pTransit?'<div class="compact-metric">Culmina alle <b>'+fmtTime(pTransit)+'</b></div>':'')
@@ -2082,17 +1685,13 @@ function updateAstro(){
     card.className="planet-box"+(item.ac.dim?" dim":"");
     card.setAttribute('data-key',item.pKey);
     card.innerHTML=item.html;
-    card.addEventListener('click',function(e){
-      if(e.target.closest('a,button')) return;
-      openCelestialModal(item.pKey);
-    });
+    card.addEventListener('click',function(e){if(e.target.closest('a,button')) return;openCelestialModal(item.pKey);});
     var arBtn=card.querySelector('[data-ar]');
     if(arBtn)arBtn.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();startAR(item.pKey);});
     container.appendChild(card);
   });
   var moonInfoForTargets={illumFrac:fMoon,altAt:moonHorNow.altitude};
   renderNightTargets(obs,win.start,win.end,candidates,moonInfoForTargets,sunState);
-
   var pointerEl=document.getElementById('pointingTarget');
   var validTargets=candidates.filter(function(c){return c.maxAlt>=18;});
   if(validTargets.length>0){
@@ -2123,24 +1722,17 @@ function updateAstro(){
   updateNavButtons();
   scheduleFitMetrics();
 }
-
 function computeNightIdxRange(hTimeArr,obs,anchorDate,dayOffsetFallback){
   var fallback=[21,22,23,24,25,26,27,28].map(function(i){return i+dayOffsetFallback*24;});
   if(typeof Astronomy==='undefined'||!hTimeArr||!hTimeArr.length)return fallback;
   try{
     var darkWin=getAstroDarkWindow(obs,anchorDate);
     if(!darkWin.start||!darkWin.end)return fallback;
-    var duskStr=dateToIsoHourStr(darkWin.start);
-    var dawnStr=dateToIsoHourStr(darkWin.end);
+    var duskStr=dateToIsoHourStr(darkWin.start);var dawnStr=dateToIsoHourStr(darkWin.end);
     var idxStart=-1,idxEnd=-1;
-    for(var i=0;i<hTimeArr.length;i++){
-      var t=hTimeArr[i];
-      if(t>=duskStr&&idxStart<0)idxStart=i;
-      if(t<=dawnStr)idxEnd=i;
-    }
+    for(var i=0;i<hTimeArr.length;i++){var t=hTimeArr[i];if(t>=duskStr&&idxStart<0)idxStart=i;if(t<=dawnStr)idxEnd=i;}
     if(idxStart<0||idxEnd<0||idxStart>idxEnd)return fallback;
-    var out=[];
-    for(var j=idxStart;j<=idxEnd;j++)out.push(j);
+    var out=[];for(var j=idxStart;j<=idxEnd;j++)out.push(j);
     return out.length?out:fallback;
   }catch(e){return fallback;}
 }
@@ -2158,8 +1750,7 @@ function fetchWeather(){
   fetch(url).then(function(res){if(!res.ok)throw new Error();return res.json();}).then(function(data){
     if(myToken!==weatherFetchToken)return;
     var curr=data.current||{},h=data.hourly||{};
-    var hourOffset=dayOffset*24;
-    var refIdx;
+    var hourOffset=dayOffset*24;var refIdx;
     if(dayOffset===0)refIdx=new Date().getHours();
     else{
       try{
@@ -2167,8 +1758,7 @@ function fetchWeather(){
         var darkR=getAstroDarkWindow(obsR,activeDate);
         if(darkR.start&&darkR.end&&h.time&&h.time.length){
           var midD=new Date((darkR.start.getTime()+darkR.end.getTime())/2);
-          var midStr=dateToIsoHourStr(midD);
-          var found=-1;
+          var midStr=dateToIsoHourStr(midD);var found=-1;
           for(var ri=0;ri<h.time.length;ri++){if(h.time[ri]>=midStr){found=ri;break;}}
           refIdx=found>=0?found:(hourOffset+23);
         }else refIdx=hourOffset+23;
@@ -2190,8 +1780,7 @@ function fetchWeather(){
       currentDew=cD!==null?cD.toFixed(1):"--";
       currentWind10=cW!==null?Math.round(cW):"--";
     }
-    var wind850=valAt(h.wind_speed_850hPa,refIdx);
-    var wJet=valAt(h.wind_speed_250hPa,refIdx);
+    var wind850=valAt(h.wind_speed_850hPa,refIdx);var wJet=valAt(h.wind_speed_250hPa,refIdx);
     wind850=wind850!==null?Math.round(wind850):null;
     wJet=wJet!==null?Math.round(wJet):null;
     var nightIdx;
@@ -2226,15 +1815,13 @@ function fetchWeather(){
     else if(wJet<115){seeingQuality=1;seeEl.innerHTML='<span class="tag low">Seeing Discreto - 135x o 162x</span>';}
     else{seeingQuality=0;seeEl.innerHTML='<span class="tag no">Forte Jet Stream ('+wJet+' km/h) - 81x</span>';}
     currentWeatherContext.seeingQuality=seeingQuality;
-    weatherLoaded=true;
-    navBusy=false;
+    weatherLoaded=true;navBusy=false;
     updateEyepieceAdvice();
     updateAstro();
   }).catch(function(){
     if(myToken!==weatherFetchToken)return;
     document.getElementById('mSeeing').textContent="Dati meteo live non disponibili";
-    weatherLoaded=true;
-    navBusy=false;
+    weatherLoaded=true;navBusy=false;
     updateEyepieceAdvice();
     updateAstro();
   });
@@ -2253,10 +1840,7 @@ function fetchMagneticDeclination(){
   fetch(url).then(function(r){return r.json();}).then(function(data){
     try{
       var d=data.result[0].declination;
-      if(typeof d==='number' && isFinite(d)){
-        MAGNETIC_DECLINATION=d;
-        safeSet('astroalert_decl', d.toFixed(3));
-      }
+      if(typeof d==='number' && isFinite(d)){MAGNETIC_DECLINATION=d;safeSet('astroalert_decl', d.toFixed(3));}
     }catch(e){}
   }).catch(function(){});
 }
@@ -2290,10 +1874,7 @@ function geocodeCity(query){
         fetchWeather();
       });
     });
-  }).catch(function(){
-    if(myToken!==geocodeFetchToken)return;
-    resEl.innerHTML='<div class="loc-item">Errore di connessione.</div>';
-  });
+  }).catch(function(){if(myToken!==geocodeFetchToken)return;resEl.innerHTML='<div class="loc-item">Errore di connessione.</div>';});
 }
 function acquireGps(){
   if(!navigator.geolocation)return;
@@ -2337,11 +1918,7 @@ function requestNotificationPermission(){
     if(!('Notification' in window)){setPermState('notif','no');resolve(false);return;}
     if(Notification.permission==='granted'){setPermState('notif','ok');resolve(true);return;}
     if(Notification.permission==='denied'){setPermState('notif','no');resolve(false);return;}
-    Notification.requestPermission().then(function(res){
-      var ok=res==='granted';
-      setPermState('notif',ok?'ok':'no');
-      resolve(ok);
-    });
+    Notification.requestPermission().then(function(res){var ok=res==='granted';setPermState('notif',ok?'ok':'no');resolve(ok);});
   });
 }
 function requestCameraPermission(){
@@ -2365,8 +1942,7 @@ function runOnboarding(){
   if(isAndroid()){var sn=document.getElementById('permStNotif');if(sn){sn.textContent='N/A';sn.className='st na';}}
   if(!window.isSecureContext){
     var btn=document.getElementById('permGrant');
-    btn.disabled=true;
-    btn.textContent='Non disponibile senza HTTPS';
+    btn.disabled=true;btn.textContent='Non disponibile senza HTTPS';
     document.getElementById('permSkip').textContent='Chiudi e configura dopo';
   }
   document.getElementById('permGrant').addEventListener('click',function(){
@@ -2403,13 +1979,9 @@ function updateOnlineDot(){
 window.addEventListener('online',updateOnlineDot);
 window.addEventListener('offline',updateOnlineDot);
 var wakeLock=null;
-function requestWakeLock(){
-  if(!('wakeLock' in navigator))return;
-  try{navigator.wakeLock.request('screen').then(function(w){wakeLock=w;}).catch(function(){});}catch(e){}
-}
+function requestWakeLock(){if(!('wakeLock' in navigator))return;try{navigator.wakeLock.request('screen').then(function(w){wakeLock=w;}).catch(function(){});}catch(e){}}
 function releaseWakeLock(){if(wakeLock){try{wakeLock.release();}catch(e){}wakeLock=null;}}
 document.addEventListener('visibilitychange',function(){if(document.hidden){releaseWakeLock();}else if(!wakeLock){requestWakeLock();}});
-
 function checkSecureContext(){
   if(window.isSecureContext)return true;
   var banner=document.createElement('div');banner.className='secure-warn';
@@ -2423,28 +1995,17 @@ function showCdnError(){
   if(p)p.innerHTML='<div class="note err"><b>Errore critico:</b> la libreria Astronomy Engine non è stata caricata. Verifica la connessione e ricarica.</div>';
   var n=document.getElementById('nightTargets');if(n)n.innerHTML='<div class="section-note">In attesa del motore astronomico...</div>';
 }
-
 function init(){
   checkSecureContext();
-  updateLocLabel();
-  updateOnlineDot();
-  fetchMagneticDeclination();
-
-  try {
-    initMoonTabs();
-    renderLandingSites();
-    renderCratersAndMaria();
-  } catch(err){ console.error('[Moon init]', err); }
-
+  updateLocLabel();updateOnlineDot();fetchMagneticDeclination();
+  try {initMoonTabs();renderLandingSites();renderCratersAndMaria();} catch(err){ console.error('[Moon init]', err); }
   if(typeof Astronomy==='undefined'){
     showCdnError();
     setTimeout(function(){if(typeof Astronomy!=='undefined')location.reload();else showCdnError();},4000);
     return;
   }
   var onboardingShown=runOnboarding();
-  if(!onboardingShown){
-    updateAstro();fetchWeather();fetchKp();requestWakeLock();
-  }
+  if(!onboardingShown){updateAstro();fetchWeather();fetchKp();requestWakeLock();}
   document.getElementById('btnGps').addEventListener('click',acquireGps);
   document.getElementById('btnSearchCity').addEventListener('click',function(){var q=document.getElementById('locInput').value.trim();if(q.length>1)geocodeCity(q);});
   document.getElementById('locInput').addEventListener('keydown',function(e){if(e.key==='Enter'){var q=this.value.trim();if(q.length>1)geocodeCity(q);}});
@@ -2456,20 +2017,9 @@ function init(){
       applyFilterToTargets(activeFilter);
     });
   });
-  document.getElementById('btnToday').addEventListener('click',function(){
-    var d=new Date();if(d.getHours()<12)d.setDate(d.getDate()-1);
-    activeDate=d;weatherLoaded=false;updateAstro();fetchWeather();
-  });
-  document.getElementById('btnPrev').addEventListener('click',function(){
-    if(!canGoPrev()){toast('Puoi andare indietro di 1 notte al massimo.',2500);return;}
-    activeDate.setDate(activeDate.getDate()-1);
-    weatherLoaded=false;updateAstro();fetchWeather();
-  });
-  document.getElementById('btnNext').addEventListener('click',function(){
-    if(!canGoNext()){toast('Previsioni meteo fino a +3 giorni.',2500);return;}
-    activeDate.setDate(activeDate.getDate()+1);
-    weatherLoaded=false;updateAstro();fetchWeather();
-  });
+  document.getElementById('btnToday').addEventListener('click',function(){var d=new Date();if(d.getHours()<12)d.setDate(d.getDate()-1);activeDate=d;weatherLoaded=false;updateAstro();fetchWeather();});
+  document.getElementById('btnPrev').addEventListener('click',function(){if(!canGoPrev()){toast('Puoi andare indietro di 1 notte al massimo.',2500);return;}activeDate.setDate(activeDate.getDate()-1);weatherLoaded=false;updateAstro();fetchWeather();});
+  document.getElementById('btnNext').addEventListener('click',function(){if(!canGoNext()){toast('Previsioni meteo fino a +3 giorni.',2500);return;}activeDate.setDate(activeDate.getDate()+1);weatherLoaded=false;updateAstro();fetchWeather();});
   var rp=document.getElementById('btnResetPerms');
   if(rp)rp.addEventListener('click',function(){if(confirm('Vuoi rivedere la schermata dei permessi?'))window.resetAstroAlertOnboarding();});
   var bgr=document.getElementById('btnGlobalRadar');
@@ -2477,8 +2027,7 @@ function init(){
   setInterval(function(){updateAstro();},60*1000);
   setInterval(function(){fetchWeather();fetchKp();},5*60*1000);
   document.addEventListener('visibilitychange',function(){if(!document.hidden){updateAstro();fetchWeather();fetchKp();}});
-  setTimeout(scheduleFitMetrics, 300);
-  setTimeout(scheduleFitMetrics, 1200);
+  setTimeout(scheduleFitMetrics, 300);setTimeout(scheduleFitMetrics, 1200);
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleFitMetrics);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
