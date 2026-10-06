@@ -934,6 +934,10 @@ function compareTargets(a,b){
    - Etichette stelle: solo le più significative (flag label)
    - Nomi senza cornice nera: solo ombra sfocata (shadowBlur)
    - Costellazioni: linee bianche continue + nome bold italic
+   - PRUNING: se la costellazione è troppo affollata sullo schermo,
+     mostra solo le 3 stelle più significative. Le altre vengono
+     omesse completamente (nessun puntino, nessuna etichetta).
+     La linea bianca della costellazione resta sempre visibile.
    ═══════════════════════════════════════════════════════════ */
 
 /* Catalogo stelle: name · ra/dec (J2000) · mag · sp · R☉ · label
@@ -1009,6 +1013,19 @@ function starGlowScore(mag){
   if(s > 1) s = 1;
   return s;
 }
+
+/* Mappa stella → costellazione (serve per il pruning quando la costellazione
+   è troppo affollata sullo schermo: si tengono solo le 3 più significative). */
+var CON_OF = {
+  'Betelgeuse':'Orione','Rigel':'Orione','Bellatrix':'Orione',
+  'Alnilam':'Orione','Alnitak':'Orione','Mintaka':'Orione','Saiph':'Orione',
+  'Dubhe':'Orsa Maggiore','Merak':'Orsa Maggiore','Phecda':'Orsa Maggiore',
+  'Megrez':'Orsa Maggiore','Alioth':'Orsa Maggiore','Mizar':'Orsa Maggiore','Alkaid':'Orsa Maggiore',
+  'Schedar':'Cassiopea','Caph':'Cassiopea',
+  'Vega':'Triangolo Estivo','Deneb':'Triangolo Estivo','Altair':'Triangolo Estivo',
+  'Acrux':'Croce del Sud','Mimosa':'Croce del Sud','Gacrux':'Croce del Sud',
+  'Antares':'Scorpione','Shaula':'Scorpione'
+};
 
 var CONSTELLATIONS = [
   { name:'Orione', label:{ra:5.65, dec:-2.5}, lines:[
@@ -1428,6 +1445,7 @@ function drawPlanisphere(){
           type:'star', name:s.name, x:p.x, y:p.y,
           alt:hor.altitude, az:hor.azimuth,
           mag:s.mag, sp:s.sp, R:s.R, label:s.label === true,
+          con: CON_OF[s.name] || null,
           desc:planisphereDescForStar(s),
           priority:10+s.mag
         });
@@ -1435,9 +1453,43 @@ function drawPlanisphere(){
     }catch(e){}
   });
 
-  // Disegna stelle
+  /* ★ RILEVAMENTO AFFOLLAMENTO COSTELLAZIONI
+     Se le stelle di una costellazione sono troppo vicine sullo schermo,
+     mostra solo le 3 più significative (più brillanti). Le altre vengono
+     omesse del tutto (nessun puntino, nessuna etichetta, nessun blocker).
+     La linea bianca della costellazione resta sempre disegnata. */
+  var crowdedConstellations = {};
+  var keepStarSet = {};
+  CONSTELLATIONS.forEach(function(con){
+    var conStars = [];
+    items.forEach(function(it){
+      if(it.type==='star' && it.con === con.name) conStars.push(it);
+    });
+    if(conStars.length < 4) return; // 3 o meno stelle: niente pruning
+    var minD = Infinity;
+    for(var i=0;i<conStars.length;i++){
+      for(var j=i+1;j<conStars.length;j++){
+        var dx=conStars[i].x-conStars[j].x;
+        var dy=conStars[i].y-conStars[j].y;
+        var d=Math.sqrt(dx*dx+dy*dy);
+        if(d<minD) minD=d;
+      }
+    }
+    var crowdingThreshold = w * 0.055;
+    if(minD < crowdingThreshold){
+      crowdedConstellations[con.name] = true;
+      conStars.sort(function(a,b){
+        if(a.mag !== b.mag) return a.mag - b.mag;
+        return b.R - a.R;
+      });
+      conStars.slice(0,3).forEach(function(s){ keepStarSet[s.name] = true; });
+    }
+  });
+
+  // Disegna stelle (con pruning se la costellazione è affollata)
   items.forEach(function(it){
     if(it.type==='star'){
+      if(it.con && crowdedConstellations[it.con] && !keepStarSet[it.name]) return;
       drawStar(ctx, it.x, it.y, it.mag, it.sp, it.R, dpr);
     }
   });
@@ -1468,6 +1520,8 @@ function drawPlanisphere(){
 
   var occupied=[];
   items.forEach(function(it){
+    // Salta le stelle eliminate dal pruning: non occupano spazio
+    if(it.type==='star' && it.con && crowdedConstellations[it.con] && !keepStarSet[it.name]) return;
     var blocker;
     if(it.type==='sun') blocker={x1:it.x-iconR*2.4,y1:it.y-iconR*2.4,x2:it.x+iconR*2.4,y2:it.y+iconR*2.4};
     else if(it.type==='moon') blocker={x1:it.x-iconR*1.6,y1:it.y-iconR*1.6,x2:it.x+iconR*1.6,y2:it.y+iconR*1.6};
@@ -1490,9 +1544,12 @@ function drawPlanisphere(){
 
   var fontBase=Math.max(11*dpr,w*0.020);
 
-  // Filtro: le stelle non significative restano puntini senza nome
+  // Filtro: solo stelle significative E non eliminate dal pruning affollamento
   var labelItems=items.filter(function(it){
-    if(it.type==='star' && !it.label) return false;
+    if(it.type==='star'){
+      if(!it.label) return false;
+      if(it.con && crowdedConstellations[it.con] && !keepStarSet[it.name]) return false;
+    }
     return true;
   }).sort(function(a,b){
     var pa = (a.type==='star')?100+a.mag:a.priority;
@@ -1523,7 +1580,6 @@ function drawPlanisphere(){
           var rad=angles[ai]*Math.PI/180;
           var tx=it.x+Math.cos(rad)*dist;
           var ty=it.y+Math.sin(rad)*dist;
-          // ★ Padding 5 px per garantire separazione tra lettere vicine
           var box={x1:tx-tw/2-5,y1:ty-th/2-5,x2:tx+tw/2+5,y2:ty+th/2+5};
           if(box.x1<2 || box.y1<2 || box.x2>w-2 || box.y2>h-2) continue;
           var dco=Math.hypot(tx-cx,ty-cy);
@@ -1538,8 +1594,7 @@ function drawPlanisphere(){
       if(bestScore<50)break;
     }
 
-    // ★ Fallback: se non c'è posto nemmeno con font minimo → salta il nome
-    //   (meglio nessun nome che lettere coperte da un'altra etichetta)
+    // Fallback: se non c'è posto nemmeno con font minimo → salta il nome
     if(!chosen && it.type!=='star'){
       var fsize=Math.max(8*dpr, baseFont*0.55);
       ctx.font='700 '+fsize+'px sans-serif';
@@ -1575,7 +1630,7 @@ function drawPlanisphere(){
     else if(it.key==='Neptune') fill='#8fb4f5';
     else if(it.type==='moon'||it.type==='sun'||it.key==='Venus') fill='#fff2cc';
     else fill='#e7edf6';
-    // ★ Ombra sfocata — nessun rettangolo nero
+    // Ombra sfocata — nessun rettangolo nero
     ctx.shadowColor='rgba(7,12,22,0.95)';
     ctx.shadowBlur=Math.max(3*dpr, chosen.fsize*0.28);
     ctx.shadowOffsetX=0;
@@ -1585,15 +1640,15 @@ function drawPlanisphere(){
     ctx.shadowBlur=0;
   });
 
-  // ★ NOMI COSTELLAZIONI — bold italic, più grandi e visibili
+  // ★ NOMI COSTELLAZIONI — bold italic, dimensione ridotta
   constellationLabelPts.forEach(function(cp){
-    var baseFont=Math.max(12*dpr,w*0.023);
+    var baseFont=Math.max(10*dpr,w*0.017);
     var chosen=null, bestScore=Infinity;
     var cAngles=[0,30,60,90,120,150,180,210,240,270,300,330];
     var cDists=[0, 14*dpr, 26*dpr, 40*dpr, 56*dpr, 74*dpr];
     var cScales=[1.0, 0.88, 0.78, 0.68];
     for(var fi=0; fi<cScales.length; fi++){
-      var fsize=Math.max(10*dpr, baseFont*cScales[fi]);
+      var fsize=Math.max(9*dpr, baseFont*cScales[fi]);
       ctx.font='800 italic '+fsize+'px Georgia,serif';
       var tw=ctx.measureText(cp.name).width;
       var th=fsize*1.25;
@@ -1602,7 +1657,6 @@ function drawPlanisphere(){
           var rad=cAngles[ai]*Math.PI/180;
           var tx=cp.x+Math.cos(rad)*cDists[di];
           var ty=cp.y+Math.sin(rad)*cDists[di];
-          // ★ Padding 6 px per non toccare i nomi stellari vicini
           var box={x1:tx-tw/2-6,y1:ty-th/2-6,x2:tx+tw/2+6,y2:ty+th/2+6};
           if(box.x1<2||box.y1<2||box.x2>w-2||box.y2>h-2) continue;
           var dco=Math.hypot(tx-cx,ty-cy);
@@ -1615,7 +1669,7 @@ function drawPlanisphere(){
       }
       if(bestScore<50)break;
     }
-    // ★ Se collisione persiste, meglio non stampare il nome
+    // Se collisione persiste, meglio non stampare il nome
     if(!chosen || bestScore>=200) return;
     occupied.push(chosen.box);
     ctx.font='800 italic '+chosen.fsize+'px Georgia,serif';
