@@ -13,22 +13,8 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23070c16'/%3E%3Ccircle cx='50' cy='50' r='34' fill='%23f2b84b'/%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23070c16'/%3E%3Ccircle cx='50' cy='50' r='34' fill='%23f2b84b'/%3E%3C/svg%3E">
 <style>
-:root{
-  --bg:#070c16;--panel:#0f1828;--panel-2:#0a111d;--line:#1c2d46;
-  --text:#e7edf6;--muted:#8ca0ba;--muted-2:#586982;
-  --amber:#f2b84b;--cyan:#51a0d5;--green:#2ecc71;--red:#e74c3c;
-  --mono:ui-monospace,"SF Mono","Roboto Mono",Consolas,monospace;
-  --sans:Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --pad-x:clamp(8px,2.5vw,14px);--pad-y:clamp(8px,2vw,12px);--gap:clamp(6px,2vw,10px);--radius:clamp(6px,1.6vw,8px);
-  --fs-xs:clamp(9.5px,2.6vw,11px);--fs-sm:clamp(10.5px,2.9vw,12px);--fs-base:clamp(11.5px,3.2vw,12.5px);
-  --fs-md:clamp(12.5px,3.4vw,13.5px);--fs-lg:clamp(14px,3.8vw,16.5px);--fs-xl:clamp(16px,4.4vw,19px);
-  --fs-2xl:clamp(19px,5.2vw,23px);--fs-3xl:clamp(20px,5.6vw,24px);
-}
-body.red-mode{
-  --bg:#030000;--panel:#120000;--panel-2:#080000;--line:#3b0000;
-  --text:#ff5555;--muted:#aa3333;--muted-2:#661111;
-  --amber:#ff3333;--cyan:#ff4444;--green:#ff2222;--red:#ff0000;
-}
+:root{--bg:#070c16;--panel:#0f1828;--panel-2:#0a111d;--line:#1c2d46;--text:#e7edf6;--muted:#8ca0ba;--muted-2:#586982;--amber:#f2b84b;--cyan:#51a0d5;--green:#2ecc71;--red:#e74c3c;--mono:ui-monospace,"SF Mono","Roboto Mono",Consolas,monospace;--sans:Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--pad-x:clamp(8px,2.5vw,14px);--pad-y:clamp(8px,2vw,12px);--gap:clamp(6px,2vw,10px);--radius:clamp(6px,1.6vw,8px);--fs-xs:clamp(9.5px,2.6vw,11px);--fs-sm:clamp(10.5px,2.9vw,12px);--fs-base:clamp(11.5px,3.2vw,12.5px);--fs-md:clamp(12.5px,3.4vw,13.5px);--fs-lg:clamp(14px,3.8vw,16.5px);--fs-xl:clamp(16px,4.4vw,19px);--fs-2xl:clamp(19px,5.2vw,23px);--fs-3xl:clamp(20px,5.6vw,24px)}
+body.red-mode{--bg:#030000;--panel:#120000;--panel-2:#080000;--line:#3b0000;--text:#ff5555;--muted:#aa3333;--muted-2:#661111;--amber:#ff3333;--cyan:#ff4444;--green:#ff2222;--red:#ff0000}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior-y:contain}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:var(--fs-base);line-height:1.5;padding:calc(var(--pad-y) + env(safe-area-inset-top)) var(--pad-x) calc(40px + env(safe-area-inset-bottom));max-width:520px;margin:0 auto;-webkit-font-smoothing:antialiased;touch-action:manipulation;user-select:none;-webkit-user-select:none;overflow-wrap:break-word;word-break:break-word;transition:background-color 0.25s ease,color 0.25s ease}
@@ -44,37 +30,17 @@ header{border-bottom:2px solid var(--line);padding-bottom:var(--gap);margin-bott
 .btn-ui{background:var(--panel-2);border:1px solid var(--line);color:var(--cyan);font-size:var(--fs-sm);padding:8px 12px;border-radius:6px;font-family:var(--mono);min-height:38px;display:inline-flex;align-items:center;justify-content:center}
 .btn-ui:active{background:var(--line);transform:scale(0.97)}
 .btn-ui:disabled{opacity:0.4;cursor:not-allowed}
-.red-mode-banner{
-  display:flex;align-items:center;gap:10px;width:100%;
-  background:linear-gradient(135deg,rgba(231,76,60,0.15),rgba(231,76,60,0.05));
-  border:2px solid var(--red);color:var(--red);
-  font-family:var(--mono);font-size:var(--fs-sm);font-weight:700;
-  padding:11px 14px;border-radius:8px;margin-bottom:var(--gap);
-  text-align:left;line-height:1.35;min-height:52px;
-  transition:background 0.2s ease,box-shadow 0.2s ease;
-  animation:redPulse 3s ease-in-out infinite;
-}
+.red-mode-banner{display:flex;align-items:center;gap:10px;width:100%;background:linear-gradient(135deg,rgba(231,76,60,0.15),rgba(231,76,60,0.05));border:2px solid var(--red);color:var(--red);font-family:var(--mono);font-size:var(--fs-sm);font-weight:700;padding:11px 14px;border-radius:8px;margin-bottom:var(--gap);text-align:left;line-height:1.35;min-height:52px;transition:background 0.2s ease,box-shadow 0.2s ease;animation:redPulse 3s ease-in-out infinite}
 .red-mode-banner:active{transform:scale(0.98)}
-.red-mode-banner.active{
-  background:linear-gradient(135deg,rgba(231,76,60,0.35),rgba(231,76,60,0.18));
-  box-shadow:0 0 18px rgba(231,76,60,0.55),inset 0 0 12px rgba(231,76,60,0.25);
-  animation:none;
-}
+.red-mode-banner.active{background:linear-gradient(135deg,rgba(231,76,60,0.35),rgba(231,76,60,0.18));box-shadow:0 0 18px rgba(231,76,60,0.55),inset 0 0 12px rgba(231,76,60,0.25);animation:none}
 .red-mode-banner .red-icon{font-size:22px;flex-shrink:0;line-height:1}
 .red-mode-banner .red-text{flex:1;min-width:0}
 .red-mode-banner .red-title{display:block;font-size:var(--fs-md);letter-spacing:0.03em}
 .red-mode-banner .red-sub{display:block;font-size:var(--fs-xs);font-weight:400;opacity:0.85;margin-top:2px;line-height:1.35}
-.red-mode-banner .red-status{
-  flex-shrink:0;font-size:9.5px;padding:3px 8px;border-radius:4px;
-  border:1px solid currentColor;background:rgba(0,0,0,0.25);
-  font-weight:700;white-space:nowrap;letter-spacing:0.05em;
-}
+.red-mode-banner .red-status{flex-shrink:0;font-size:9.5px;padding:3px 8px;border-radius:4px;border:1px solid currentColor;background:rgba(0,0,0,0.25);font-weight:700;white-space:nowrap;letter-spacing:0.05em}
 .red-mode-banner.active .red-status::before{content:"● ATTIVA";}
 .red-mode-banner:not(.active) .red-status::before{content:"○ OFF";}
-@keyframes redPulse{
-  0%,100%{box-shadow:0 0 8px rgba(231,76,60,0.35),inset 0 0 6px rgba(231,76,60,0.1)}
-  50%{box-shadow:0 0 18px rgba(231,76,60,0.65),inset 0 0 10px rgba(231,76,60,0.2)}
-}
+@keyframes redPulse{0%,100%{box-shadow:0 0 8px rgba(231,76,60,0.35),inset 0 0 6px rgba(231,76,60,0.1)}50%{box-shadow:0 0 18px rgba(231,76,60,0.65),inset 0 0 10px rgba(231,76,60,0.2)}}
 .loc-search-box{display:flex;gap:var(--gap);margin:var(--gap) 0 6px}
 .loc-search-box input{flex:1;min-width:0;background:var(--panel-2);border:1px solid var(--line);color:var(--text);padding:10px 12px;border-radius:6px;font-size:16px;font-family:var(--sans);outline:none}
 .loc-search-box input:focus{border-color:var(--cyan)}
@@ -89,7 +55,7 @@ header{border-bottom:2px solid var(--line);padding-bottom:var(--gap);margin-bott
 .navrow button:active:not(:disabled){background:var(--line);transform:scale(0.97)}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:var(--pad-y) var(--pad-x);margin-bottom:var(--gap)}
 .card-head{font-size:var(--fs-sm);font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.03em;margin-bottom:var(--gap);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-.astro-debug{font-family:var(--mono);font-size:11px;color:var(--muted);background:var(--panel-2);border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin-bottom:var(--gap);line-height:1.55;white-space:pre;overflow-x:auto}
+.astro-debug{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:11px;color:var(--muted);background:var(--panel-2);border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin-bottom:var(--gap);line-height:1.55;white-space:pre;overflow-x:auto}
 .astro-debug .dbg-title{color:var(--amber);font-weight:700;display:block;margin-bottom:6px;font-size:11px;letter-spacing:0.05em}
 .astro-debug .up{color:var(--green);font-weight:700}
 .astro-debug .down{color:var(--red);font-weight:700}
@@ -215,7 +181,6 @@ details.collapse > div{padding:10px var(--pad-x);border-top:1px solid var(--line
 .moon-tab:active{transform:scale(0.97)}
 .moon-tab.active{border-color:var(--amber);color:var(--amber);font-weight:600;background:rgba(242,184,75,0.08)}
 .moon-tab-content{animation:fadeIn 0.22s ease}
-/* --- FIX #5: CSS mancante per i filtri del globo --- */
 .moon-filter-bar{display:flex;flex-wrap:wrap;gap:5px;margin:10px 0 12px}
 .moon-filter{flex:1 1 auto;min-width:calc(20% - 4px);background:var(--panel-2);border:1px solid var(--line);color:var(--muted);padding:9px 6px;border-radius:6px;font-size:var(--fs-xs);font-family:var(--mono);min-height:38px;white-space:nowrap;line-height:1.2;transition:all 0.15s;cursor:pointer;text-align:center}
 .moon-filter:active{transform:scale(0.97)}
@@ -375,7 +340,7 @@ footer{margin-top:20px;padding-top:12px;border-top:1px solid var(--line);font-si
 <div class="card planisphere-card" id="planisphereCard">
   <div class="planisphere-head">
     <div class="planisphere-title">PLANISFERO CELESTE LOCALE</div>
-    <div class="planisphere-sub">Zenit al centro · Orizzonte sul bordo</div>
+    <div class="planisphere-sub">Zenit al centro · Est a sinistra (convenzione celeste)</div>
   </div>
   <div class="planisphere-controls">
     <button type="button" id="btnPlanisphereNow">ORA</button>
@@ -411,7 +376,7 @@ footer{margin-top:20px;padding-top:12px;border-top:1px solid var(--line);font-si
     <div><span class="label">Vento a terra (10 m):</span><span class="val" id="mWind10">-- km/h</span></div>
     <div><span class="label">Vento 1.500 m (850 hPa):</span><span class="val" id="mWind850">-- km/h</span></div>
     <div><span class="label">Vento Quota (250 hPa Jet):</span><span class="val" id="mJet">-- km/h</span></div>
-    <div><span class="label">Indice Kp Solare:</span><span class="val" id="mKp">--</span></div>
+    <div><span class="label">Indice Kp geomagnetico:</span><span class="val" id="mKp">--</span></div>
     <div class="row-full"><span class="label">Condensa, Δ aria-rugiada:</span><span id="mCond">--</span></div>
     <div class="row-full"><span class="label">Seeing:</span><span id="mSeeing">--</span></div>
   </div>
@@ -617,21 +582,10 @@ function safeGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
 function safeSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
 var arCalibAz  = parseFloat(safeGet('astroalert_ar_calib_az')  || '0') || 0;
 var arCalibAlt = parseFloat(safeGet('astroalert_ar_calib_alt') || '0') || 0;
-var OBS_TIMEZONE = 'Europe/Rome';
+var OBS_TIMEZONE = (Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC');
 
-/* ═══════════════════════════════════════════════════════════════
-   ★ FIX #1 — FUSO ORARIO DELL'OSSERVATORE
-   Tutte le date usate per le ricerche (tramonto, alba, mezzanotte,
-   "stanotte", +/- giorni) sono costruite nel fuso dell'osservatore
-   (OBS_TIMEZONE), non nel fuso del browser/dispositivo.
-   ═══════════════════════════════════════════════════════════════ */
 function obsDateParts(d){
-  var parts=new Intl.DateTimeFormat('en-CA',{
-    timeZone:OBS_TIMEZONE,
-    year:'numeric',month:'2-digit',day:'2-digit',
-    hour:'2-digit',minute:'2-digit',second:'2-digit',
-    hourCycle:'h23'
-  }).formatToParts(d);
+  var parts=new Intl.DateTimeFormat('en-CA',{timeZone:OBS_TIMEZONE,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(d);
   var o={};parts.forEach(function(p){if(p.type!=='literal')o[p.type]=p.value;});
   return o;
 }
@@ -675,23 +629,14 @@ function obsDateFmt(opts){
 
 var activeDate = obsNowActiveDate();
 
-/* ★ FIX #4 — DECLINAZIONE MAGNETICA (WMM semplificato per l'Italia) */
 function magneticDeclination(lat, lon){
-  // Approssimazione WMM 2025-2026, valida su Italia/Mediterraneo
-  // con errore < 1°. Fuori dall'area, molto grossolana.
-  if(lat>=35 && lat<=48 && lon>=5 && lon<=20){
-    return 3.5 + 0.05*(lat-42) - 0.10*(lon-12);
-  }
-  if(lat>=35 && lat<=60 && lon>=-15 && lon<=30){
-    // Europa centrale: valore tipico 0..5
-    return 2.5 + 0.03*(lat-48);
-  }
+  if(lat>=35 && lat<=48 && lon>=5 && lon<=20){return 3.5 + 0.05*(lat-42) - 0.10*(lon-12);}
+  if(lat>=35 && lat<=60 && lon>=-15 && lon<=30){return 2.5 + 0.03*(lat-48);}
   return 0;
 }
 var OBS_MAG_DECL = magneticDeclination(loc.lat, loc.lon);
 function updateMagDecl(){ OBS_MAG_DECL = magneticDeclination(loc.lat, loc.lon); }
 
-/* ★ FIX #7 — SOGLIA SOLE PER "VISIBILE ORA" */
 function sunAltThreshold(mag){
   if(mag === null || mag === undefined || isNaN(mag)) return -0.833;
   if(mag <= 0.5) return -0.833;
@@ -699,32 +644,28 @@ function sunAltThreshold(mag){
   if(mag <= 4.0) return -12;
   return -18;
 }
-function isObservableUnderSun(sunAlt, mag){
-  return sunAlt <= sunAltThreshold(mag);
-}
+function isObservableUnderSun(sunAlt, mag){return sunAlt <= sunAltThreshold(mag);}
 
 var activeRadarCleanup = null;
 function compassDir(az){var i=Math.round(az/22.5)%16;if(i<0)i+=16;return COMPASS[i];}
-function fmtTime(d){if(!d)return"--:--";return new Intl.DateTimeFormat('it-IT',{timeZone:OBS_TIMEZONE,hour:'2-digit',minute:'2-digit'}).format(d);}
+function fmtTime(d){if(!d)return"--:--";return new Intl.DateTimeFormat('it-IT',{timeZone:OBS_TIMEZONE,hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(d);}
 function hoursBetween(a,b){return (b.getTime()-a.getTime())/3600000;}
 function addHours(d,h){return new Date(d.getTime()+h*3600000);}
 function toast(msg,ms){
   var el=document.createElement('div');
-  el.className='toast';
-  el.textContent=msg;
-  document.body.appendChild(el);
+  el.className='toast';el.textContent=msg;document.body.appendChild(el);
   setTimeout(function(){el.style.opacity='0';}, (ms||3000)-300);
   setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);}, (ms||3000));
 }
 function padLabel(label, width){var w=width||22;var s=String(label);while(s.length<w)s+=' ';return s;}
 function fmtSystemUTC(d){var y=d.getUTCFullYear();var mo=String(d.getUTCMonth()+1).padStart(2,'0');var da=String(d.getUTCDate()).padStart(2,'0');var hh=String(d.getUTCHours()).padStart(2,'0');var mm=String(d.getUTCMinutes()).padStart(2,'0');var ss=String(d.getUTCSeconds()).padStart(2,'0');return da+'/'+mo+'/'+y+' '+hh+':'+mm+':'+ss+' UTC';}
+function fmtLocalDateTime(d){if(!d)return"--/--/---- --:--:--";var p=new Intl.DateTimeFormat('en-CA',{timeZone:OBS_TIMEZONE,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(d),o={};p.forEach(function(x){if(x.type!=='literal')o[x.type]=x.value;});return o.day+'/'+o.month+'/'+o.year+' '+o.hour+':'+o.minute+':'+o.second;}
 function magBrightnessClass(mag){if(mag<=-2)return"mag-super";if(mag<=0)return"mag-bright";if(mag<=2)return"mag-mid";if(mag<=4.5)return"mag-low";if(mag<=6)return"mag-dim";return"mag-faint";}
 function magHTML(mag){return '<span class="mag-label">Mag</span> <span class="mag-value">'+Number(mag).toFixed(1)+'</span>';}
 function magSpan(mag){return '<span class="pmag '+magBrightnessClass(mag)+'">'+magHTML(mag)+'</span>';}
 function isAndroid(){return /Android/i.test(navigator.userAgent);}
 function dateToIsoHourStr(d){var parts=new Intl.DateTimeFormat('en-CA',{timeZone:OBS_TIMEZONE,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'}).formatToParts(d);var o={};parts.forEach(function(p){if(p.type!=='literal')o[p.type]=p.value;});return o.year+'-'+o.month+'-'+o.day+'T'+o.hour+':00';}
-function zonedHourKey(d){return dateToIsoHourStr(d);}
-function findHourlyIndex(times, dateObj){if(!times||!times.length||!dateObj)return -1;var key=zonedHourKey(dateObj);for(var i=0;i<times.length;i++){if(times[i]===key)return i;}return -1;}
+function findHourlyIndex(times, dateObj){if(!times||!times.length||!dateObj)return -1;var key=dateToIsoHourStr(dateObj);for(var i=0;i<times.length;i++){if(times[i]===key)return i;}return -1;}
 function daysFromToday(d){return obsDaysFromToday(d);}
 function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 var METRIC_MIN_PX=11,METRIC_MAX_PX=20,_fitScheduled=false;
@@ -811,7 +752,6 @@ var LUNAR_LANDING_SITES = [
   {name:"Chang'e 3", lat:44.12, lon:-19.51, year:2013, country:'Cina', mission:'Yutu rover', desc:'Mare Imbrium'},
   {name:"Chang'e 5", lat:43.06, lon:-51.92, year:2020, country:'Cina', mission:'Ritorno campioni', desc:'Mons Rümker'},
   {name:'Chandrayaan-3', lat:-69.37, lon:32.35, year:2023, country:'India', mission:'Primo atterraggio vicino al polo sud', desc:'Polo Sud'},
-  /* ★ FIX #3 — SLIM: descrizione corretta */
   {name:'SLIM', lat:-13.3, lon:25.2, year:2024, country:'Giappone', mission:'Precision landing (~100 m)', desc:'Cratere Shioli, margine del Mare Nectaris'},
   {name:'IM-1 Odysseus', lat:-80.13, lon:1.44, year:2024, country:'USA (privato)', mission:'Primo lander commerciale', desc:'Polo Sud (Malapert A)'}
 ];
@@ -833,7 +773,6 @@ var LUNAR_MARIA = [
   {name:'Mare Imbrium', nameIt:'Mare delle Piogge', lat:32.8, lon:-15.6, area:1129000, desc:'Il più grande mare singolo'},
   {name:'Mare Crisium', nameIt:'Mare delle Crisi', lat:17.0, lon:59.1, area:176000, desc:'Mare isolato e ben delimitato'},
   {name:'Mare Fecunditatis', nameIt:'Mare della Fecondità', lat:-7.8, lon:51.3, area:326000, desc:'Sito Luna 16 e Luna 20'},
-  /* ★ FIX #3 — coerente con SLIM a Shioli, non al centro del mare */
   {name:'Mare Nectaris', nameIt:'Mare del Nettare', lat:-15.2, lon:35.5, area:100000, desc:'Confina a sud col cratere Shioli (sito SLIM)'},
   {name:'Oceanus Procellarum', nameIt:'Oceano delle Tempeste', lat:18.4, lon:-57.4, area:4000000, desc:"L'unico 'oceanus'"},
   {name:'Mare Humorum', nameIt:"Mare dell'Umidità", lat:-24.4, lon:-38.6, area:389000, desc:'Circondato da scarpate'},
@@ -848,6 +787,7 @@ var LUNAR_MOUNTAINS = [
   {name:'Montes Recti', nameIt:'Monti Diritti', lat:48.3, lon:-19.5, length:90, desc:'Catena rettilinea'},
   {name:'Montes Riphaeus', nameIt:'Rifei', lat:7.7, lon:-28.1, length:190, desc:'Resti di anelli di bacino'}
 ];
+
 function getFixedBody(obj){
   if(!obj || typeof obj.ra!=='number' || typeof obj.dec!=='number') return null;
   try{
@@ -881,7 +821,6 @@ function getSunState(obs, t){
   var alt = hor.altitude;
   return {alt:alt, isUp:alt>0, isDay:alt>-0.833, isCivilTwilight:alt<=-0.833&&alt>-6, isNauticalTwilight:alt<=-6&&alt>-12, isAstronomicalTwilight:alt<=-12&&alt>-18, isNight:alt<=-18};
 }
-/* ★ FIX #1 — base a mezzogiorno dell'OSSERVATORE, non del browser */
 function getNightWindow(obs,anchorDate){
   var base=obsNoon(anchorDate);
   var sunset=A.SearchRiseSet(A.Body.Sun,obs,-1,base,1);
@@ -1021,7 +960,6 @@ function compareTargets(a,b){
   return (b.alt||0)-(a.alt||0);
 }
 
-/* ★ Catalogo stelle del planisfero */
 var PLANISPHERE_STARS = [
   {name:'Sirio',      ra:6.7525,  dec:-16.7161, mag:-1.46, sp:'A', R:1.7,   label:true},
   {name:'Arturo',     ra:14.2610, dec:19.1824,  mag:-0.05, sp:'K', R:25.4,  label:true},
@@ -1051,7 +989,6 @@ var PLANISPHERE_STARS = [
   {name:'Mimosa',     ra:12.7953, dec:-59.6888, mag:1.25,  sp:'B', R:8.0,   label:true},
   {name:'Acrux',      ra:12.4433, dec:-63.0991, mag:0.77,  sp:'B', R:7.8,   label:true},
   {name:'Shaula',     ra:17.5601, dec:-37.1038, mag:1.62,  sp:'B', R:8.0,   label:true},
-  /* ★ FIX #2 — aggiunta Sargas (θ Sco) per la coda dello Scorpione */
   {name:'Sargas',     ra:17.6220, dec:-42.9978, mag:1.86,  sp:'F', R:20.0,  label:true},
   {name:'Saiph',      ra:5.7959,  dec:-9.6696,  mag:2.06,  sp:'B', R:11.0,  label:false},
   {name:'Schedar',    ra:0.6751,  dec:56.5373,  mag:2.24,  sp:'K', R:42.0,  label:true},
@@ -1063,10 +1000,7 @@ var PLANISPHERE_STARS = [
   {name:'Megrez',     ra:12.2571, dec:57.0326,  mag:3.31,  sp:'A', R:1.7,   label:false}
 ];
 
-var SPECTRAL_COLORS = {
-  O:'#9bb0ff', B:'#aabfff', A:'#cad7ff', F:'#f8f7ff',
-  G:'#fff4ea', K:'#ffd2a1', M:'#ffcc6f'
-};
+var SPECTRAL_COLORS = {O:'#9bb0ff', B:'#aabfff', A:'#cad7ff', F:'#f8f7ff', G:'#fff4ea', K:'#ffd2a1', M:'#ffcc6f'};
 function starColor(sp){return SPECTRAL_COLORS[sp] || '#cad7ff';}
 function starDotRadius(R, dpr){
   var lr = Math.log10(Math.max(1, R));
@@ -1128,8 +1062,6 @@ var CONSTELLATIONS = [
     [12.4433, -63.0991, 12.5194, -57.1132],
     [12.7953, -59.6888, 12.2525, -58.7489],
   ]},
-  /* ★ FIX #2 — Scorpione: usare Sargas (θ Sco 17.6220, -42.9978) e Shaula
-     (λ Sco 17.5601, -37.1038) invece del punto fittizio 17.2025. */
   { name:'Scorpione', label:{ra:17.2, dec:-35}, lines:[
     [16.4901, -26.4320, 16.8362, -34.2933],
     [16.8362, -34.2933, 17.6220, -42.9978],
@@ -1155,7 +1087,6 @@ function planisphereNightWindow(obs){
   if(night.start&&night.end&&night.end.getTime()>night.start.getTime()+5*60000){
     return {start:night.start,end:night.end,label:'Finestra notturna'};
   }
-  /* ★ FIX #1 — fallback a mezzanotte dell'osservatore */
   return {start:addHours(obsMidnight(activeDate),20),end:addHours(obsMidnight(activeDate),30),label:'Orario di fallback'};
 }
 function ensurePlanisphereClock(force){
@@ -1372,6 +1303,8 @@ function drawStar(ctx, x, y, mag, sp, R, dpr){
     ctx.stroke();
   }
 }
+
+/* ★ drawPlanisphere — convenzione celeste: Est a sinistra, Ovest a destra */
 function drawPlanisphere(){
   var canvas=document.getElementById('skyCanvas');
   if(!canvas||typeof A==='undefined')return;
@@ -1407,14 +1340,19 @@ function drawPlanisphere(){
   ctx.font='900 '+cardFont+'px ui-monospace,monospace';
   ctx.fillStyle='#f2b84b';ctx.textAlign='center';ctx.textBaseline='middle';
   var cardOffset=Math.round(cardinalPad*0.55);
+  /* ★ Etichette cardinali con EST a SINISTRA e OVEST a DESTRA (convenzione celeste) */
   ctx.fillText('N',cx,cy-R-cardOffset);
   ctx.fillText('S',cx,cy+R+cardOffset);
-  ctx.fillText('E',cx+R+cardOffset,cy);
-  ctx.fillText('O',cx-R-cardOffset,cy);
+  ctx.fillText('E',cx-R-cardOffset,cy);
+  ctx.fillText('O',cx+R+cardOffset,cy);
+  /* ★ Proiezione speculare: E/O invertiti, N/S invariati.
+     Motivo: N in alto, S in basso → specchiamo solo l'asse x.
+     Così la direzione apparente del moto dei corpi risulta invertita
+     coerentemente (sorgere a Est = sinistra, tramontare a Ovest = destra). */
   function project(alt,az){
     var r=R*(1-alt/90);
     var th=(az-90)*Math.PI/180;
-    return {x:cx+r*Math.cos(th),y:cy+r*Math.sin(th)};
+    return {x:cx-r*Math.cos(th),y:cy+r*Math.sin(th)};
   }
   var obs=new A.Observer(loc.lat,loc.lon,loc.elev);
   var muted=css.getPropertyValue('--muted').trim()||'#8ca0ba';
@@ -1784,7 +1722,6 @@ function renderNightTargets(obs,tStart,tEnd,planetCandidates,moonInfo,sunState){
   planetCandidates.forEach(function(p){
     var transit=findTransitTime(p.key,null,obs,tStart,tEnd);
     var cur=currentAltAz(A.Body[p.key],obs,now);
-    /* ★ FIX #7 — soglia crepuscolo dipendente dalla magnitudine */
     var observableNow=cur.isUp && isObservableUnderSun(sunState.alt, p.mag);
     out.push({kind:'planet', name:p.name, alt:p.maxAlt, az:p.maxAz, time:p.maxTime, mag:p.mag,
       distObj:formatDistanceLines(p.distKm,false), massObj:formatMassLines(PLANET_DATA[p.key].massRatio),
@@ -1827,7 +1764,7 @@ function renderNightTargets(obs,tStart,tEnd,planetCandidates,moonInfo,sunState){
     else if(x.isGeomUp&&sunState.isDay) visTag='<span class="tag day">SOPRA MA NON VISIBILE</span>';
     else if(x.isGeomUp) visTag='<span class="tag low">SOPRA (LUCE SOLARE)</span>';
     else visTag='<span class="tag no">SOTTO ORIZZONTE</span>';
-    var moonWarn=x.moonPenalty?'<span class="moon-warn">Criterio orientativo: Luna illuminata &gt;40%, alt &gt;25° e separazione &lt;30°. Non è una previsione quantitativa del contrasto.</span>':'';
+    var moonWarn=x.moonPenalty?'<span class="moon-warn">Criterio orientativo: Luna illuminata &gt;40%, alt &gt;25° e separazione &lt;30°.</span>':'';
     var infoText=visTag+'<span>Verso <b>'+compassDir(x.az)+'</b> ('+Math.round(x.az)+'°), <b>'+Math.round(x.alt)+'°</b> sopra orizzonte alle <b>'+fmtTime(x.time)+'</b>.</span>'+magSpan(x.mag);
     var transitLine = x.transit ? '<div class="compact-metric">Culmina alle <b>'+fmtTime(x.transit)+'</b></div>' : '';
     return '<div class="target-card" data-kind="'+x.kind+'" data-tidx="'+idx+'">'
@@ -1912,7 +1849,6 @@ function openCelestialModal(arg,atDate){
   if(desc.body){var bodyKey = isMoon ? 'Moon' : desc.key;transit = findTransitTime(bodyKey, null, obs, win.start, win.end);}
   else {transit = findTransitTime(null, desc, obs, win.start, win.end);}
   var posTxt;
-  /* ★ FIX #7 — soglia crepuscolo dipendente dalla magnitudine */
   var observabilitySunOK = mag!==null && isObservableUnderSun(sunState.alt, mag);
   if(horNow.altitude <= 0)posTxt = 'In questo momento si trova <b>sotto l\'orizzonte</b> (azimut '+compassDir(horNow.azimuth)+' '+Math.round(horNow.azimuth)+'°).';
   else if(!observabilitySunOK)posTxt = 'Geometricamente è a <b>'+Math.round(horNow.altitude)+'°</b> sopra l\'orizzonte verso <b>'+compassDir(horNow.azimuth)+'</b>, ma il cielo è <b>troppo luminoso per questa magnitudine</b>.';
@@ -1970,9 +1906,6 @@ function startAR(arg){
   document.getElementById('arDebugToggle').addEventListener('click',function(){var d=document.getElementById('arDebug'); if(d) d.classList.toggle('hidden');});
   phonePitch=null; phoneHeading=null;
   phoneRawAlpha=null; phoneRawBeta=null; phoneRawGamma=null;
-  /* ★ FIX #4 — Declinazione magnetica applicata al heading magnetico.
-     iOS webkitCompassHeading è già riferito al nord geografico → nessuna correzione.
-     Android deviceorientationabsolute alpha è riferito al nord magnetico → aggiungo OBS_MAG_DECL. */
   function onOrientation(e){
     phoneRawAlpha = (typeof e.alpha==='number')?e.alpha:null;
     phoneRawBeta  = (typeof e.beta ==='number')?e.beta :null;
@@ -2111,7 +2044,6 @@ function openRadar(highlightDesc){
   document.getElementById('modalRoot').innerHTML = html;
   document.body.classList.add('modal-open');
   var lastRenderedHeading = null;
-  /* ★ FIX #4 — anche in radar, applico la declinazione magnetica al heading magnetico */
   function radarOrientation(e){
     if(e.webkitCompassHeading!==undefined && e.webkitCompassHeading!==null){
       phoneHeading=(e.webkitCompassHeading + 360) % 360;
@@ -2127,7 +2059,6 @@ function openRadar(highlightDesc){
     var w = document.getElementById('radarWrap');if(!w) return;
     var size = Math.min(window.innerWidth - 24, 440);
     var heading = (phoneHeading !== null) ? ((phoneHeading + arCalibAz) % 360 + 360) % 360 : null;
-    /* ★ FIX #8 — wrap 359↔1 nel confronto anti-jitter */
     if(heading !== null && lastRenderedHeading !== null){
       var dh = heading - lastRenderedHeading;
       if(dh > 180) dh -= 360;
@@ -2175,7 +2106,7 @@ function renderLandingSites(){
   var el = document.getElementById('landingSitesList');
   if(!el || el.dataset.rendered === '1') return;
   el.dataset.rendered = '1';
-  var sCard = 'border:1px solid var(--line);background:var(--panel-2);border-radius:6px;padding:10px 12px;margin-bottom:6px;cursor:pointer;transition:border-color 0.15s,background 0.15s';
+  var sCard = 'border:1px solid var(--line);background:var(--panel-2);border-radius:6px;padding:10px 12px;margin-bottom:6px;cursor:pointer';
   var sName = 'font-size:var(--fs-md);font-weight:700;color:var(--text);line-height:1.3';
   var sMeta = 'font-size:var(--fs-sm);color:var(--muted);margin-top:4px;line-height:1.4';
   var sCoord = 'font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted);margin-top:3px';
@@ -2198,7 +2129,7 @@ function renderCratersAndMaria(){
   if(!el || el.dataset.rendered === '1') return;
   el.dataset.rendered = '1';
   var sLbl = 'font-family:var(--mono);font-size:var(--fs-xs);color:var(--amber);font-weight:700;letter-spacing:0.05em;margin:14px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--line)';
-  var sCard = 'border:1px solid var(--line);background:var(--panel-2);border-radius:6px;padding:10px 12px;margin-bottom:6px;cursor:pointer;transition:border-color 0.15s,background 0.15s';
+  var sCard = 'border:1px solid var(--line);background:var(--panel-2);border-radius:6px;padding:10px 12px;margin-bottom:6px;cursor:pointer';
   var sName = 'font-size:var(--fs-md);font-weight:700;color:var(--text);line-height:1.3';
   var sCoord = 'font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted);margin-top:3px';
   var sMeta = 'font-size:var(--fs-sm);color:var(--muted);margin-top:4px;line-height:1.4';
@@ -2465,8 +2396,7 @@ function updateAstroDebug(obs){
   var sunState = getSunState(obs, now);
   var lines=[];
   lines.push(padLabel('Ora sistema UTC:') + fmtSystemUTC(now));
-  /* ★ FIX #1 — mostra l'ora nel fuso dell'OSSERVATORE, non fisso su Europe/Rome */
-  lines.push(padLabel('Ora locale ('+OBS_TIMEZONE+'):') + now.toLocaleString('it-IT', {timeZone:OBS_TIMEZONE}));
+  lines.push(padLabel('Ora locale:') + fmtLocalDateTime(now));
   lines.push(padLabel('Osservatore:') + 'Lat. ' + loc.lat.toFixed(4) + '°   Lon. ' + loc.lon.toFixed(4) + '°   Elev. ' + loc.elev + ' m');
   lines.push(padLabel('Località:') + loc.name);
   lines.push(padLabel('Declinazione magn.:') + OBS_MAG_DECL.toFixed(1) + '° (stima AR)');
@@ -2507,7 +2437,6 @@ function updateAstro(){
   var sunState = getSunState(obs, now);
   updateAstroDebug(obs);
   var win=getNightWindow(obs,activeDate);
-  /* ★ FIX #1 — confronto "stasera" basato sul giorno dell'OSSERVATORE */
   var isTonight = sameObsDay(activeDate, new Date());
   var dateTitleFmt = obsDateFmt({weekday:'long',day:'numeric',month:'long',year:'numeric'});
   document.getElementById('dateTitle').textContent="Notte di "+dateTitleFmt.format(win.start)+(isTonight?' (stasera)':'');
@@ -2523,7 +2452,6 @@ function updateAstro(){
   var moonEqNow=A.Equator(A.Body.Moon,now,obs,true,true);
   var moonHorNow=A.Horizon(now,obs,moonEqNow.ra,moonEqNow.dec,'normal');
   var moonIsUpNow=moonHorNow.altitude>0;
-  /* La Luna è molto brillante: resta osservabile anche in crepuscolo civile */
   var moonObservable = moonIsUpNow && !sunState.isDay;
   var moonIllumNow=A.Illumination(A.Body.Moon,now);
   var moonMag=moonIllumNow.mag;
@@ -2583,7 +2511,6 @@ function updateAstro(){
     var isGeomUpNow=cur.isUp;
     var illumNow=A.Illumination(body,now);
     var magNow=illumNow.mag;
-    /* ★ FIX #7 — soglia crepuscolo dipendente dalla magnitudine */
     var isObservableNow=isGeomUpNow && isObservableUnderSun(sunState.alt, magNow);
     var nowRow;
     if(!isGeomUpNow) nowRow='<div class="nowpos dimtxt">Ora: sotto l\'orizzonte ('+Math.round(cur.hor.altitude)+'°)</div>';
@@ -2670,7 +2597,6 @@ function computeNightIdxRange(hTimeArr,obs,anchorDate,dayOffsetFallback){
   }catch(e){return [];}
 }
 function fetchWeather(){
-  /* ★ FIX #1 — mezzogiorno dell'OSSERVATORE, non del browser */
   var dateToUse=obsNoon(activeDate);
   var today=obsNoon(new Date());
   var dayOffset=Math.round((dateToUse-today)/86400000);
@@ -2682,7 +2608,11 @@ function fetchWeather(){
     +"&hourly=temperature_2m,relative_humidity_2m,dew_point_2m,cloud_cover,wind_speed_10m,wind_speed_850hPa,wind_speed_250hPa"
     +"&timezone=auto&past_days=1&forecast_days=4&_nc="+nocache;
   fetch(url).then(function(res){if(!res.ok)throw new Error();return res.json();}).then(function(data){
-    if(data.timezone)OBS_TIMEZONE=data.timezone;
+    if(data.timezone){
+      var oldTimezone=OBS_TIMEZONE;
+      OBS_TIMEZONE=data.timezone;
+      if(oldTimezone!==OBS_TIMEZONE && dayOffset===0){ activeDate=obsNowActiveDate(); }
+    }
     if(myToken!==weatherFetchToken)return;
     var curr=data.current||{},h=data.hourly||{};
     var refDate=obsNoon(activeDate);
@@ -2776,7 +2706,6 @@ function geocodeCity(query){
         loc.lat=item.latitude;loc.lon=item.longitude;loc.elev=(typeof item.elevation==='number' && isFinite(item.elevation))?item.elevation:6;
         loc.name=item.name+(item.admin1?" ("+item.admin1+")":"");
         if(item.timezone)OBS_TIMEZONE=item.timezone;
-        /* ★ FIX #1 — ricalcola activeDate col nuovo fuso */
         activeDate=obsNowActiveDate();
         updateMagDecl();
         updateLocLabel();
@@ -2909,12 +2838,6 @@ function showCdnError(){
   if(p)p.innerHTML='<div class="note err"><b>Errore critico:</b> la libreria Astronomy Engine non è stata caricata. Verifica la connessione e ricarica.</div>';
   var n=document.getElementById('nightTargets');if(n)n.innerHTML='<div class="section-note">In attesa del motore astronomico...</div>';
 }
-
-/* ★ FIX #6 — MANIFEST PWA via Blob URL: installabile su Chrome/Safari/Firefox.
-   Il vecchio data URI con start_url:"." non era risolvibile.
-   Nota: per l'install prompt completo di Chrome desktop serve anche un SW,
-   che richiede un file esterno (non embeddabile in un singolo HTML).
-   Su iOS/Android "Aggiungi a schermata Home" funziona con questo manifest. */
 function installPwaManifest(){
   try{
     var iconSvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="#070c16"/><circle cx="256" cy="256" r="180" fill="#f2b84b"/><circle cx="210" cy="210" r="28" fill="#fff" opacity="0.35"/></svg>';
@@ -2971,7 +2894,6 @@ function init(){
       applyFilterToTargets(activeFilter);
     });
   });
-  /* ★ FIX #1 — "Stanotte" ora usa il giorno dell'OSSERVATORE */
   document.getElementById('btnToday').addEventListener('click',function(){activeDate=obsNowActiveDate();weatherLoaded=false;updateAstro();ensurePlanisphereClock(true);drawPlanisphere();fetchWeather();});
   document.getElementById('btnPrev').addEventListener('click',function(){if(!canGoPrev()){toast('Puoi andare indietro di 1 notte al massimo.',2500);return;}activeDate.setDate(activeDate.getDate()-1);weatherLoaded=false;updateAstro();ensurePlanisphereClock(true);drawPlanisphere();fetchWeather();});
   document.getElementById('btnNext').addEventListener('click',function(){if(!canGoNext()){toast('Previsioni meteo fino a +3 giorni.',2500);return;}activeDate.setDate(activeDate.getDate()+1);weatherLoaded=false;updateAstro();ensurePlanisphereClock(true);drawPlanisphere();fetchWeather();});
