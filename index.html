@@ -2,14 +2,16 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#070c16">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AstroAlert">
+<meta name="application-name" content="AstroAlert">
 <title>AstroAlert Pro - C8 SE</title>
-<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22AstroAlert%22%2C%22short_name%22%3A%22AstroAlert%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23070c16%22%2C%22theme_color%22%3A%22%23070c16%22%7D">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23070c16'/%3E%3Ccircle cx='50' cy='50' r='34' fill='%23f2b84b'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23070c16'/%3E%3Ccircle cx='50' cy='50' r='34' fill='%23f2b84b'/%3E%3C/svg%3E">
 <style>
 :root{
   --bg:#070c16;--panel:#0f1828;--panel-2:#0a111d;--line:#1c2d46;
@@ -213,6 +215,12 @@ details.collapse > div{padding:10px var(--pad-x);border-top:1px solid var(--line
 .moon-tab:active{transform:scale(0.97)}
 .moon-tab.active{border-color:var(--amber);color:var(--amber);font-weight:600;background:rgba(242,184,75,0.08)}
 .moon-tab-content{animation:fadeIn 0.22s ease}
+/* --- FIX #5: CSS mancante per i filtri del globo --- */
+.moon-filter-bar{display:flex;flex-wrap:wrap;gap:5px;margin:10px 0 12px}
+.moon-filter{flex:1 1 auto;min-width:calc(20% - 4px);background:var(--panel-2);border:1px solid var(--line);color:var(--muted);padding:9px 6px;border-radius:6px;font-size:var(--fs-xs);font-family:var(--mono);min-height:38px;white-space:nowrap;line-height:1.2;transition:all 0.15s;cursor:pointer;text-align:center}
+.moon-filter:active{transform:scale(0.97)}
+.moon-filter.active{border-color:var(--amber);color:var(--amber);font-weight:600;background:rgba(242,184,75,0.08)}
+@media (max-width:420px){.moon-filter{min-width:calc(33% - 4px)}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
 #moonGlobeContainer{width:100%;height:min(500px,70vh);border-radius:8px;overflow:hidden;border:1px solid var(--line);background:#000;position:relative;touch-action:none}
 .globe-tooltip{background:rgba(15,24,40,0.96)!important;border:1px solid #1c2d46!important;border-radius:6px!important;padding:8px 12px!important;font-family:var(--mono)!important;font-size:12px!important;color:#e7edf6!important;max-width:260px!important;line-height:1.4!important}
@@ -593,7 +601,6 @@ footer{margin-top:20px;padding-top:12px;border-top:1px solid var(--line);font-si
 "use strict";
 var A = (typeof Astronomy !== 'undefined') ? Astronomy : null;
 var loc = {lat:40.6947, lon:14.4803, elev:6, name:"Castellammare di Stabia"};
-var activeDate = (function(){var d=new Date();if(d.getHours()<12)d.setDate(d.getDate()-1);return d;})();
 var weatherLoaded = false;
 var activeFilter = 'all';
 var weatherFetchToken = 0;
@@ -611,6 +618,91 @@ function safeSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
 var arCalibAz  = parseFloat(safeGet('astroalert_ar_calib_az')  || '0') || 0;
 var arCalibAlt = parseFloat(safeGet('astroalert_ar_calib_alt') || '0') || 0;
 var OBS_TIMEZONE = 'Europe/Rome';
+
+/* ═══════════════════════════════════════════════════════════════
+   ★ FIX #1 — FUSO ORARIO DELL'OSSERVATORE
+   Tutte le date usate per le ricerche (tramonto, alba, mezzanotte,
+   "stanotte", +/- giorni) sono costruite nel fuso dell'osservatore
+   (OBS_TIMEZONE), non nel fuso del browser/dispositivo.
+   ═══════════════════════════════════════════════════════════════ */
+function obsDateParts(d){
+  var parts=new Intl.DateTimeFormat('en-CA',{
+    timeZone:OBS_TIMEZONE,
+    year:'numeric',month:'2-digit',day:'2-digit',
+    hour:'2-digit',minute:'2-digit',second:'2-digit',
+    hourCycle:'h23'
+  }).formatToParts(d);
+  var o={};parts.forEach(function(p){if(p.type!=='literal')o[p.type]=p.value;});
+  return o;
+}
+function obsOffsetMinutes(d){
+  var p=obsDateParts(d);
+  var asUTC=Date.UTC(+p.year,+p.month-1,+p.day,+p.hour,+p.minute,+p.second);
+  return (asUTC-d.getTime())/60000;
+}
+function obsLocalToUTC(year,month,day,hour,minute){
+  var utcGuess=Date.UTC(year,month-1,day,hour,minute,0);
+  var off1=obsOffsetMinutes(new Date(utcGuess));
+  var t1=utcGuess-off1*60000;
+  var off2=obsOffsetMinutes(new Date(t1));
+  if(off2!==off1){t1=utcGuess-off2*60000;}
+  return new Date(t1);
+}
+function obsNoon(d){var p=obsDateParts(d);return obsLocalToUTC(+p.year,+p.month,+p.day,12,0);}
+function obsMidnight(d){var p=obsDateParts(d);return obsLocalToUTC(+p.year,+p.month,+p.day,0,0);}
+function obsHour(d){return +obsDateParts(d).hour;}
+function obsNowActiveDate(){
+  var now=new Date();
+  var h=obsHour(now);
+  var midnight=obsMidnight(now);
+  if(h<12) midnight=new Date(midnight.getTime()-86400000);
+  return midnight;
+}
+function obsDaysFromToday(d){
+  var today=obsNoon(new Date());
+  var dd=obsNoon(d);
+  return Math.round((dd-today)/86400000);
+}
+function sameObsDay(a,b){
+  var pa=obsDateParts(a),pb=obsDateParts(b);
+  return pa.year===pb.year && pa.month===pb.month && pa.day===pb.day;
+}
+function obsDateFmt(opts){
+  var o=opts||{weekday:'long',day:'numeric',month:'long',year:'numeric'};
+  o.timeZone=OBS_TIMEZONE;
+  return new Intl.DateTimeFormat('it-IT',o);
+}
+
+var activeDate = obsNowActiveDate();
+
+/* ★ FIX #4 — DECLINAZIONE MAGNETICA (WMM semplificato per l'Italia) */
+function magneticDeclination(lat, lon){
+  // Approssimazione WMM 2025-2026, valida su Italia/Mediterraneo
+  // con errore < 1°. Fuori dall'area, molto grossolana.
+  if(lat>=35 && lat<=48 && lon>=5 && lon<=20){
+    return 3.5 + 0.05*(lat-42) - 0.10*(lon-12);
+  }
+  if(lat>=35 && lat<=60 && lon>=-15 && lon<=30){
+    // Europa centrale: valore tipico 0..5
+    return 2.5 + 0.03*(lat-48);
+  }
+  return 0;
+}
+var OBS_MAG_DECL = magneticDeclination(loc.lat, loc.lon);
+function updateMagDecl(){ OBS_MAG_DECL = magneticDeclination(loc.lat, loc.lon); }
+
+/* ★ FIX #7 — SOGLIA SOLE PER "VISIBILE ORA" */
+function sunAltThreshold(mag){
+  if(mag === null || mag === undefined || isNaN(mag)) return -0.833;
+  if(mag <= 0.5) return -0.833;
+  if(mag <= 2.0) return -6;
+  if(mag <= 4.0) return -12;
+  return -18;
+}
+function isObservableUnderSun(sunAlt, mag){
+  return sunAlt <= sunAltThreshold(mag);
+}
+
 var activeRadarCleanup = null;
 function compassDir(az){var i=Math.round(az/22.5)%16;if(i<0)i+=16;return COMPASS[i];}
 function fmtTime(d){if(!d)return"--:--";return new Intl.DateTimeFormat('it-IT',{timeZone:OBS_TIMEZONE,hour:'2-digit',minute:'2-digit'}).format(d);}
@@ -633,7 +725,7 @@ function isAndroid(){return /Android/i.test(navigator.userAgent);}
 function dateToIsoHourStr(d){var parts=new Intl.DateTimeFormat('en-CA',{timeZone:OBS_TIMEZONE,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'}).formatToParts(d);var o={};parts.forEach(function(p){if(p.type!=='literal')o[p.type]=p.value;});return o.year+'-'+o.month+'-'+o.day+'T'+o.hour+':00';}
 function zonedHourKey(d){return dateToIsoHourStr(d);}
 function findHourlyIndex(times, dateObj){if(!times||!times.length||!dateObj)return -1;var key=zonedHourKey(dateObj);for(var i=0;i<times.length;i++){if(times[i]===key)return i;}return -1;}
-function daysFromToday(d){var today=new Date();today.setHours(12,0,0,0);var dd=new Date(d);dd.setHours(12,0,0,0);return Math.round((dd-today)/86400000);}
+function daysFromToday(d){return obsDaysFromToday(d);}
 function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 var METRIC_MIN_PX=11,METRIC_MAX_PX=20,_fitScheduled=false;
 function lineOverflows(line){var v=line.querySelector('.metric-v');if(!v)return false;return v.scrollWidth>v.clientWidth+1;}
@@ -719,7 +811,8 @@ var LUNAR_LANDING_SITES = [
   {name:"Chang'e 3", lat:44.12, lon:-19.51, year:2013, country:'Cina', mission:'Yutu rover', desc:'Mare Imbrium'},
   {name:"Chang'e 5", lat:43.06, lon:-51.92, year:2020, country:'Cina', mission:'Ritorno campioni', desc:'Mons Rümker'},
   {name:'Chandrayaan-3', lat:-69.37, lon:32.35, year:2023, country:'India', mission:'Primo atterraggio vicino al polo sud', desc:'Polo Sud'},
-  {name:'SLIM', lat:-13.3, lon:25.2, year:2024, country:'Giappone', mission:'Precision landing (~100 m)', desc:'Mare Nectaris'},
+  /* ★ FIX #3 — SLIM: descrizione corretta */
+  {name:'SLIM', lat:-13.3, lon:25.2, year:2024, country:'Giappone', mission:'Precision landing (~100 m)', desc:'Cratere Shioli, margine del Mare Nectaris'},
   {name:'IM-1 Odysseus', lat:-80.13, lon:1.44, year:2024, country:'USA (privato)', mission:'Primo lander commerciale', desc:'Polo Sud (Malapert A)'}
 ];
 var LUNAR_CRATERS = [
@@ -740,7 +833,8 @@ var LUNAR_MARIA = [
   {name:'Mare Imbrium', nameIt:'Mare delle Piogge', lat:32.8, lon:-15.6, area:1129000, desc:'Il più grande mare singolo'},
   {name:'Mare Crisium', nameIt:'Mare delle Crisi', lat:17.0, lon:59.1, area:176000, desc:'Mare isolato e ben delimitato'},
   {name:'Mare Fecunditatis', nameIt:'Mare della Fecondità', lat:-7.8, lon:51.3, area:326000, desc:'Sito Luna 16 e Luna 20'},
-  {name:'Mare Nectaris', nameIt:'Mare del Nettare', lat:-15.2, lon:35.5, area:100000, desc:'Sito SLIM'},
+  /* ★ FIX #3 — coerente con SLIM a Shioli, non al centro del mare */
+  {name:'Mare Nectaris', nameIt:'Mare del Nettare', lat:-15.2, lon:35.5, area:100000, desc:'Confina a sud col cratere Shioli (sito SLIM)'},
   {name:'Oceanus Procellarum', nameIt:'Oceano delle Tempeste', lat:18.4, lon:-57.4, area:4000000, desc:"L'unico 'oceanus'"},
   {name:'Mare Humorum', nameIt:"Mare dell'Umidità", lat:-24.4, lon:-38.6, area:389000, desc:'Circondato da scarpate'},
   {name:'Mare Nubium', nameIt:'Mare delle Nubi', lat:-21.3, lon:-16.6, area:715000, desc:'A sud di Copernico'},
@@ -787,8 +881,9 @@ function getSunState(obs, t){
   var alt = hor.altitude;
   return {alt:alt, isUp:alt>0, isDay:alt>-0.833, isCivilTwilight:alt<=-0.833&&alt>-6, isNauticalTwilight:alt<=-6&&alt>-12, isAstronomicalTwilight:alt<=-12&&alt>-18, isNight:alt<=-18};
 }
+/* ★ FIX #1 — base a mezzogiorno dell'OSSERVATORE, non del browser */
 function getNightWindow(obs,anchorDate){
-  var base=new Date(anchorDate);base.setHours(12,0,0,0);
+  var base=obsNoon(anchorDate);
   var sunset=A.SearchRiseSet(A.Body.Sun,obs,-1,base,1);
   var sunrise=A.SearchRiseSet(A.Body.Sun,obs,+1,sunset?sunset.date:base,1);
   return {start:sunset?sunset.date:base, end:sunrise?sunrise.date:addHours(base,12)};
@@ -926,22 +1021,7 @@ function compareTargets(a,b){
   return (b.alt||0)-(a.alt||0);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   ★★★ PLANISFERO SCIENTIFICO ★★★
-   - Dimensione puntino stella ∝ RAGGIO FISICO (R☉), scala log
-   - Alone soffuso ∝ MAGNITUDINE APPARENTE
-   - Colore ∝ CLASSE SPETTRALE (temperatura superficiale)
-   - Etichette stelle: solo le più significative (flag label)
-   - Nomi senza cornice nera: solo ombra sfocata (shadowBlur)
-   - Costellazioni: linee bianche continue + nome bold italic
-   - PRUNING: se la costellazione è troppo affollata sullo schermo,
-     mostra solo le 3 stelle più significative. Le altre vengono
-     omesse completamente (nessun puntino, nessuna etichetta).
-     La linea bianca della costellazione resta sempre visibile.
-   ═══════════════════════════════════════════════════════════ */
-
-/* Catalogo stelle: name · ra/dec (J2000) · mag · sp · R☉ · label
-   Raggi orientativi da letteratura (Gaia DR3, CADARS). */
+/* ★ Catalogo stelle del planisfero */
 var PLANISPHERE_STARS = [
   {name:'Sirio',      ra:6.7525,  dec:-16.7161, mag:-1.46, sp:'A', R:1.7,   label:true},
   {name:'Arturo',     ra:14.2610, dec:19.1824,  mag:-0.05, sp:'K', R:25.4,  label:true},
@@ -971,6 +1051,8 @@ var PLANISPHERE_STARS = [
   {name:'Mimosa',     ra:12.7953, dec:-59.6888, mag:1.25,  sp:'B', R:8.0,   label:true},
   {name:'Acrux',      ra:12.4433, dec:-63.0991, mag:0.77,  sp:'B', R:7.8,   label:true},
   {name:'Shaula',     ra:17.5601, dec:-37.1038, mag:1.62,  sp:'B', R:8.0,   label:true},
+  /* ★ FIX #2 — aggiunta Sargas (θ Sco) per la coda dello Scorpione */
+  {name:'Sargas',     ra:17.6220, dec:-42.9978, mag:1.86,  sp:'F', R:20.0,  label:true},
   {name:'Saiph',      ra:5.7959,  dec:-9.6696,  mag:2.06,  sp:'B', R:11.0,  label:false},
   {name:'Schedar',    ra:0.6751,  dec:56.5373,  mag:2.24,  sp:'K', R:42.0,  label:true},
   {name:'Caph',       ra:0.1530,  dec:59.1500,  mag:2.28,  sp:'F', R:3.5,   label:true},
@@ -981,22 +1063,11 @@ var PLANISPHERE_STARS = [
   {name:'Megrez',     ra:12.2571, dec:57.0326,  mag:3.31,  sp:'A', R:1.7,   label:false}
 ];
 
-/* Palette colori per classe spettrale (temperatura superficiale) */
 var SPECTRAL_COLORS = {
-  O:'#9bb0ff',  // >30.000 K — azzurro-violetto
-  B:'#aabfff',  // 10.000-30.000 K — azzurro-bianco
-  A:'#cad7ff',  // 7.500-10.000 K — bianco puro
-  F:'#f8f7ff',  // 6.000-7.500 K — bianco caldo
-  G:'#fff4ea',  // 5.200-6.000 K — giallo (Sole)
-  K:'#ffd2a1',  // 3.700-5.200 K — arancio
-  M:'#ffcc6f'   // <3.700 K — rosso-arancio
+  O:'#9bb0ff', B:'#aabfff', A:'#cad7ff', F:'#f8f7ff',
+  G:'#fff4ea', K:'#ffd2a1', M:'#ffcc6f'
 };
 function starColor(sp){return SPECTRAL_COLORS[sp] || '#cad7ff';}
-
-/* RAGGIO PUNTINO ∝ RAGGIO FISICO (R☉), scala logaritmica
-   Ancorato: ~2 R☉ → 2.0 px · 850 R☉ → 6.0 px
-   Su schermo mobile (~350 px CSS canvas): puntino max = 3.4% larghezza
-   Rapporto Sirio→Betelgeuse ~3× → coerente con percezione umana. */
 function starDotRadius(R, dpr){
   var lr = Math.log10(Math.max(1, R));
   var t  = (lr - 0.30) / (2.93 - 0.30);
@@ -1005,17 +1076,12 @@ function starDotRadius(R, dpr){
   if(r > 6.0) r = 6.0;
   return r * dpr;
 }
-
-/* SCORE BRILLANTEZZA 0..1 ∝ magnitudine apparente. */
 function starGlowScore(mag){
   var s = (2 - mag) / 4;
   if(s < 0) s = 0;
   if(s > 1) s = 1;
   return s;
 }
-
-/* Mappa stella → costellazione (serve per il pruning quando la costellazione
-   è troppo affollata sullo schermo: si tengono solo le 3 più significative). */
 var CON_OF = {
   'Betelgeuse':'Orione','Rigel':'Orione','Bellatrix':'Orione',
   'Alnilam':'Orione','Alnitak':'Orione','Mintaka':'Orione','Saiph':'Orione',
@@ -1024,7 +1090,7 @@ var CON_OF = {
   'Schedar':'Cassiopea','Caph':'Cassiopea',
   'Vega':'Triangolo Estivo','Deneb':'Triangolo Estivo','Altair':'Triangolo Estivo',
   'Acrux':'Croce del Sud','Mimosa':'Croce del Sud','Gacrux':'Croce del Sud',
-  'Antares':'Scorpione','Shaula':'Scorpione'
+  'Antares':'Scorpione','Shaula':'Scorpione','Sargas':'Scorpione'
 };
 
 var CONSTELLATIONS = [
@@ -1062,10 +1128,12 @@ var CONSTELLATIONS = [
     [12.4433, -63.0991, 12.5194, -57.1132],
     [12.7953, -59.6888, 12.2525, -58.7489],
   ]},
+  /* ★ FIX #2 — Scorpione: usare Sargas (θ Sco 17.6220, -42.9978) e Shaula
+     (λ Sco 17.5601, -37.1038) invece del punto fittizio 17.2025. */
   { name:'Scorpione', label:{ra:17.2, dec:-35}, lines:[
     [16.4901, -26.4320, 16.8362, -34.2933],
-    [16.8362, -34.2933, 17.2025, -37.1038],
-    [17.2025, -37.1038, 17.5601, -37.1038],
+    [16.8362, -34.2933, 17.6220, -42.9978],
+    [17.6220, -42.9978, 17.5601, -37.1038],
   ]},
 ];
 
@@ -1087,7 +1155,8 @@ function planisphereNightWindow(obs){
   if(night.start&&night.end&&night.end.getTime()>night.start.getTime()+5*60000){
     return {start:night.start,end:night.end,label:'Finestra notturna'};
   }
-  return {start:addHours(new Date(activeDate),20),end:addHours(new Date(activeDate),30),label:'Orario di fallback'};
+  /* ★ FIX #1 — fallback a mezzanotte dell'osservatore */
+  return {start:addHours(obsMidnight(activeDate),20),end:addHours(obsMidnight(activeDate),30),label:'Orario di fallback'};
 }
 function ensurePlanisphereClock(force){
   var obs=new A.Observer(loc.lat,loc.lon,loc.elev);
@@ -1129,7 +1198,6 @@ function planisphereDescForStar(s){
   return {kind:'star',name:s.name,ra:s.ra,dec:s.dec,mag:s.mag,distLy:full?full.distLy:null,massRatio:full?full.massRatio:null,url:full?full.url:('https://simbad.cds.unistra.fr/simbad/sim-id?Ident='+encodeURIComponent(s.name)),simbad:full?full.simbad:('https://simbad.cds.unistra.fr/simbad/sim-id?Ident='+encodeURIComponent(s.name))};
 }
 
-/* ★ ICONE PIANETI STILIZZATE ★ */
 function drawSunIcon(ctx, x, y, r){
   var glow=ctx.createRadialGradient(x,y,r*0.5,x,y,r*2.6);
   glow.addColorStop(0,'rgba(255,220,80,0.55)');
@@ -1231,8 +1299,6 @@ function drawNeptuneIcon(ctx, x, y, r){
   body.addColorStop(0,'#8fb4f5');body.addColorStop(1,'#3055c5');
   ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=body;ctx.fill();
 }
-
-/* ★ OCCHIO UMANO PICCOLO E REALISTICO — in secondo piano al centro mappa */
 function drawEyeIcon(ctx, cx, cy, size, color, bgColor){
   var w = size * 1.7;
   var h = size * 0.7;
@@ -1266,13 +1332,10 @@ function drawEyeIcon(ctx, cx, cy, size, color, bgColor){
   ctx.fill();
   ctx.restore();
 }
-
-/* ★ DISEGNO STELLA SCIENTIFICO ★ */
 function drawStar(ctx, x, y, mag, sp, R, dpr){
   var rDot  = starDotRadius(R, dpr);
   var glow  = starGlowScore(mag);
   var color = starColor(sp);
-
   if(glow > 0.05){
     var glowR = rDot * (2.2 + glow * 5.0);
     var a1 = Math.round(100 + glow * 145).toString(16).padStart(2,'0');
@@ -1286,12 +1349,10 @@ function drawStar(ctx, x, y, mag, sp, R, dpr){
     ctx.fillStyle = grad;
     ctx.fill();
   }
-
   ctx.beginPath();
   ctx.arc(x, y, rDot, 0, Math.PI*2);
   ctx.fillStyle = color;
   ctx.fill();
-
   if(glow > 0.45){
     var coreAlpha = Math.min(1, 0.4 + glow * 0.6);
     ctx.beginPath();
@@ -1299,7 +1360,6 @@ function drawStar(ctx, x, y, mag, sp, R, dpr){
     ctx.fillStyle = 'rgba(255,255,255,' + coreAlpha.toFixed(2) + ')';
     ctx.fill();
   }
-
   if(mag < 0){
     var spikeLen = rDot * (3.0 + glow * 1.8);
     var spikeW   = Math.max(0.7*dpr, rDot * 0.22);
@@ -1312,36 +1372,26 @@ function drawStar(ctx, x, y, mag, sp, R, dpr){
     ctx.stroke();
   }
 }
-
-/* ★ DISEGNO PRINCIPALE DEL PLANISFERO ★ */
 function drawPlanisphere(){
   var canvas=document.getElementById('skyCanvas');
   if(!canvas||typeof A==='undefined')return;
   ensurePlanisphereClock(false);clampPlanisphereTime();planisphereSliderSync();
-
   var rect=canvas.getBoundingClientRect();
   var cssSize=Math.max(280,Math.floor(Math.min(rect.width||360,rect.height||360)));
   var dpr=Math.min(window.devicePixelRatio||1,2.5);
   var px=Math.max(600,Math.min(1200,Math.round(cssSize*dpr)));
   if(canvas.width!==px||canvas.height!==px){canvas.width=px;canvas.height=px;}
-
   var w=canvas.width,h=canvas.height,cx=w/2,cy=h/2;
   var cardinalPad=Math.round(w*0.055);
   var R=w/2-cardinalPad;
-
   var css=getComputedStyle(document.body);
   var bg=css.getPropertyValue('--bg').trim()||'#070c16';
-
   var ctx=canvas.getContext('2d');
   ctx.clearRect(0,0,w,h);
   ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
-
-  // Disco cielo
   ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);
   ctx.fillStyle='#02050b';ctx.fill();
   ctx.strokeStyle='rgba(80,100,130,0.35)';ctx.lineWidth=Math.max(1,1.2*dpr);ctx.stroke();
-
-  // Anelli altitudine
   [30,60].forEach(function(alt){
     var rr=R*(1-alt/90);
     ctx.beginPath();ctx.arc(cx,cy,rr,0,Math.PI*2);
@@ -1353,8 +1403,6 @@ function drawPlanisphere(){
   ctx.moveTo(cx,cy-R);ctx.lineTo(cx,cy+R);
   ctx.moveTo(cx-R,cy);ctx.lineTo(cx+R,cy);
   ctx.strokeStyle='rgba(140,160,186,.1)';ctx.lineWidth=1*dpr;ctx.stroke();
-
-  // Punti cardinali FUORI dal disco
   var cardFont=Math.round(w*0.034);
   ctx.font='900 '+cardFont+'px ui-monospace,monospace';
   ctx.fillStyle='#f2b84b';ctx.textAlign='center';ctx.textBaseline='middle';
@@ -1363,20 +1411,14 @@ function drawPlanisphere(){
   ctx.fillText('S',cx,cy+R+cardOffset);
   ctx.fillText('E',cx+R+cardOffset,cy);
   ctx.fillText('O',cx-R-cardOffset,cy);
-
   function project(alt,az){
     var r=R*(1-alt/90);
     var th=(az-90)*Math.PI/180;
     return {x:cx+r*Math.cos(th),y:cy+r*Math.sin(th)};
   }
-
   var obs=new A.Observer(loc.lat,loc.lon,loc.elev);
-
-  // Occhio al centro — in secondo piano
   var muted=css.getPropertyValue('--muted').trim()||'#8ca0ba';
   drawEyeIcon(ctx,cx,cy,Math.round(w*0.020),muted,bg);
-
-  // Costellazioni — linee continue bianche
   ctx.strokeStyle='rgba(200,215,240,0.55)';
   ctx.lineWidth=Math.max(1.3*dpr,1.6);
   ctx.lineCap='round';
@@ -1402,8 +1444,6 @@ function drawPlanisphere(){
       constellationLabelPts.push({name:con.name,x:sx/visiblePts.length,y:sy/visiblePts.length});
     }
   });
-
-  // Raccogli oggetti
   var items=[];
   Object.keys(PLANET_DATA).forEach(function(k){
     try{
@@ -1434,8 +1474,6 @@ function drawPlanisphere(){
       items.push({type:'sun',name:'Sole',x:pS.x,y:pS.y,alt:horS.altitude,az:horS.azimuth,mag:illS.mag,desc:resolveTarget('Sun'),priority:0});
     }
   }catch(e){}
-
-  // Stelle
   PLANISPHERE_STARS.forEach(function(s){
     try{
       var hor=fixedHorizon({ra:s.ra,dec:s.dec},planisphereTime,obs);
@@ -1452,12 +1490,6 @@ function drawPlanisphere(){
       }
     }catch(e){}
   });
-
-  /* ★ RILEVAMENTO AFFOLLAMENTO COSTELLAZIONI
-     Se le stelle di una costellazione sono troppo vicine sullo schermo,
-     mostra solo le 3 più significative (più brillanti). Le altre vengono
-     omesse del tutto (nessun puntino, nessuna etichetta, nessun blocker).
-     La linea bianca della costellazione resta sempre disegnata. */
   var crowdedConstellations = {};
   var keepStarSet = {};
   CONSTELLATIONS.forEach(function(con){
@@ -1465,7 +1497,7 @@ function drawPlanisphere(){
     items.forEach(function(it){
       if(it.type==='star' && it.con === con.name) conStars.push(it);
     });
-    if(conStars.length < 4) return; // 3 o meno stelle: niente pruning
+    if(conStars.length < 4) return;
     var minD = Infinity;
     for(var i=0;i<conStars.length;i++){
       for(var j=i+1;j<conStars.length;j++){
@@ -1485,16 +1517,12 @@ function drawPlanisphere(){
       conStars.slice(0,3).forEach(function(s){ keepStarSet[s.name] = true; });
     }
   });
-
-  // Disegna stelle (con pruning se la costellazione è affollata)
   items.forEach(function(it){
     if(it.type==='star'){
       if(it.con && crowdedConstellations[it.con] && !keepStarSet[it.name]) return;
       drawStar(ctx, it.x, it.y, it.mag, it.sp, it.R, dpr);
     }
   });
-
-  // Pianeti con icone
   var iconR=R*0.024;
   items.forEach(function(it){
     if(it.type==='planet'){
@@ -1514,13 +1542,9 @@ function drawPlanisphere(){
     if(it.type==='moon') drawMoonIcon(ctx,it.x,it.y,iconR*1.22);
     if(it.type==='sun')  drawSunIcon(ctx,it.x,it.y,iconR*1.32);
   });
-
-  // SMART LABELS
   items.sort(function(a,b){return a.priority-b.priority;});
-
   var occupied=[];
   items.forEach(function(it){
-    // Salta le stelle eliminate dal pruning: non occupano spazio
     if(it.type==='star' && it.con && crowdedConstellations[it.con] && !keepStarSet[it.name]) return;
     var blocker;
     if(it.type==='sun') blocker={x1:it.x-iconR*2.4,y1:it.y-iconR*2.4,x2:it.x+iconR*2.4,y2:it.y+iconR*2.4};
@@ -1534,17 +1558,12 @@ function drawPlanisphere(){
   });
   var centerRes=Math.round(w*0.042);
   occupied.push({x1:cx-centerRes,y1:cy-centerRes,x2:cx+centerRes,y2:cy+centerRes});
-
   function overlaps(a,b){return !(a.x2<b.x1||a.x1>b.x2||a.y2<b.y1||a.y1>b.y2);}
-
   var angles=[0,30,60,90,120,150,180,210,240,270,300,330];
   var distMults=[1.6,2.4,3.4,4.6,6.0];
   var fontScalePlanet=[1.0,0.85,0.72,0.58];
   var fontScaleStar  =[0.9,0.75,0.62,0.52];
-
   var fontBase=Math.max(11*dpr,w*0.020);
-
-  // Filtro: solo stelle significative E non eliminate dal pruning affollamento
   var labelItems=items.filter(function(it){
     if(it.type==='star'){
       if(!it.label) return false;
@@ -1556,7 +1575,6 @@ function drawPlanisphere(){
     var pb = (b.type==='star')?100+b.mag:b.priority;
     return pa-pb;
   });
-
   labelItems.forEach(function(it){
     var baseFont = (it.type==='star') ? fontBase*0.9 : fontBase*1.05;
     var mults = (it.type==='star') ? fontScaleStar : fontScalePlanet;
@@ -1564,16 +1582,13 @@ function drawPlanisphere(){
     if(it.type==='planet') anchorPad=iconR*1.5;
     else if(it.type==='sun'||it.type==='moon') anchorPad=iconR*2.0;
     else anchorPad=starDotRadius(it.R || 1.7, dpr) + 3*dpr;
-
     var chosen=null;
     var bestScore=Infinity;
-
     for(var fi=0; fi<mults.length; fi++){
       var fsize=Math.max(9*dpr, baseFont*mults[fi]);
       ctx.font='700 '+fsize+'px sans-serif';
       var tw=ctx.measureText(it.name).width;
       var th=fsize*1.15;
-
       for(var di=0; di<distMults.length; di++){
         var dist=anchorPad+iconR*distMults[di];
         for(var ai=0; ai<angles.length; ai++){
@@ -1593,8 +1608,6 @@ function drawPlanisphere(){
       }
       if(bestScore<50)break;
     }
-
-    // Fallback: se non c'è posto nemmeno con font minimo → salta il nome
     if(!chosen && it.type!=='star'){
       var fsize=Math.max(8*dpr, baseFont*0.55);
       ctx.font='700 '+fsize+'px sans-serif';
@@ -1610,15 +1623,12 @@ function drawPlanisphere(){
     } else if(!chosen){
       return;
     }
-
     occupied.push(chosen.box);
-
     var anchorDist=Math.hypot(chosen.x-it.x, chosen.y-it.y);
     if(anchorDist > iconR*2.5){
       ctx.beginPath();ctx.moveTo(it.x,it.y);ctx.lineTo(chosen.x,chosen.y);
       ctx.strokeStyle='rgba(180,200,225,0.32)';ctx.lineWidth=1*dpr;ctx.stroke();
     }
-
     ctx.font='700 '+chosen.fsize+'px sans-serif';
     ctx.textAlign='center';ctx.textBaseline='middle';
     var fill='#e7edf6';
@@ -1630,7 +1640,6 @@ function drawPlanisphere(){
     else if(it.key==='Neptune') fill='#8fb4f5';
     else if(it.type==='moon'||it.type==='sun'||it.key==='Venus') fill='#fff2cc';
     else fill='#e7edf6';
-    // Ombra sfocata — nessun rettangolo nero
     ctx.shadowColor='rgba(7,12,22,0.95)';
     ctx.shadowBlur=Math.max(3*dpr, chosen.fsize*0.28);
     ctx.shadowOffsetX=0;
@@ -1639,8 +1648,6 @@ function drawPlanisphere(){
     ctx.fillText(it.name,chosen.x,chosen.y);
     ctx.shadowBlur=0;
   });
-
-  // ★ NOMI COSTELLAZIONI — bold italic, dimensione ridotta
   constellationLabelPts.forEach(function(cp){
     var baseFont=Math.max(10*dpr,w*0.017);
     var chosen=null, bestScore=Infinity;
@@ -1669,7 +1676,6 @@ function drawPlanisphere(){
       }
       if(bestScore<50)break;
     }
-    // Se collisione persiste, meglio non stampare il nome
     if(!chosen || bestScore>=200) return;
     occupied.push(chosen.box);
     ctx.font='800 italic '+chosen.fsize+'px Georgia,serif';
@@ -1682,9 +1688,7 @@ function drawPlanisphere(){
     ctx.fillText(cp.name,chosen.x,chosen.y);
     ctx.shadowBlur=0;
   });
-
   planisphereItems=items;
-
   var tl=document.getElementById('planisphereTimeLabel');if(tl)tl.textContent=planisphereTimeText();
   var note=document.getElementById('planisphereNote');
   if(note){
@@ -1710,14 +1714,12 @@ function setRedMode(on){
 function initPlanisphere(){
   var canvas=document.getElementById('skyCanvas');
   if(!canvas)return;
-
   if(safeGet('astroalert_red_mode') === '1') setRedMode(true);
   var btnRed = document.getElementById('btnRedMode');
   if(btnRed) btnRed.addEventListener('click', function(){
     setRedMode(!planisphereRedMode);
     toast(planisphereRedMode ? '🔴 Luce rossa attivata — visione notturna preservata' : 'Luce bianca normale', 2200);
   });
-
   var range=document.getElementById('planisphereRange');
   var nowBtn=document.getElementById('btnPlanisphereNow');
   var nightBtn=document.getElementById('btnPlanisphereNight');
@@ -1782,7 +1784,8 @@ function renderNightTargets(obs,tStart,tEnd,planetCandidates,moonInfo,sunState){
   planetCandidates.forEach(function(p){
     var transit=findTransitTime(p.key,null,obs,tStart,tEnd);
     var cur=currentAltAz(A.Body[p.key],obs,now);
-    var observableNow=cur.isUp&&!sunState.isDay;
+    /* ★ FIX #7 — soglia crepuscolo dipendente dalla magnitudine */
+    var observableNow=cur.isUp && isObservableUnderSun(sunState.alt, p.mag);
     out.push({kind:'planet', name:p.name, alt:p.maxAlt, az:p.maxAz, time:p.maxTime, mag:p.mag,
       distObj:formatDistanceLines(p.distKm,false), massObj:formatMassLines(PLANET_DATA[p.key].massRatio),
       url:p.url, extra:getDynamicEyepieceAdvice(p.key,p.maxAlt), source:'Astronomy Engine + EduINAF',
@@ -1793,7 +1796,7 @@ function renderNightTargets(obs,tStart,tEnd,planetCandidates,moonInfo,sunState){
     if(b.alt>=15){
       var transit=findTransitTime(null,s,obs,tStart,tEnd);
       var horNow=fixedHorizon(s,now,obs);
-      var observNow=horNow.altitude>0&&!sunState.isDay;
+      var observNow=horNow.altitude>0 && isObservableUnderSun(sunState.alt, s.mag);
       out.push({kind:'star', name:s.name, alt:b.alt, az:b.az, time:b.time, mag:s.mag, fixedObj:s,
         distObj:formatDistanceLines(0,true,s.distLy), massObj:formatMassLines(s.massRatio),
         url:s.url, extra:'25 mm (81x) per centrare, 15 mm (135x) per osservare', simbad:s.simbad,
@@ -1806,7 +1809,7 @@ function renderNightTargets(obs,tStart,tEnd,planetCandidates,moonInfo,sunState){
     if(b.alt>=18){
       var transit=findTransitTime(null,m,obs,tStart,tEnd);
       var horNow=fixedHorizon(m,now,obs);
-      var observNow=horNow.altitude>0&&!sunState.isDay;
+      var observNow=horNow.altitude>0 && isObservableUnderSun(sunState.alt, m.mag);
       var simbadUrl='https://simbad.cds.unistra.fr/simbad/sim-id?Ident='+encodeURIComponent(m.id);
       var rec={kind:'deep', name:m.name, alt:b.alt, az:b.az, time:b.time, mag:m.mag, fixedObj:m,
         distObj:formatDistanceLines(0,true,m.distLy), massObj:null,
@@ -1909,8 +1912,10 @@ function openCelestialModal(arg,atDate){
   if(desc.body){var bodyKey = isMoon ? 'Moon' : desc.key;transit = findTransitTime(bodyKey, null, obs, win.start, win.end);}
   else {transit = findTransitTime(null, desc, obs, win.start, win.end);}
   var posTxt;
+  /* ★ FIX #7 — soglia crepuscolo dipendente dalla magnitudine */
+  var observabilitySunOK = mag!==null && isObservableUnderSun(sunState.alt, mag);
   if(horNow.altitude <= 0)posTxt = 'In questo momento si trova <b>sotto l\'orizzonte</b> (azimut '+compassDir(horNow.azimuth)+' '+Math.round(horNow.azimuth)+'°).';
-  else if(sunState.isDay)posTxt = 'Geometricamente è a <b>'+Math.round(horNow.altitude)+'°</b> sopra l\'orizzonte verso <b>'+compassDir(horNow.azimuth)+'</b>, ma <b>in pieno giorno non è osservabile</b>.';
+  else if(!observabilitySunOK)posTxt = 'Geometricamente è a <b>'+Math.round(horNow.altitude)+'°</b> sopra l\'orizzonte verso <b>'+compassDir(horNow.azimuth)+'</b>, ma il cielo è <b>troppo luminoso per questa magnitudine</b>.';
   else posTxt = 'In questo momento è a <b>'+compassDir(horNow.azimuth)+'</b> ('+Math.round(horNow.azimuth)+'°), a <b>'+Math.round(horNow.altitude)+'°</b> sopra l\'orizzonte ed è <b>osservabile</b>.';
   var moonImg="",moonCap="";
   if(isMoon){var phaseAngle=A.MoonPhase(now);var illumM = A.Illumination(A.Body.Moon, now);var fMoon=illumM.phase_fraction;moonImg='<div class="moon-phase-svg-wrap">'+moonPhaseSVG(fMoon,phaseAngle<180,170)+'</div>';moonCap='<div class="moon-phase-caption">Fase attuale · '+Math.round(fMoon*100)+'% illuminata</div>';}
@@ -1965,13 +1970,21 @@ function startAR(arg){
   document.getElementById('arDebugToggle').addEventListener('click',function(){var d=document.getElementById('arDebug'); if(d) d.classList.toggle('hidden');});
   phonePitch=null; phoneHeading=null;
   phoneRawAlpha=null; phoneRawBeta=null; phoneRawGamma=null;
+  /* ★ FIX #4 — Declinazione magnetica applicata al heading magnetico.
+     iOS webkitCompassHeading è già riferito al nord geografico → nessuna correzione.
+     Android deviceorientationabsolute alpha è riferito al nord magnetico → aggiungo OBS_MAG_DECL. */
   function onOrientation(e){
     phoneRawAlpha = (typeof e.alpha==='number')?e.alpha:null;
     phoneRawBeta  = (typeof e.beta ==='number')?e.beta :null;
     phoneRawGamma = (typeof e.gamma==='number')?e.gamma:null;
-    if(e.webkitCompassHeading!==undefined && e.webkitCompassHeading!==null){phoneHeading=(e.webkitCompassHeading + 360) % 360;}
-    else if(e.alpha!==null && e.alpha!==undefined && e.absolute===true){phoneHeading=((360-e.alpha) + 360) % 360;}
-    else if(e.absolute!==true && phoneHeading===null){phoneHeading=null;}
+    if(e.webkitCompassHeading!==undefined && e.webkitCompassHeading!==null){
+      phoneHeading=(e.webkitCompassHeading + 360) % 360;
+    } else if(e.alpha!==null && e.alpha!==undefined && e.absolute===true){
+      var magHeading=((360-e.alpha) + 360) % 360;
+      phoneHeading=(magHeading + OBS_MAG_DECL + 360) % 360;
+    } else if(e.absolute!==true && phoneHeading===null){
+      phoneHeading=null;
+    }
     if(typeof e.beta==='number' && !isNaN(e.beta)){var p = Math.abs(e.beta) - 90;if(p<-90) p=-90;if(p>90)  p=90;phonePitch=p;}
   }
   function setMsg(txt){var m=document.getElementById('arMsg');if(m){m.style.display='block';m.innerHTML=txt;}}
@@ -2014,7 +2027,7 @@ function startAR(arg){
         var dbgEl=document.getElementById('arDebug');
         if(dbgEl && !dbgEl.classList.contains('hidden')){
           var f1=function(v){return (v===null||v===undefined||isNaN(v))?'--':(v*1).toFixed(1);};
-          dbgEl.textContent ='heading   '+f1(phoneHeading)+'°  (raw α '+f1(phoneRawAlpha)+')\n'+'pitch     '+f1(phonePitch)+'°  (raw β '+f1(phoneRawBeta)+', γ '+f1(phoneRawGamma)+')\n'+'target    az '+f1(hor.azimuth)+'°  alt '+f1(hor.altitude)+'°\n'+'diffAz    '+f1(diffAz)+'°  (scaled '+f1(diffAzScaled)+'°)\n'+'diffAlt   '+f1(diffAlt)+'°\n'+'errTotal  '+f1(errTotal)+'°  (soglia UI '+LOCK_TOL+'°)\n'+'calib     az '+f1(arCalibAz)+'°  alt '+f1(arCalibAlt)+'°\n'+'decl      n/a · orientamento assoluto';
+          dbgEl.textContent ='heading   '+f1(phoneHeading)+'°  (raw α '+f1(phoneRawAlpha)+')\n'+'pitch     '+f1(phonePitch)+'°  (raw β '+f1(phoneRawBeta)+', γ '+f1(phoneRawGamma)+')\n'+'target    az '+f1(hor.azimuth)+'°  alt '+f1(hor.altitude)+'°\n'+'diffAz    '+f1(diffAz)+'°  (scaled '+f1(diffAzScaled)+'°)\n'+'diffAlt   '+f1(diffAlt)+'°\n'+'errTotal  '+f1(errTotal)+'°  (soglia UI '+LOCK_TOL+'°)\n'+'calib     az '+f1(arCalibAz)+'°  alt '+f1(arCalibAlt)+'°\n'+'decl      '+f1(OBS_MAG_DECL)+'° (modello, applicato ad α assoluto)';
         }
         var rawX=50+(diffAzScaled/HALF_H)*45;var rawY=50-(diffAlt/HALF_V)*45;
         var cx=Math.max(12,Math.min(88,rawX));var cy=Math.max(14,Math.min(86,rawY));
@@ -2098,17 +2111,29 @@ function openRadar(highlightDesc){
   document.getElementById('modalRoot').innerHTML = html;
   document.body.classList.add('modal-open');
   var lastRenderedHeading = null;
+  /* ★ FIX #4 — anche in radar, applico la declinazione magnetica al heading magnetico */
   function radarOrientation(e){
-    if(e.webkitCompassHeading!==undefined && e.webkitCompassHeading!==null){phoneHeading=(e.webkitCompassHeading + 360) % 360;}
-    else if(e.alpha!==null && e.alpha!==undefined && e.absolute===true){phoneHeading=((360-e.alpha) + 360) % 360;}
-    else if(e.absolute!==true && phoneHeading===null){phoneHeading=null;}
+    if(e.webkitCompassHeading!==undefined && e.webkitCompassHeading!==null){
+      phoneHeading=(e.webkitCompassHeading + 360) % 360;
+    } else if(e.alpha!==null && e.alpha!==undefined && e.absolute===true){
+      var magH=((360-e.alpha) + 360) % 360;
+      phoneHeading=(magH + OBS_MAG_DECL + 360) % 360;
+    } else if(e.absolute!==true && phoneHeading===null){
+      phoneHeading=null;
+    }
   }
   window.addEventListener('deviceorientationabsolute', radarOrientation, true);window.addEventListener('deviceorientation', radarOrientation, true);
   function render(){
     var w = document.getElementById('radarWrap');if(!w) return;
     var size = Math.min(window.innerWidth - 24, 440);
     var heading = (phoneHeading !== null) ? ((phoneHeading + arCalibAz) % 360 + 360) % 360 : null;
-    if(heading !== null && lastRenderedHeading !== null && Math.abs(heading - lastRenderedHeading) < 2) return;
+    /* ★ FIX #8 — wrap 359↔1 nel confronto anti-jitter */
+    if(heading !== null && lastRenderedHeading !== null){
+      var dh = heading - lastRenderedHeading;
+      if(dh > 180) dh -= 360;
+      if(dh < -180) dh += 360;
+      if(Math.abs(dh) < 2) return;
+    }
     lastRenderedHeading = heading;
     w.innerHTML = radarSVG(size, targets, heading, highlightName);
     var visCount = targets.filter(function(t){return t.alt>0;}).length;
@@ -2252,7 +2277,6 @@ function initMoonGlobe(){
   var container = document.getElementById('moonGlobeContainer');
   if(!container) return;
   _moonGlobeItems = buildMoonGlobeData();
-
   if(!document.body.dataset.moonGlobeFiltersBound){
     document.body.dataset.moonGlobeFiltersBound = '1';
     document.addEventListener('click', function(e){
@@ -2321,7 +2345,6 @@ function initMoonGlobe(){
     });
   }catch(e){ console.log('[MoonGlobe] Controls error', e); }
   try {moonGlobeInstance.pointOfView({ lat: 0, lng: 0, altitude: 2.2 }, 0);_moonGlobeViewPOV = { lat:0, lng:0, altitude:2.2 };updateGlobeCompass();}catch(e){}
-
   moonGlobeInstance
     .pointsData(_moonGlobeItems)
     .pointLat('lat').pointLng('lng')
@@ -2343,7 +2366,6 @@ function initMoonGlobe(){
       refreshHighlight();
       try { moonGlobeInstance.pointOfView({ lat: d.lat, lng: d.lng, altitude: 1.4 }, 700); } catch(e) {}
     });
-
   moonGlobeInstance
     .ringsData([])
     .ringLat('lat').ringLng('lng')
@@ -2352,7 +2374,6 @@ function initMoonGlobe(){
     .ringPropagationSpeed(3)
     .ringRepeatPeriod(700)
     .ringResolution(64);
-
   moonGlobeInstance
     .labelsData([])
     .labelLat('lat').labelLng('lng')
@@ -2362,7 +2383,6 @@ function initMoonGlobe(){
     .labelColor(function(d){ return d.color || '#fff'; })
     .labelResolution(2)
     .labelAltitude(0.06);
-
   setTimeout(function(){updateGlobeCompass();},250);
   window.addEventListener('resize', function(){
     if(moonGlobeInstance && container.clientWidth > 0){moonGlobeInstance.width(container.clientWidth);moonGlobeInstance.height(container.clientHeight);}
@@ -2445,9 +2465,11 @@ function updateAstroDebug(obs){
   var sunState = getSunState(obs, now);
   var lines=[];
   lines.push(padLabel('Ora sistema UTC:') + fmtSystemUTC(now));
-  lines.push(padLabel('Ora locale IT:') + now.toLocaleString('it-IT', {timeZone:'Europe/Rome'}));
+  /* ★ FIX #1 — mostra l'ora nel fuso dell'OSSERVATORE, non fisso su Europe/Rome */
+  lines.push(padLabel('Ora locale ('+OBS_TIMEZONE+'):') + now.toLocaleString('it-IT', {timeZone:OBS_TIMEZONE}));
   lines.push(padLabel('Osservatore:') + 'Lat. ' + loc.lat.toFixed(4) + '°   Lon. ' + loc.lon.toFixed(4) + '°   Elev. ' + loc.elev + ' m');
   lines.push(padLabel('Località:') + loc.name);
+  lines.push(padLabel('Declinazione magn.:') + OBS_MAG_DECL.toFixed(1) + '° (stima AR)');
   lines.push('');
   var sunLabel;
   if(sunState.isDay) sunLabel = '<span class="day">GIORNO</span> (Sole alt='+sunState.alt.toFixed(2)+'°)';
@@ -2462,9 +2484,10 @@ function updateAstroDebug(obs){
     try{
       var eq=A.Equator(A.Body[k], now, obs, true, true);
       var hor=A.Horizon(now, obs, eq.ra, eq.dec, 'normal');
+      var illum=A.Illumination(A.Body[k], now);
       var state;
       if(hor.altitude<=0) state='<span class="down">sotto</span>';
-      else if(sunState.isDay) state='<span class="up">sopra l\'orizzonte ma non visibile</span>';
+      else if(!isObservableUnderSun(sunState.alt, illum.mag)) state='<span class="up">sopra l\'orizzonte ma non visibile</span>';
       else state='<span class="up">OSSERVABILE</span>';
       var pad=(k+'        ').slice(0,8);
       lines.push(pad+' alt='+hor.altitude.toFixed(2).padStart(7)+'°  az='+hor.azimuth.toFixed(2).padStart(7)+'°  '+state);
@@ -2484,10 +2507,10 @@ function updateAstro(){
   var sunState = getSunState(obs, now);
   updateAstroDebug(obs);
   var win=getNightWindow(obs,activeDate);
-  var tonightBase=new Date();
-  if(tonightBase.getHours()<12)tonightBase.setDate(tonightBase.getDate()-1);
-  var isTonight=activeDate.toDateString()===tonightBase.toDateString();
-  document.getElementById('dateTitle').textContent="Notte di "+win.start.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+(isTonight?' (stasera)':'');
+  /* ★ FIX #1 — confronto "stasera" basato sul giorno dell'OSSERVATORE */
+  var isTonight = sameObsDay(activeDate, new Date());
+  var dateTitleFmt = obsDateFmt({weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('dateTitle').textContent="Notte di "+dateTitleFmt.format(win.start)+(isTonight?' (stasera)':'');
   document.getElementById('sunCycle').textContent=fmtTime(win.start)+" → "+fmtTime(win.end);
   var dusk=A.SearchAltitude(A.Body.Sun,obs,-1,win.start,1,-18);
   var dawn=dusk?A.SearchAltitude(A.Body.Sun,obs,+1,dusk.date,1,-18):null;
@@ -2500,6 +2523,7 @@ function updateAstro(){
   var moonEqNow=A.Equator(A.Body.Moon,now,obs,true,true);
   var moonHorNow=A.Horizon(now,obs,moonEqNow.ra,moonEqNow.dec,'normal');
   var moonIsUpNow=moonHorNow.altitude>0;
+  /* La Luna è molto brillante: resta osservabile anche in crepuscolo civile */
   var moonObservable = moonIsUpNow && !sunState.isDay;
   var moonIllumNow=A.Illumination(A.Body.Moon,now);
   var moonMag=moonIllumNow.mag;
@@ -2557,12 +2581,13 @@ function updateAstro(){
     var ac=altCategory(pData.peak.alt);
     var cur=currentAltAz(body, obs, now);
     var isGeomUpNow=cur.isUp;
-    var isObservableNow=isGeomUpNow&&!sunState.isDay;
     var illumNow=A.Illumination(body,now);
     var magNow=illumNow.mag;
+    /* ★ FIX #7 — soglia crepuscolo dipendente dalla magnitudine */
+    var isObservableNow=isGeomUpNow && isObservableUnderSun(sunState.alt, magNow);
     var nowRow;
     if(!isGeomUpNow) nowRow='<div class="nowpos dimtxt">Ora: sotto l\'orizzonte ('+Math.round(cur.hor.altitude)+'°)</div>';
-    else if(sunState.isDay) nowRow='<div class="nowpos dimtxt">Ora: geometricamente '+Math.round(cur.hor.altitude)+'° ('+compassDir(cur.hor.azimuth)+') ma in pieno giorno invisibile</div>';
+    else if(!isObservableNow) nowRow='<div class="nowpos dimtxt">Ora: geometricamente '+Math.round(cur.hor.altitude)+'° ('+compassDir(cur.hor.azimuth)+') ma cielo troppo luminoso per mag '+magNow.toFixed(1)+'</div>';
     else nowRow='<div class="nowpos">Ora: '+compassDir(cur.hor.azimuth)+' ('+Math.round(cur.hor.azimuth)+'°), '+Math.round(cur.hor.altitude)+'° sopra l\'orizzonte</div>';
     if(pData.peak.alt>5){candidates.push({key:pKey,name:data.name,maxAlt:pData.peak.alt,maxTime:pData.peak.t,maxAz:pData.peak.az,mag:illum.mag,diam:diam,cons:cons.name,distKm:kmDist,url:data.url});}
     var pTransit=findTransitTime(pKey,null,obs,pData.win.start,pData.win.end);
@@ -2617,7 +2642,8 @@ function updateAstro(){
   }else{
     pointerEl.innerHTML='<div class="point-card"><div class="point-label">DOVE INQUADRARE PER PRIMO STANOTTE</div><div class="point-name">Luna o Deep-Sky</div><div class="point-main">Nessun pianeta principale supera i 18° di quota stanotte.</div></div>';
   }
-  var curMonth=win.start.getMonth(),curDay=win.start.getDate();
+  var monthParts=obsDateParts(win.start);
+  var curMonth=+monthParts.month-1, curDay=+monthParts.day;
   var activeShowers=SHOWERS.filter(function(s){
     if(s.s[0]===s.e[0])return curMonth===s.s[0]&&curDay>=s.s[1]&&curDay<=s.e[1];
     return (curMonth===s.s[0]&&curDay>=s.s[1])||(curMonth===s.e[0]&&curDay<=s.e[1]);
@@ -2644,8 +2670,9 @@ function computeNightIdxRange(hTimeArr,obs,anchorDate,dayOffsetFallback){
   }catch(e){return [];}
 }
 function fetchWeather(){
-  var dateToUse=new Date(activeDate);dateToUse.setHours(12,0,0,0);
-  var today=new Date();today.setHours(12,0,0,0);
+  /* ★ FIX #1 — mezzogiorno dell'OSSERVATORE, non del browser */
+  var dateToUse=obsNoon(activeDate);
+  var today=obsNoon(new Date());
   var dayOffset=Math.round((dateToUse-today)/86400000);
   var nocache=new Date().getTime();
   var myToken=++weatherFetchToken;
@@ -2658,8 +2685,7 @@ function fetchWeather(){
     if(data.timezone)OBS_TIMEZONE=data.timezone;
     if(myToken!==weatherFetchToken)return;
     var curr=data.current||{},h=data.hourly||{};
-    var refDate=new Date(activeDate);
-    refDate.setHours(12,0,0,0);
+    var refDate=obsNoon(activeDate);
     var refIdx=findHourlyIndex(h.time,refDate);
     if(refIdx<0 && dayOffset===0)refIdx=findHourlyIndex(h.time,new Date());
     if(refIdx<0 && h.time&&h.time.length)refIdx=Math.min(h.time.length-1,Math.max(0,h.time.length-1));
@@ -2750,6 +2776,9 @@ function geocodeCity(query){
         loc.lat=item.latitude;loc.lon=item.longitude;loc.elev=(typeof item.elevation==='number' && isFinite(item.elevation))?item.elevation:6;
         loc.name=item.name+(item.admin1?" ("+item.admin1+")":"");
         if(item.timezone)OBS_TIMEZONE=item.timezone;
+        /* ★ FIX #1 — ricalcola activeDate col nuovo fuso */
+        activeDate=obsNowActiveDate();
+        updateMagDecl();
         updateLocLabel();
         resEl.innerHTML="";document.getElementById('locInput').value="";
         weatherLoaded=false;
@@ -2766,6 +2795,7 @@ function acquireGps(){
   navigator.geolocation.getCurrentPosition(function(pos){
     loc.lat=pos.coords.latitude;loc.lon=pos.coords.longitude;loc.elev=(typeof pos.coords.altitude==='number')?pos.coords.altitude:6;
     loc.name="Posizione GPS";
+    updateMagDecl();
     updateLocLabel();
     btn.textContent="GPS Attivo";
     weatherLoaded=false;
@@ -2787,6 +2817,7 @@ function requestGeolocationPermission(){
       function(pos){
         loc.lat=pos.coords.latitude;loc.lon=pos.coords.longitude;loc.elev=(typeof pos.coords.altitude==='number')?pos.coords.altitude:6;
         loc.name="Posizione GPS";
+        updateMagDecl();
         updateLocLabel();
         setPermState('geo','ok');resolve(true);
       },
@@ -2878,7 +2909,46 @@ function showCdnError(){
   if(p)p.innerHTML='<div class="note err"><b>Errore critico:</b> la libreria Astronomy Engine non è stata caricata. Verifica la connessione e ricarica.</div>';
   var n=document.getElementById('nightTargets');if(n)n.innerHTML='<div class="section-note">In attesa del motore astronomico...</div>';
 }
+
+/* ★ FIX #6 — MANIFEST PWA via Blob URL: installabile su Chrome/Safari/Firefox.
+   Il vecchio data URI con start_url:"." non era risolvibile.
+   Nota: per l'install prompt completo di Chrome desktop serve anche un SW,
+   che richiede un file esterno (non embeddabile in un singolo HTML).
+   Su iOS/Android "Aggiungi a schermata Home" funziona con questo manifest. */
+function installPwaManifest(){
+  try{
+    var iconSvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="#070c16"/><circle cx="256" cy="256" r="180" fill="#f2b84b"/><circle cx="210" cy="210" r="28" fill="#fff" opacity="0.35"/></svg>';
+    var iconUrl = "data:image/svg+xml," + encodeURIComponent(iconSvg);
+    var startUrl = location.href.split('#')[0];
+    var scopeUrl = startUrl.replace(/[^/]*$/, '');
+    var manifest = {
+      name: "AstroAlert Pro - C8 SE",
+      short_name: "AstroAlert",
+      description: "Effemeridi, meteo astronomico e puntamento AR per Celestron 8SE",
+      start_url: startUrl,
+      scope: scopeUrl,
+      display: "standalone",
+      orientation: "portrait",
+      background_color: "#070c16",
+      theme_color: "#070c16",
+      lang: "it",
+      categories: ["education","utilities","science"],
+      icons: [
+        { src: iconUrl, sizes: "192x192", type: "image/svg+xml", purpose: "any" },
+        { src: iconUrl, sizes: "512x512", type: "image/svg+xml", purpose: "any maskable" }
+      ]
+    };
+    var blob = new Blob([JSON.stringify(manifest)], {type: 'application/manifest+json'});
+    var blobUrl = URL.createObjectURL(blob);
+    var link = document.createElement('link');
+    link.rel = 'manifest';
+    link.href = blobUrl;
+    document.head.appendChild(link);
+  }catch(e){ console.warn('[PWA] manifest non applicato:', e); }
+}
+
 function init(){
+  installPwaManifest();
   checkSecureContext();
   updateLocLabel();updateOnlineDot();
   try {initMoonTabs();renderLandingSites();renderCratersAndMaria();} catch(err){ console.error('[Moon init]', err); }
@@ -2901,7 +2971,8 @@ function init(){
       applyFilterToTargets(activeFilter);
     });
   });
-  document.getElementById('btnToday').addEventListener('click',function(){var d=new Date();if(d.getHours()<12)d.setDate(d.getDate()-1);activeDate=d;weatherLoaded=false;updateAstro();ensurePlanisphereClock(true);drawPlanisphere();fetchWeather();});
+  /* ★ FIX #1 — "Stanotte" ora usa il giorno dell'OSSERVATORE */
+  document.getElementById('btnToday').addEventListener('click',function(){activeDate=obsNowActiveDate();weatherLoaded=false;updateAstro();ensurePlanisphereClock(true);drawPlanisphere();fetchWeather();});
   document.getElementById('btnPrev').addEventListener('click',function(){if(!canGoPrev()){toast('Puoi andare indietro di 1 notte al massimo.',2500);return;}activeDate.setDate(activeDate.getDate()-1);weatherLoaded=false;updateAstro();ensurePlanisphereClock(true);drawPlanisphere();fetchWeather();});
   document.getElementById('btnNext').addEventListener('click',function(){if(!canGoNext()){toast('Previsioni meteo fino a +3 giorni.',2500);return;}activeDate.setDate(activeDate.getDate()+1);weatherLoaded=false;updateAstro();ensurePlanisphereClock(true);drawPlanisphere();fetchWeather();});
   var rp=document.getElementById('btnResetPerms');
