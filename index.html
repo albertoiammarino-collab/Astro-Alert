@@ -4,14 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#070c16">
+<link rel="manifest" href="manifest.webmanifest">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AstroAlert">
 <meta name="application-name" content="AstroAlert">
 <title>AstroAlert Pro - C8 SE</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23070c16'/%3E%3Ccircle cx='50' cy='50' r='34' fill='%23f2b84b'/%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23070c16'/%3E%3Ccircle cx='50' cy='50' r='34' fill='%23f2b84b'/%3E%3C/svg%3E">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
 :root{--bg:#070c16;--panel:#0f1828;--panel-2:#0a111d;--line:#1c2d46;--text:#e7edf6;--muted:#8ca0ba;--muted-2:#586982;--amber:#f2b84b;--cyan:#51a0d5;--green:#2ecc71;--red:#e74c3c;--mono:ui-monospace,"SF Mono","Roboto Mono",Consolas,monospace;--sans:Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--pad-x:clamp(8px,2.5vw,14px);--pad-y:clamp(8px,2vw,12px);--gap:clamp(6px,2vw,10px);--radius:clamp(6px,1.6vw,8px);--fs-xs:clamp(9.5px,2.6vw,11px);--fs-sm:clamp(10.5px,2.9vw,12px);--fs-base:clamp(11.5px,3.2vw,12.5px);--fs-md:clamp(12.5px,3.4vw,13.5px);--fs-lg:clamp(14px,3.8vw,16.5px);--fs-xl:clamp(16px,4.4vw,19px);--fs-2xl:clamp(19px,5.2vw,23px);--fs-3xl:clamp(20px,5.6vw,24px)}
 body.red-mode{--bg:#030000;--panel:#120000;--panel-2:#080000;--line:#3b0000;--text:#ff5555;--muted:#aa3333;--muted-2:#661111;--amber:#ff3333;--cyan:#ff4444;--green:#ff2222;--red:#ff0000}
@@ -638,6 +639,7 @@ body.red-mode::after{content:"";position:fixed;inset:0;background:#f00;mix-blend
 
 <footer>
   Effemeridi: Astronomy Engine (VSOP87). Meteo: Open-Meteo. Globo 3D: globe.gl + texture three.js.<br>
+  <button type="button" class="btn-ui" id="btnInstall" style="display:none;margin:8px 8px 0 0;">Installa app</button>
   <button type="button" class="btn-ui" id="btnResetPerms" style="margin-top:8px;">Ripeti permessi</button>
 </footer>
 
@@ -1099,6 +1101,52 @@ var PLANISPHERE_STARS = [
   {name:'Megrez',     ra:12.2571, dec:57.0326,  mag:3.31,  sp:'A', R:1.7,   label:false}
 ];
 
+
+var PLANISPHERE_STAR_META = {
+  'Sirio':      {distLy:8.6,   mass:'≈ 2,02 M☉', url:'https://it.wikipedia.org/wiki/Sirio', simbad:'Sirius'},
+  'Arturo':     {distLy:36.7,  mass:'≈ 1,10 M☉', url:'https://it.wikipedia.org/wiki/Arturo_(stella)', simbad:'Arcturus'},
+  'Vega':       {distLy:25.3,  mass:'≈ 2,14 M☉', url:'https://it.wikipedia.org/wiki/Vega', simbad:'Vega'},
+  'Capella':    {distLy:42.9,  mass:'≈ 2,7 M☉', url:'https://it.wikipedia.org/wiki/Capella_(astronomia)', simbad:'Capella'},
+  'Rigel':      {distLy:860,   mass:'≈ 21 M☉', url:'https://it.wikipedia.org/wiki/Rigel', simbad:'Rigel'},
+  'Procione':   {distLy:11.46, mass:'≈ 1,50 M☉', url:'https://it.wikipedia.org/wiki/Procione', simbad:'Procyon'},
+  'Betelgeuse': {distLy:642.5, mass:'≈ 15 M☉', url:'https://it.wikipedia.org/wiki/Betelgeuse', simbad:'Betelgeuse'},
+  'Altair':     {distLy:16.7,  mass:'≈ 1,79 M☉', url:'https://it.wikipedia.org/wiki/Altair', simbad:'Altair'},
+  'Aldebaran':  {distLy:65.3,  mass:'≈ 1,16 M☉', url:'https://it.wikipedia.org/wiki/Aldebaran', simbad:'Aldebaran'},
+  'Spica':      {distLy:250,   mass:'≈ 10,25 M☉', url:'https://it.wikipedia.org/wiki/Spica', simbad:'Spica'},
+  'Antares':    {distLy:550,   mass:'≈ 12,4 M☉', url:'https://it.wikipedia.org/wiki/Antares', simbad:'Antares'},
+  'Polluce':    {distLy:33.7,  mass:'≈ 1,86 M☉', url:'https://it.wikipedia.org/wiki/Polluce_(stella)', simbad:'Pollux'},
+  'Fomalhaut':  {distLy:25.1,  mass:'≈ 1,92 M☉', url:'https://it.wikipedia.org/wiki/Fomalhaut', simbad:'Fomalhaut'},
+  'Deneb':      {distLy:2600,  mass:'≈ 19 M☉', url:'https://it.wikipedia.org/wiki/Deneb', simbad:'Deneb'},
+  'Regolo':     {distLy:79.3,  mass:'≈ 3,4 M☉', url:'https://it.wikipedia.org/wiki/Regolo_(stella)', simbad:'Regulus'},
+  'Adhara':     {distLy:430,   mass:'≈ 12,5 M☉', url:'https://it.wikipedia.org/wiki/Adhara', simbad:'Adhara'},
+  'Castore':    {distLy:51.6,  mass:'≈ 2,8 M☉', url:'https://it.wikipedia.org/wiki/Castore_(stella)', simbad:'Castor'},
+  'Gacrux':     {distLy:88.6,  mass:'≈ 1,5 M☉', url:'https://it.wikipedia.org/wiki/Gacrux', simbad:'Gacrux'},
+  'Bellatrix':  {distLy:250,   mass:'≈ 8,6 M☉', url:'https://it.wikipedia.org/wiki/Bellatrix_(stella)', simbad:'Bellatrix'},
+  'Elnath':     {distLy:131,   mass:'≈ 5,8 M☉', url:'https://it.wikipedia.org/wiki/Elnath', simbad:'Elnath'},
+  'Alnilam':    {distLy:2000,  mass:'≈ 34 M☉', url:'https://it.wikipedia.org/wiki/Alnilam', simbad:'Alnilam'},
+  'Alnitak':    {distLy:1260,  mass:'≈ 33 M☉', url:'https://it.wikipedia.org/wiki/Alnitak', simbad:'Alnitak'},
+  'Alioth':     {distLy:81,    mass:'≈ 2,9 M☉', url:'https://it.wikipedia.org/wiki/Alioth', simbad:'Alioth'},
+  'Dubhe':      {distLy:123,   mass:'≈ 4,25 M☉', url:'https://it.wikipedia.org/wiki/Dubhe', simbad:'Dubhe'},
+  'Alkaid':     {distLy:104,   mass:'≈ 6 M☉', url:'https://it.wikipedia.org/wiki/Alkaid', simbad:'Alkaid'},
+  'Mimosa':     {distLy:280,   mass:'≈ 14 M☉', url:'https://it.wikipedia.org/wiki/Mimosa_(stella)', simbad:'Mimosa'},
+  'Acrux':      {distLy:321,   mass:'≈ 17,8 M☉', url:'https://it.wikipedia.org/wiki/Acrux', simbad:'Acrux'},
+  'Shaula':     {distLy:570,   mass:'≈ 11 M☉', url:'https://it.wikipedia.org/wiki/Shaula', simbad:'Shaula'},
+  'Sargas':     {distLy:270,   mass:'≈ 4,4 M☉', url:'https://it.wikipedia.org/wiki/Sargas', simbad:'Sargas'},
+  'Saiph':      {distLy:720,   mass:'≈ 15 M☉', url:'https://it.wikipedia.org/wiki/Saiph', simbad:'Saiph'},
+  'Schedar':    {distLy:228,   mass:'≈ 4,5 M☉', url:'https://it.wikipedia.org/wiki/Schedar', simbad:'Schedar'},
+  'Caph':       {distLy:54.7,  mass:'≈ 2,1 M☉', url:'https://it.wikipedia.org/wiki/Caph', simbad:'Caph'},
+  'Mizar':      {distLy:86.8,  mass:'≈ 2,2 M☉', url:'https://it.wikipedia.org/wiki/Mizar', simbad:'Mizar'},
+  'Mintaka':    {distLy:1200,  mass:'≈ 24 M☉', url:'https://it.wikipedia.org/wiki/Mintaka', simbad:'Mintaka'},
+  'Merak':      {distLy:79.7,  mass:'≈ 2,7 M☉', url:'https://it.wikipedia.org/wiki/Merak', simbad:'Merak'},
+  'Phecda':     {distLy:83.2,  mass:'≈ 2,6 M☉', url:'https://it.wikipedia.org/wiki/Phecda', simbad:'Phecda'},
+  'Megrez':     {distLy:80.5,  mass:'≈ 1,6 M☉', url:'https://it.wikipedia.org/wiki/Megrez', simbad:'Megrez'}
+};
+function planisphereStarMeta(s){
+  var m=PLANISPHERE_STAR_META[s.name]||{};
+  var simbad=m.simbad?('https://simbad.cds.unistra.fr/simbad/sim-id?Ident='+encodeURIComponent(m.simbad)):null;
+  return {distLy:m.distLy||null,massRatio:m.mass||null,url:m.url||null,simbad:simbad};
+}
+
 var SPECTRAL_COLORS = {O:'#8fa8ff', B:'#9db4ff', A:'#c8d4ff', F:'#ffe566', G:'#ffdd33', K:'#ff8c1a', M:'#e63946'};
 function starColor(sp){return SPECTRAL_COLORS[sp] || '#cad7ff';}
 function starDotRadius(R, dpr){
@@ -1223,9 +1271,11 @@ function planisphereTimeText(){
   return fmtTime(planisphereTime)+' · '+planisphereWindow.label;
 }
 function planisphereDescForStar(s){
-  var full=null;
-  for(var i=0;i<STAR_CATALOG.length;i++){if(STAR_CATALOG[i].name===s.name){full=STAR_CATALOG[i];break;}}
-  return {kind:'star',name:s.name,ra:s.ra,dec:s.dec,mag:s.mag,distLy:full?full.distLy:null,massRatio:full?full.massRatio:null,url:full?full.url:('https://simbad.cds.unistra.fr/simbad/sim-id?Ident='+encodeURIComponent(s.name)),simbad:full?full.simbad:('https://simbad.cds.unistra.fr/simbad/sim-id?Ident='+encodeURIComponent(s.name))};
+  var m=planisphereStarMeta(s);
+  return {
+    kind:'star',name:s.name,ra:s.ra,dec:s.dec,mag:s.mag,
+    distLy:m.distLy,massRatio:m.massRatio,url:m.url,simbad:m.simbad
+  };
 }
 
 function drawSunIcon(ctx, x, y, r){
@@ -1362,7 +1412,7 @@ function drawEyeIcon(ctx, cx, cy, size, color, bgColor){
   ctx.fillStyle = 'rgba(0,0,0,0.28)';
   ctx.fill();
   ctx.strokeStyle = color;
-  ctx.lineWidth = Math.max(1, size * 0.07);
+  ctx.lineWidth = Math.max(1.8, size * 0.13);
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
   ctx.beginPath();
@@ -1375,7 +1425,10 @@ function drawEyeIcon(ctx, cx, cy, size, color, bgColor){
   ctx.beginPath();
   ctx.arc(cx, cy, irisR, 0, Math.PI*2);
   ctx.fillStyle = color;
+  ctx.shadowColor = 'rgba(255,255,255,0.95)';
+  ctx.shadowBlur = Math.max(2, size * 0.45);
   ctx.fill();
+  ctx.shadowBlur = 0;
   ctx.beginPath();
   ctx.arc(cx, cy, irisR * 0.42, 0, Math.PI*2);
   ctx.fillStyle = '#000';
@@ -1473,7 +1526,7 @@ function drawPlanisphere(){
   }
   var obs=new A.Observer(loc.lat,loc.lon,loc.elev);
   var muted=css.getPropertyValue('--muted').trim()||'#8ca0ba';
-  drawEyeIcon(ctx,cx,cy,Math.round(w*0.020),muted,bg);
+  drawEyeIcon(ctx,cx,cy,Math.round(w*0.028),'#fff',bg);
   ctx.strokeStyle='rgba(200,215,240,0.55)';
   ctx.lineWidth=Math.max(1.3*dpr,1.6);
   ctx.lineCap='round';
@@ -1581,7 +1634,7 @@ function drawPlanisphere(){
   var iconR=R*0.024;
   items.forEach(function(it){
     if(it.type==='planet'){
-      var r=iconR*0.95;
+      var r=iconR*0.95*1.2;
       switch(it.key){
         case 'Mercury': drawMercuryIcon(ctx,it.x,it.y,r);break;
         case 'Venus':   drawVenusIcon(ctx,it.x,it.y,r);break;
@@ -1808,9 +1861,18 @@ function initPlanisphere(){
     if(!info)return;
     if(!hit){info.innerHTML='Tocca un oggetto per vedere altezza, azimut e magnitudine all\'ora selezionata.';return;}
     var mass=hit.desc&&hit.desc.massRatio?'<br>Massa: <b>'+escapeHtml(hit.desc.massRatio)+'</b>':'';
+    var distText='';
+    if(hit.desc){
+      if(hit.type==='star' && typeof hit.desc.distLy==='number') distText='<br>Distanza: <b>'+formatDistanceLines(0,true,hit.desc.distLy).value+'</b>';
+      else if(hit.desc.body){try{var di=A.Illumination(hit.desc.body,planisphereTime);distText='<br>Distanza: <b>'+formatDistanceLines(di.geo_dist*KM_PER_AU,false).value+'</b>';}catch(e){}}
+    }
     var spInfo=hit.sp?' · Classe <b>'+hit.sp+'</b>':'';
     var rInfo=hit.R?' · R☉ <b>'+hit.R+'</b>':'';
-    info.innerHTML='<div class="pi-main">'+escapeHtml(hit.name)+'</div>Alt <b>'+hit.alt.toFixed(1)+'°</b> · Az <b>'+Math.round(hit.az)+'° ('+compassDir(hit.az)+')</b> · Mag <b>'+Number(hit.mag).toFixed(2)+'</b>'+spInfo+rInfo+mass+'<br><button type="button" class="btn-ui" id="planisphereOpenCard" style="margin-top:7px;min-height:34px;padding:6px 9px">Apri scheda</button>';
+    var links='';
+    if(hit.desc&&hit.desc.url)links+=' <a href="'+hit.desc.url+'" target="_blank" rel="noopener" style="color:var(--cyan)">URL ↗</a>';
+    if(hit.desc&&hit.desc.simbad)links+=' <a href="'+hit.desc.simbad+'" target="_blank" rel="noopener" style="color:var(--cyan)">SIMBAD ↗</a>';
+    else if(hit.type==='planet'||hit.type==='moon'||hit.type==='sun')links+=' <span style="color:var(--muted-2)">SIMBAD: N/D</span>';
+    info.innerHTML='<div class="pi-main">'+escapeHtml(hit.name)+'</div>Alt <b>'+hit.alt.toFixed(1)+'°</b> · Az <b>'+Math.round(hit.az)+'° ('+compassDir(hit.az)+')</b> · Mag <b>'+Number(hit.mag).toFixed(2)+'</b>'+spInfo+rInfo+distText+mass+'<br><span style="display:inline-flex;gap:8px;flex-wrap:wrap;margin-top:5px">'+links+'</span><br><button type="button" class="btn-ui" id="planisphereOpenCard" style="margin-top:7px;min-height:34px;padding:6px 9px">Apri scheda</button>';
     var b=document.getElementById('planisphereOpenCard');if(b)b.addEventListener('click',function(){openCelestialModal(hit.desc,planisphereTime);});
   });
   window.addEventListener('resize',function(){if(planisphereFrame)cancelAnimationFrame(planisphereFrame);planisphereFrame=requestAnimationFrame(function(){planisphereFrame=0;drawPlanisphere();});});
@@ -1832,8 +1894,8 @@ function computeMoonPenalty(target,obs,moonIllumFrac){
 }
 function resolveTarget(arg){
   if(typeof arg === 'string'){
-    if(arg === 'Moon')return {kind:'moon', name:'Luna', body:A.Body.Moon, key:'Moon', url:null, simbad:null, mag:null, distLy:null, massRatio:MOON_MASS_RATIO};
-    if(arg === 'Sun')return {kind:'sun', name:'Sole', body:A.Body.Sun, key:'Sun', url:null, simbad:null, mag:null, distLy:null, massRatio:null};
+    if(arg === 'Moon')return {kind:'moon', name:'Luna', body:A.Body.Moon, key:'Moon', url:'https://it.wikipedia.org/wiki/Luna', simbad:null, mag:null, distLy:null, massRatio:MOON_MASS_RATIO};
+    if(arg === 'Sun')return {kind:'sun', name:'Sole', body:A.Body.Sun, key:'Sun', url:'https://it.wikipedia.org/wiki/Sole', simbad:null, mag:null, distLy:null, massRatio:'333.000 volte la Terra (1 M☉)'};
     if(PLANET_DATA[arg])return {kind:'planet', name:PLANET_DATA[arg].name, body:A.Body[arg], key:arg, url:PLANET_DATA[arg].url, simbad:null, mag:null, distLy:null, massRatio:PLANET_DATA[arg].massRatio};
   }
   return arg;
@@ -1981,7 +2043,7 @@ function openCelestialModal(arg,atDate){
   if(isMoon){var phaseAngle=A.MoonPhase(now);var illumM = A.Illumination(A.Body.Moon, now);var fMoon=illumM.phase_fraction;moonImg='<div class="moon-phase-svg-wrap">'+moonPhaseSVG(fMoon,phaseAngle<180,170)+'</div>';moonCap='<div class="moon-phase-caption">Fase attuale · '+Math.round(fMoon*100)+'% illuminata</div>';}
   var distLine = distObj.value + (distObj.note ? ' <span style="color:var(--muted-2);font-size:0.9em">'+distObj.note+'</span>' : '');
   var massLine = massObj ? (massObj.value + (massObj.note ? ' <span style="color:var(--muted-2);font-size:0.9em">'+massObj.note+'</span>' : '')) : '';
-  var simbadRow = simbad ? '<div class="datarow"><span>SIMBAD</span><b><a href="'+simbad+'" target="_blank" rel="noopener" style="color:var(--cyan)">Apri ↗</a></b></div>' : '';
+  var simbadRow = simbad ? '<div class="datarow"><span>SIMBAD</span><b><a href="'+simbad+'" target="_blank" rel="noopener" style="color:var(--cyan)">Apri ↗</a></b></div>' : ((desc.kind==='planet'||desc.kind==='moon'||desc.kind==='sun') ? '<div class="datarow"><span>SIMBAD</span><b style="color:var(--muted)">Non disponibile: SIMBAD esclude i corpi del Sistema Solare</b></div>' : '');
   var html='<div class="modal-backdrop" id="modalBackdrop"><div class="modal-sheet">'
     +'<div class="mtop"><h3>'+escapeHtml(title)+'</h3><button type="button" class="mclose" id="modalClose">&times;</button></div>'
     +moonImg+moonCap
@@ -3003,40 +3065,12 @@ function showCdnError(){
   if(p)p.innerHTML='<div class="note err"><b>Errore critico:</b> la libreria Astronomy Engine non è stata caricata. Verifica la connessione e ricarica.</div>';
   var n=document.getElementById('nightTargets');if(n)n.innerHTML='<div class="section-note">In attesa del motore astronomico...</div>';
 }
-function installPwaManifest(){
-  try{
-    var iconSvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" fill="#070c16"/><circle cx="256" cy="256" r="180" fill="#f2b84b"/><circle cx="210" cy="210" r="28" fill="#fff" opacity="0.35"/></svg>';
-    var iconUrl = "data:image/svg+xml," + encodeURIComponent(iconSvg);
-    var startUrl = location.href.split('#')[0];
-    var scopeUrl = startUrl.replace(/[^/]*$/, '');
-    var manifest = {
-      name: "AstroAlert Pro - C8 SE",
-      short_name: "AstroAlert",
-      description: "Effemeridi, meteo astronomico e puntamento AR per Celestron 8SE",
-      start_url: startUrl,
-      scope: scopeUrl,
-      display: "standalone",
-      orientation: "portrait",
-      background_color: "#070c16",
-      theme_color: "#070c16",
-      lang: "it",
-      categories: ["education","utilities","science"],
-      icons: [
-        { src: iconUrl, sizes: "192x192", type: "image/svg+xml", purpose: "any" },
-        { src: iconUrl, sizes: "512x512", type: "image/svg+xml", purpose: "any maskable" }
-      ]
-    };
-    var blob = new Blob([JSON.stringify(manifest)], {type: 'application/manifest+json'});
-    var blobUrl = URL.createObjectURL(blob);
-    var link = document.createElement('link');
-    link.rel = 'manifest';
-    link.href = blobUrl;
-    document.head.appendChild(link);
-  }catch(e){ console.warn('[PWA] manifest non applicato:', e); }
-}
-
 function init(){
-  installPwaManifest();
+  if('serviceWorker' in navigator && window.isSecureContext){navigator.serviceWorker.register('sw.js').catch(function(){});}
+  var deferredInstall=null,bi=document.getElementById('btnInstall');
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredInstall=e;if(bi)bi.style.display='inline-flex';});
+  window.addEventListener('appinstalled',function(){if(bi)bi.style.display='none';deferredInstall=null;});
+  if(bi)bi.addEventListener('click',function(){if(!deferredInstall)return;deferredInstall.prompt();deferredInstall.userChoice.then(function(){deferredInstall=null;bi.style.display='none';});});
   checkSecureContext();
   updateLocLabel();updateOnlineDot();
   try {initMoonTabs();renderLandingSites();renderCratersAndMaria();} catch(err){ console.error('[Moon init]', err); }
