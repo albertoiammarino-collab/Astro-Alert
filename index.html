@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AstroAlert">
 <meta name="application-name" content="AstroAlert">
-<title>AstroAlert Pro - C8 SE</title>
+<title>Astro Alberto · versione corretta</title>
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
@@ -328,7 +328,7 @@ body.red-mode::after{content:"";position:fixed;inset:0;background:#f00;mix-blend
   </div>
   <div class="loc-results" id="locResults"></div>
   <div class="loc-title" id="dateTitle">Calcolo effemeridi...</div>
-  <div class="setup-specs">Celestron NexStar 8SE (D: 203mm f/10, Focale 2032mm)<br>Treno ottico: Oculari 25mm (81x), 15mm (135x), Barlow 2x (162x / 271x)</div>
+  <div class="setup-specs">Celestron NexStar 8SE (D: 203 mm, f/10, focale 2032 mm)<br>Oculari: 25 mm e 15 mm originali, zoom SVBONY 7-21 mm, Baader Hyperion Zoom Mark IV 8-24 mm, Barlow 2x.</div>
 </header>
 
 <button type="button" class="red-mode-banner" id="btnRedMode" aria-pressed="false">
@@ -443,7 +443,7 @@ body.red-mode::after{content:"";position:fixed;inset:0;background:#f00;mix-blend
   </div>
 
   <div class="planisphere-info" id="planisphereInfo">Tocca un oggetto per vedere altezza, azimut e magnitudine all'ora selezionata.</div>
-  <div class="planisphere-note" id="planisphereNote">Mappa con Astronomy Engine · coordinate J2000.</div>
+  <div class="planisphere-note" id="planisphereNote">Pianeti calcolati per data e ora selezionate. Stelle basate sul catalogo di riferimento J2000.</div>
 </div>
 
 <div class="astro-debug" id="astroDebug"><span class="dbg-title">🔍 VERIFICA ASTRONOMICA</span><span id="astroDebugContent">Inizializzazione...</span></div>
@@ -599,16 +599,23 @@ body.red-mode::after{content:"";position:fixed;inset:0;background:#f00;mix-blend
   <summary>CALCOLO OCULARI CELESTRON 8SE</summary>
   <div>
     <table class="eyepiece-table">
-      <thead><tr><th>Configurazione</th><th>Ingr.</th><th>Pupilla</th><th>Utilizzo C8SE</th></tr></thead>
+      <thead><tr><th>Oculare / focale</th><th>Ingr.</th><th>Pupilla</th><th>Uso consigliato sul C8</th></tr></thead>
       <tbody>
-        <tr class="ep-row" data-min-quality="0"><td>25mm</td><td>81x</td><td>2.50 mm</td><td>Ricerca, centraggio, ammassi aperti</td></tr>
-        <tr class="ep-row" data-min-quality="0"><td>15mm</td><td>135x</td><td>1.50 mm</td><td>Ingrandimento intermedio, Luna e pianeti</td></tr>
-        <tr class="ep-row" data-min-quality="0"><td>25mm+Barlow</td><td>162x</td><td>1.25 mm</td><td>Solo con immagine stabile</td></tr>
-        <tr class="ep-row" data-min-quality="0"><td>15mm+Barlow</td><td>271x</td><td>0.74 mm</td><td>Solo con seeing realmente stabile</td></tr>
+        <tr class="ep-row" data-min-quality="0"><td>25 mm originale</td><td>81x</td><td>2.50 mm</td><td>Ricerca, centraggio, ammassi aperti</td></tr>
+        <tr class="ep-row" data-min-quality="0"><td>Hyperion Zoom 24 mm</td><td>85x</td><td>2.40 mm</td><td>Ricerca e visione generale</td></tr>
+        <tr class="ep-row" data-min-quality="0"><td>SVBONY Zoom 21 mm</td><td>97x</td><td>2.10 mm</td><td>Ricerca, Luna e bersagli estesi</td></tr>
+        <tr class="ep-row" data-min-quality="0"><td>Hyperion Zoom 16 mm</td><td>127x</td><td>1.60 mm</td><td>Compromesso per Luna e pianeti</td></tr>
+        <tr class="ep-row" data-min-quality="0"><td>SVBONY Zoom 15 mm</td><td>135x</td><td>1.50 mm</td><td>Ingrandimento intermedio</td></tr>
+        <tr class="ep-row" data-min-quality="0"><td>Hyperion Zoom 12 mm</td><td>169x</td><td>1.20 mm</td><td>Luna e pianeti se l'immagine è stabile</td></tr>
+        <tr class="ep-row" data-min-quality="0"><td>SVBONY Zoom 10 mm</td><td>203x</td><td>1.00 mm</td><td>Dettagli planetari con buon seeing</td></tr>
+        <tr class="ep-row" data-min-quality="0"><td>Hyperion Zoom 8 mm</td><td>254x</td><td>0.80 mm</td><td>Seeing molto buono, non sempre sfruttabile</td></tr>
+        <tr class="ep-row" data-min-quality="0"><td>SVBONY Zoom 7 mm</td><td>290x</td><td>0.70 mm</td><td>Ingrandimento estremo, raramente utile</td></tr>
+        <tr class="ep-row" data-min-quality="0"><td>25 mm + Barlow 2x</td><td>163x</td><td>1.25 mm</td><td>Prova se la visione resta nitida</td></tr>
+        <tr class="ep-row" data-min-quality="0"><td>15 mm + Barlow 2x</td><td>271x</td><td>0.75 mm</td><td>Solo con seeing eccezionale</td></tr>
       </tbody>
     </table>
-    <div class="note" id="eyepieceLiveNote"><b>Adattamento live:</b> le righe con badge <b>SCONSIGLIATO</b> sono poco indicate col seeing attuale.</div>
-    <div class="note">Potere risolutivo ottico (Dawes): <b>0.57"</b>. Sul litorale il tetto pratico è tipicamente <b>~200x</b>: i 271x restano una rarità.</div>
+    <div class="note" id="eyepieceLiveNote"><b>Adattamento live:</b> la qualità dell'immagine va verificata all'oculare. Le condizioni meteo da sole non misurano il seeing.</div>
+    <div class="note">Il potere risolutivo teorico di Dawes del C8 da 203 mm è circa <b>0,57″</b>, non una garanzia di dettaglio reale. 200x è già elevato ma spesso utile. 254x e 290x richiedono atmosfera stabile e ottiche in temperatura. Non abbinare automaticamente la Barlow agli zoom: l'ingrandimento risultante rischia di essere eccessivo.</div>
   </div>
 </details>
 
@@ -696,7 +703,7 @@ function obsNowActiveDate(){
     try{
       var o=new A.Observer(loc.lat,loc.lon,loc.elev);
       var e=A.Equator(A.Body.Sun,now,o,true,true);
-      before=A.Horizon(now,o,e.ra,e.dec,'normal').altitude<=-0.833;
+      before=A.Horizon(now,o,e.ra,e.dec).altitude<=-0.833;
     }catch(x){}
     if(before) midnight=obsMidnight(new Date(obsNoon(now).getTime()-86400000));
   }
@@ -789,11 +796,11 @@ function metricsBlockHTML(distObj, massObj){var html='<div class="metrics-block"
 var PLANET_DATA = {
   Mercury:{name:"Mercurio", radius:2440.5, url:"https://edu.inaf.it/rubriche/schede-pianeti/mercurio/", massRatio:"0,055 volte la Terra (1/18)", facts:"Il pianeta più piccolo del sistema solare interno.", guide:"Non aspettarti colori o dettagli: apparirà come una piccolissima 'mezzaluna' o disco giallino che ribolle per la bassa elevazione."},
   Venus:{name:"Venere", radius:6051.8, url:"https://edu.inaf.it/rubriche/schede-pianeti/venere/", massRatio:"0,815 volte la Terra (quasi gemello)", facts:"Pianeta più caldo del sistema solare per via dell'effetto serra.", guide:"Così splendente che all'oculare rischia di abbagliare. Ammirane la fase (da sottile falce a gibbosa), meglio al crepuscolo."},
-  Mars:{name:"Marte", radius:3396.2, url:"https://edu.inaf.it/rubriche/schede-pianeti/marte/", massRatio:"0,107 volte la Terra (circa un decimo)", facts:"Il pianeta rosso. Ospita l'Olympus Mons, il vulcano più alto del sistema solare.", guide:"Bersaglio esigente: il diametro apparente varia molto. A 162x o 271x mostra la calotta polare bianca e chiazze scure."},
-  Jupiter:{name:"Giove", radius:71492, url:"https://edu.inaf.it/rubriche/schede-pianeti/giove/", massRatio:"318 volte la Terra (il più imponente)", facts:"Il pianeta più imponente del sistema solare.", guide:"Il pianeta più gratificante: già a 81x vedi le due strisce equatoriali e i 4 satelliti galileiani. A 162x puoi scorgere la Grande Macchia Rossa."},
-  Saturn:{name:"Saturno", radius:60268, url:"https://edu.inaf.it/rubriche/schede-pianeti/saturno/", massRatio:"95 volte la Terra (col sistema di anelli)", facts:"Celebre per il maestoso sistema di anelli.", guide:"L'anello si stacca nettamente dal disco già a 81x. A 135x-162x noti l'ombra del pianeta sugli anelli e la Divisione di Cassini."},
-  Uranus:{name:"Urano", radius:25559, url:"https://edu.inaf.it/rubriche/schede-pianeti/urano/", massRatio:"14,5 volte la Terra (asse a 98°)", facts:"Gigante di ghiaccio con asse inclinato di ~98°.", guide:"A bassi ingrandimenti sembra una stella: monta il 15mm (135x). Noterai un minuscolo dischetto verde acqua."},
-  Neptune:{name:"Nettuno", radius:24764, url:"https://edu.inaf.it/rubriche/schede-pianeti/nettuno/", massRatio:"17 volte la Terra (il più esterno)", facts:"Il pianeta più esterno. Venti fino a 2.000 km/h.", guide:"Appare piccolissimo. A 135x-162x lo distingui dalle stelle per la tonalità azzurro cobalto."}
+  Mars:{name:"Marte", radius:3396.2, url:"https://edu.inaf.it/rubriche/schede-pianeti/marte/", massRatio:"0,107 volte la Terra (circa un decimo)", facts:"Il pianeta rosso. Ospita l'Olympus Mons, il vulcano più alto del sistema solare.", guide:"Inizia con lo zoom Hyperion tra 12 e 16 mm (127-169x) oppure con lo SVBONY intorno a 12-15 mm (135-169x). Prova 10 mm (~203x) o 8 mm Hyperion (~254x) solo se i dettagli restano fermi. I 7 mm SVBONY (~290x) sono una scelta rara."},
+  Jupiter:{name:"Giove", radius:71492, url:"https://edu.inaf.it/rubriche/schede-pianeti/giove/", massRatio:"318 volte la Terra (il più imponente)", facts:"Il pianeta più imponente del sistema solare.", guide:"Per iniziare usa l'Hyperion tra 16 e 12 mm (127-169x), oppure lo SVBONY tra 15 e 12 mm (135-169x). Se il bordo del pianeta è stabile, prova 10 mm (~203x). 8 mm Hyperion (254x) richiede seeing molto buono."},
+  Saturn:{name:"Saturno", radius:60268, url:"https://edu.inaf.it/rubriche/schede-pianeti/saturno/", massRatio:"95 volte la Terra (col sistema di anelli)", facts:"Celebre per il maestoso sistema di anelli.", guide:"Inizia con l'Hyperion a 12-16 mm (127-169x) o lo SVBONY a 12-15 mm (135-169x). Se l'immagine è stabile prova 10 mm (~203x). L'Hyperion a 8 mm (254x) e lo SVBONY a 7 mm (~290x) sono utili solo in condizioni atmosferiche eccellenti."},
+  Uranus:{name:"Urano", radius:25559, url:"https://edu.inaf.it/rubriche/schede-pianeti/urano/", massRatio:"14,5 volte la Terra (asse a 98°)", facts:"Gigante di ghiaccio con asse inclinato di ~98°.", guide:"Centra con il 25 mm oppure con l'Hyperion a 24 mm (~85x). Poi prova lo zoom tra 12 e 10 mm (169-203x): potrai percepire un piccolo disco, non dettagli superficiali."},
+  Neptune:{name:"Nettuno", radius:24764, url:"https://edu.inaf.it/rubriche/schede-pianeti/nettuno/", massRatio:"17 volte la Terra (il più esterno)", facts:"Il pianeta più esterno. Venti fino a 2.000 km/h.", guide:"Centra con il 25 mm o l'Hyperion a 24 mm (~85x), poi prova 12 mm (~169x) e, se l'immagine è nitida, 10 mm (~203x). Aspettati un disco molto piccolo, senza dettagli superficiali."}
 };
 var MOON_MASS_RATIO = "0,012 volte la Terra (1/81)";
 var STAR_CATALOG = [
@@ -852,14 +859,14 @@ var LUNAR_CRATERS = [
   {name:'Aristarco', lat:23.7, lon:-47.4, diameter:40, desc:'Il più brillante della Luna'},
   {name:'Keplero', lat:8.1, lon:-38.0, diameter:32, desc:'Cratere con raggi luminosi'},
   {name:'Aristotele', lat:50.2, lon:17.4, diameter:87, desc:'Cratere con pareti terrazzate'},
-  {name:'Eudosso', lat:44.3, lon:16.0, diameter:67, desc:'Vicino agli Appennini'},
+  {name:'Eudosso', lat:44.3, lon:16.0, diameter:67, desc:'Vicino al Caucaso'},
   {name:'Pitagora', lat:63.5, lon:-62.8, diameter:130, desc:'Cratere con ombre spettacolari'},
   {name:'Grimaldi', lat:-5.5, lon:-68.3, diameter:173, desc:'Fondo molto scuro'}
 ];
 var LUNAR_MARIA = [
   {name:'Mare Tranquillitatis', nameIt:'Mare della Tranquillità', lat:8.5, lon:31.4, area:873000, desc:'Sito Apollo 11'},
   {name:'Mare Serenitatis', nameIt:'Mare della Serenità', lat:28.0, lon:17.5, area:707000, desc:'Mare ben definito'},
-  {name:'Mare Imbrium', nameIt:'Mare delle Piogge', lat:32.8, lon:-15.6, area:1129000, desc:'Il più grande mare singolo'},
+  {name:'Mare Imbrium', nameIt:'Mare delle Piogge', lat:32.8, lon:-15.6, area:1123000, desc:'Il più grande mare singolo'},
   {name:'Mare Crisium', nameIt:'Mare delle Crisi', lat:17.0, lon:59.1, area:176000, desc:'Mare isolato e ben delimitato'},
   {name:'Mare Fecunditatis', nameIt:'Mare della Fecondità', lat:-7.8, lon:51.3, area:326000, desc:'Sito Luna 16 e Luna 20'},
   {name:'Mare Nectaris', nameIt:'Mare del Nettare', lat:-15.2, lon:35.5, area:100000, desc:'Bacino circolare a sud di Mare Tranquillitatis'},
@@ -908,7 +915,7 @@ function fixedTransit(obj,obs,tStart,tEnd){
 }
 function getSunState(obs, t){
   var eq = A.Equator(A.Body.Sun, t, obs, true, true);
-  var hor = A.Horizon(t, obs, eq.ra, eq.dec, 'normal');
+  var hor = A.Horizon(t, obs, eq.ra, eq.dec);
   var alt = hor.altitude;
   return {alt:alt, isUp:alt>0, isDay:alt>-0.833, isCivilTwilight:alt<=-0.833&&alt>-6, isNauticalTwilight:alt<=-6&&alt>-12, isAstronomicalTwilight:alt<=-12&&alt>-18, isNight:alt<=-18};
 }
@@ -1012,11 +1019,19 @@ function altCategory(maxAlt){
   return{tag:"good",chip:"ottimo",label:"buona altezza in cielo",dim:false};
 }
 function getDynamicEyepieceAdvice(key,alt){
-  if(key==="Moon")return alt<18?"Luna bassa: inizia con 25mm (81x), poi 15mm se l'immagine resta stabile.":"Inizia con 15mm (135x). Passa a 162x o 271x solo dopo una verifica visuale del seeing.";
-  if(alt<15)return"Bersaglio basso: inizia con 25mm (81x). L'atmosfera introduce più turbolenza vicino all'orizzonte.";
-  if(key==="Jupiter"||key==="Saturn"||key==="Mars")return"Inizia con 15mm (135x). Prova 162x solo se il disco resta nitido. 271x richiede seeing realmente stabile.";
-  if(key==="Uranus"||key==="Neptune")return"Inizia con 15mm (135x). 162x serve solo con immagine stabile e buon contrasto.";
-  return"Inizia con 25mm (81x) per centrare. Passa a 15mm (135x) se l'immagine resta stabile.";
+  if(alt<(key==="Moon"?18:15)){
+    return "Bersaglio basso: inizia con il 25 mm originale (81x), l'Hyperion a 24 mm (~85x) o lo SVBONY a 21 mm (~97x). L'atmosfera vicino all'orizzonte limita i dettagli, quindi evita gli ingrandimenti elevati.";
+  }
+  if(key==="Moon"){
+    return "Luna: prova l'Hyperion tra 12 e 16 mm (~127-169x) o lo SVBONY tra 12 e 15 mm (~135-169x). Per dettagli fini scendi verso 10 mm (~203x), se l'immagine resta stabile. Hyperion 8 mm (254x) e SVBONY 7 mm (~290x) sono per serate eccezionali.";
+  }
+  if(key==="Jupiter"||key==="Saturn"||key==="Mars"){
+    return "Pianeti: inizia con Hyperion 12-16 mm (~127-169x) o SVBONY 12-15 mm (~135-169x). Prova 10 mm (~203x) se il bordo resta nitido. Hyperion 8 mm (254x) richiede seeing molto buono; SVBONY 7 mm (~290x) è raramente utile. Evita la Barlow sugli zoom salvo prove consapevoli.";
+  }
+  if(key==="Uranus"||key==="Neptune"){
+    return "Urano/Nettuno: centra prima con 25 mm o Hyperion 24 mm (~85x). Prova poi 12 mm (~169x) e 10 mm (~203x). Gli ingrandimenti maggiori rendono il disco più grande ma raramente aggiungono dettagli.";
+  }
+  return "Per centrare usa il 25 mm originale (81x) o l'Hyperion a 24 mm (~85x). Poi regola lo zoom in base al bersaglio e alla stabilità dell'immagine. Lo SVBONY 7 mm (~290x) e l'Hyperion 8 mm (254x) non sono ingrandimenti da usare automaticamente.";
 }
 
 function bestFixed(obj,tStart,tEnd,obs){
@@ -1100,52 +1115,6 @@ var PLANISPHERE_STARS = [
   {name:'Phecda',     ra:11.8972, dec:53.6948,  mag:2.44,  sp:'A', R:3.0,   label:false},
   {name:'Megrez',     ra:12.2571, dec:57.0326,  mag:3.31,  sp:'A', R:1.7,   label:false}
 ];
-
-
-var PLANISPHERE_STAR_META = {
-  'Sirio':      {distLy:8.6,   mass:'≈ 2,02 M☉', url:'https://it.wikipedia.org/wiki/Sirio', simbad:'Sirius'},
-  'Arturo':     {distLy:36.7,  mass:'≈ 1,10 M☉', url:'https://it.wikipedia.org/wiki/Arturo_(stella)', simbad:'Arcturus'},
-  'Vega':       {distLy:25.3,  mass:'≈ 2,14 M☉', url:'https://it.wikipedia.org/wiki/Vega', simbad:'Vega'},
-  'Capella':    {distLy:42.9,  mass:'≈ 2,7 M☉', url:'https://it.wikipedia.org/wiki/Capella_(astronomia)', simbad:'Capella'},
-  'Rigel':      {distLy:860,   mass:'≈ 21 M☉', url:'https://it.wikipedia.org/wiki/Rigel', simbad:'Rigel'},
-  'Procione':   {distLy:11.46, mass:'≈ 1,50 M☉', url:'https://it.wikipedia.org/wiki/Procione', simbad:'Procyon'},
-  'Betelgeuse': {distLy:642.5, mass:'≈ 15 M☉', url:'https://it.wikipedia.org/wiki/Betelgeuse', simbad:'Betelgeuse'},
-  'Altair':     {distLy:16.7,  mass:'≈ 1,79 M☉', url:'https://it.wikipedia.org/wiki/Altair', simbad:'Altair'},
-  'Aldebaran':  {distLy:65.3,  mass:'≈ 1,16 M☉', url:'https://it.wikipedia.org/wiki/Aldebaran', simbad:'Aldebaran'},
-  'Spica':      {distLy:250,   mass:'≈ 10,25 M☉', url:'https://it.wikipedia.org/wiki/Spica', simbad:'Spica'},
-  'Antares':    {distLy:550,   mass:'≈ 12,4 M☉', url:'https://it.wikipedia.org/wiki/Antares', simbad:'Antares'},
-  'Polluce':    {distLy:33.7,  mass:'≈ 1,86 M☉', url:'https://it.wikipedia.org/wiki/Polluce_(stella)', simbad:'Pollux'},
-  'Fomalhaut':  {distLy:25.1,  mass:'≈ 1,92 M☉', url:'https://it.wikipedia.org/wiki/Fomalhaut', simbad:'Fomalhaut'},
-  'Deneb':      {distLy:2600,  mass:'≈ 19 M☉', url:'https://it.wikipedia.org/wiki/Deneb', simbad:'Deneb'},
-  'Regolo':     {distLy:79.3,  mass:'≈ 3,4 M☉', url:'https://it.wikipedia.org/wiki/Regolo_(stella)', simbad:'Regulus'},
-  'Adhara':     {distLy:430,   mass:'≈ 12,5 M☉', url:'https://it.wikipedia.org/wiki/Adhara', simbad:'Adhara'},
-  'Castore':    {distLy:51.6,  mass:'≈ 2,8 M☉', url:'https://it.wikipedia.org/wiki/Castore_(stella)', simbad:'Castor'},
-  'Gacrux':     {distLy:88.6,  mass:'≈ 1,5 M☉', url:'https://it.wikipedia.org/wiki/Gacrux', simbad:'Gacrux'},
-  'Bellatrix':  {distLy:250,   mass:'≈ 8,6 M☉', url:'https://it.wikipedia.org/wiki/Bellatrix_(stella)', simbad:'Bellatrix'},
-  'Elnath':     {distLy:131,   mass:'≈ 5,8 M☉', url:'https://it.wikipedia.org/wiki/Elnath', simbad:'Elnath'},
-  'Alnilam':    {distLy:2000,  mass:'≈ 34 M☉', url:'https://it.wikipedia.org/wiki/Alnilam', simbad:'Alnilam'},
-  'Alnitak':    {distLy:1260,  mass:'≈ 33 M☉', url:'https://it.wikipedia.org/wiki/Alnitak', simbad:'Alnitak'},
-  'Alioth':     {distLy:81,    mass:'≈ 2,9 M☉', url:'https://it.wikipedia.org/wiki/Alioth', simbad:'Alioth'},
-  'Dubhe':      {distLy:123,   mass:'≈ 4,25 M☉', url:'https://it.wikipedia.org/wiki/Dubhe', simbad:'Dubhe'},
-  'Alkaid':     {distLy:104,   mass:'≈ 6 M☉', url:'https://it.wikipedia.org/wiki/Alkaid', simbad:'Alkaid'},
-  'Mimosa':     {distLy:280,   mass:'≈ 14 M☉', url:'https://it.wikipedia.org/wiki/Mimosa_(stella)', simbad:'Mimosa'},
-  'Acrux':      {distLy:321,   mass:'≈ 17,8 M☉', url:'https://it.wikipedia.org/wiki/Acrux', simbad:'Acrux'},
-  'Shaula':     {distLy:570,   mass:'≈ 11 M☉', url:'https://it.wikipedia.org/wiki/Shaula', simbad:'Shaula'},
-  'Sargas':     {distLy:270,   mass:'≈ 4,4 M☉', url:'https://it.wikipedia.org/wiki/Sargas', simbad:'Sargas'},
-  'Saiph':      {distLy:720,   mass:'≈ 15 M☉', url:'https://it.wikipedia.org/wiki/Saiph', simbad:'Saiph'},
-  'Schedar':    {distLy:228,   mass:'≈ 4,5 M☉', url:'https://it.wikipedia.org/wiki/Schedar', simbad:'Schedar'},
-  'Caph':       {distLy:54.7,  mass:'≈ 2,1 M☉', url:'https://it.wikipedia.org/wiki/Caph', simbad:'Caph'},
-  'Mizar':      {distLy:86.8,  mass:'≈ 2,2 M☉', url:'https://it.wikipedia.org/wiki/Mizar', simbad:'Mizar'},
-  'Mintaka':    {distLy:1200,  mass:'≈ 24 M☉', url:'https://it.wikipedia.org/wiki/Mintaka', simbad:'Mintaka'},
-  'Merak':      {distLy:79.7,  mass:'≈ 2,7 M☉', url:'https://it.wikipedia.org/wiki/Merak', simbad:'Merak'},
-  'Phecda':     {distLy:83.2,  mass:'≈ 2,6 M☉', url:'https://it.wikipedia.org/wiki/Phecda', simbad:'Phecda'},
-  'Megrez':     {distLy:80.5,  mass:'≈ 1,6 M☉', url:'https://it.wikipedia.org/wiki/Megrez', simbad:'Megrez'}
-};
-function planisphereStarMeta(s){
-  var m=PLANISPHERE_STAR_META[s.name]||{};
-  var simbad=m.simbad?('https://simbad.cds.unistra.fr/simbad/sim-id?Ident='+encodeURIComponent(m.simbad)):null;
-  return {distLy:m.distLy||null,massRatio:m.mass||null,url:m.url||null,simbad:simbad};
-}
 
 var SPECTRAL_COLORS = {O:'#8fa8ff', B:'#9db4ff', A:'#c8d4ff', F:'#ffe566', G:'#ffdd33', K:'#ff8c1a', M:'#e63946'};
 function starColor(sp){return SPECTRAL_COLORS[sp] || '#cad7ff';}
@@ -1270,12 +1239,67 @@ function planisphereTimeText(){
   if(!planisphereTime)return '--:--';
   return fmtTime(planisphereTime)+' · '+planisphereWindow.label;
 }
+// Masse stellari indicative in masse solari. I sistemi doppi/multipli includono le componenti note;
+// la conversione in masse terrestri usa 332.946 masse terrestri per massa solare.
+// Le stime evolutive di alcune stelle massicce possono variare sensibilmente tra le fonti.
+var PLANISPHERE_STAR_MASSES = {
+  'Sirio': [{label:'Sirio A', mass:2.02}, {label:'Sirio B', mass:1.018}],
+  'Arturo': [{label:'Arturo', mass:1.10}],
+  'Vega': [{label:'Vega', mass:2.135}],
+  'Capella': [{label:'Capella Aa', mass:2.569}, {label:'Capella Ab', mass:2.483}],
+  'Rigel': [{label:'Rigel A', mass:21.0}, {label:'Rigel Ba', mass:3.84}, {label:'Rigel Bb', mass:2.94}, {label:'Rigel C', mass:3.84}],
+  'Procione': [{label:'Procione A', mass:1.478}, {label:'Procione B', mass:0.592}],
+  'Betelgeuse': [{label:'Betelgeuse', mass:15.0}],
+  'Altair': [{label:'Altair', mass:1.79}],
+  'Aldebaran': [{label:'Aldebaran', mass:1.16}],
+  'Spica': [{label:'Spica A', mass:10.25}, {label:'Spica B', mass:7.0}],
+  'Antares': [{label:'Antares A', mass:12.4}, {label:'Antares B', mass:7.2}],
+  'Polluce': [{label:'Polluce', mass:1.86}],
+  'Fomalhaut': [{label:'Fomalhaut A', mass:1.92}, {label:'Fomalhaut B', mass:0.73}, {label:'Fomalhaut C', mass:0.18}],
+  'Deneb': [{label:'Deneb', mass:19.0}],
+  'Regolo': [{label:'Regolo A', mass:3.8}, {label:'compagna stretta di Regolo A', mass:0.3}],
+  'Adhara': [{label:'Adhara A', mass:12.6}, {label:'Adhara B', mass:1.54}],
+  'Castore': [{label:'Castore Aa', mass:2.37}, {label:'Castore Ab', mass:0.39}, {label:'Castore Ba', mass:1.79}, {label:'Castore Bb', mass:0.39}, {label:'Castore Ca', mass:0.60}, {label:'Castore Cb', mass:0.60}],
+  'Gacrux': [{label:'Gacrux', mass:1.5}],
+  'Bellatrix': [{label:'Bellatrix', mass:8.6}],
+  'Elnath': [{label:'Elnath', mass:5.0}],
+  'Alnilam': [{label:'Alnilam', mass:40.0}],
+  'Alnitak': [{label:'Alnitak Aa', mass:30.0}, {label:'Alnitak Ab', mass:14.0}, {label:'Alnitak B', mass:16.7}],
+  'Alioth': [{label:'Alioth', mass:2.9}],
+  'Dubhe': [{label:'Dubhe A', mass:3.7}, {label:'Dubhe B', mass:2.5}],
+  'Alkaid': [{label:'Alkaid', mass:6.1}],
+  'Mimosa': [{label:'Mimosa A', mass:14.5}, {label:'Mimosa B', mass:1.9}, {label:'Mimosa D', mass:0.78}],
+  'Acrux': [{label:'Acrux Aa', mass:17.8}, {label:'Acrux Ab', mass:6.05}, {label:'Acrux α²', mass:15.52}, {label:'Acrux C', mass:9.65}],
+  'Shaula': [{label:'Shaula Aa', mass:10.4}, {label:'Shaula Ab', mass:1.8}, {label:'Shaula B', mass:8.1}],
+  'Sargas': [{label:'Sargas', mass:5.7}],
+  'Saiph': [{label:'Saiph', mass:15.0}],
+  'Schedar': [{label:'Schedar', mass:4.0}],
+  'Caph': [{label:'Caph', mass:1.9}],
+  'Mizar': [{label:'Mizar Aa', mass:2.222}, {label:'Mizar Ab', mass:2.238}, {label:'Mizar Ba', mass:1.85}, {label:'Mizar Bb', mass:0.25, qualifier:'almeno'}],
+  'Mintaka': [{label:'Mintaka Aa1', mass:17.8}, {label:'Mintaka Aa2', mass:8.5}, {label:'Mintaka Ab', mass:8.8}],
+  'Merak': [{label:'Merak', mass:2.7}],
+  'Phecda': [{label:'Phecda', mass:2.6}],
+  'Megrez': [{label:'Megrez', mass:1.63}]
+};
+function planisphereStarMassText(name){
+  var components=PLANISPHERE_STAR_MASSES[name];
+  if(!components||!components.length)return null;
+  function earthMass(m){return (Math.round(m*332946/1000)*1000).toLocaleString('it-IT');}
+  function solarMass(m){return String(Number(m.toFixed(3))).replace('.',',');}
+  if(components.length===1){
+    var one=components[0];
+    return '≈ '+earthMass(one.mass)+' volte la massa terrestre ('+solarMass(one.mass)+' masse solari)';
+  }
+  return components.map(function(c){
+    var qualifier=c.qualifier?c.qualifier+' ':'≈ ';
+    return c.label+': '+qualifier+earthMass(c.mass)+' volte la massa terrestre, pari a '+solarMass(c.mass)+' masse solari';
+  }).join('; ');
+}
 function planisphereDescForStar(s){
-  var m=planisphereStarMeta(s);
-  return {
-    kind:'star',name:s.name,ra:s.ra,dec:s.dec,mag:s.mag,
-    distLy:m.distLy,massRatio:m.massRatio,url:m.url,simbad:m.simbad
-  };
+  var full=null;
+  for(var i=0;i<STAR_CATALOG.length;i++){if(STAR_CATALOG[i].name===s.name){full=STAR_CATALOG[i];break;}}
+  var massText=planisphereStarMassText(s.name)||(full?full.massRatio:null);
+  return {kind:'star',name:s.name,ra:s.ra,dec:s.dec,mag:s.mag,distLy:full?full.distLy:null,massRatio:massText,url:full?full.url:('https://simbad.cds.unistra.fr/simbad/sim-id?Ident='+encodeURIComponent(s.name)),simbad:full?full.simbad:('https://simbad.cds.unistra.fr/simbad/sim-id?Ident='+encodeURIComponent(s.name))};
 }
 
 function drawSunIcon(ctx, x, y, r){
@@ -1412,7 +1436,7 @@ function drawEyeIcon(ctx, cx, cy, size, color, bgColor){
   ctx.fillStyle = 'rgba(0,0,0,0.28)';
   ctx.fill();
   ctx.strokeStyle = color;
-  ctx.lineWidth = Math.max(1.8, size * 0.13);
+  ctx.lineWidth = Math.max(1, size * 0.07);
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
   ctx.beginPath();
@@ -1425,10 +1449,7 @@ function drawEyeIcon(ctx, cx, cy, size, color, bgColor){
   ctx.beginPath();
   ctx.arc(cx, cy, irisR, 0, Math.PI*2);
   ctx.fillStyle = color;
-  ctx.shadowColor = 'rgba(255,255,255,0.95)';
-  ctx.shadowBlur = Math.max(2, size * 0.45);
   ctx.fill();
-  ctx.shadowBlur = 0;
   ctx.beginPath();
   ctx.arc(cx, cy, irisR * 0.42, 0, Math.PI*2);
   ctx.fillStyle = '#000';
@@ -1526,7 +1547,7 @@ function drawPlanisphere(){
   }
   var obs=new A.Observer(loc.lat,loc.lon,loc.elev);
   var muted=css.getPropertyValue('--muted').trim()||'#8ca0ba';
-  drawEyeIcon(ctx,cx,cy,Math.round(w*0.028),'#fff',bg);
+  drawEyeIcon(ctx,cx,cy,Math.round(w*0.020),muted,bg);
   ctx.strokeStyle='rgba(200,215,240,0.55)';
   ctx.lineWidth=Math.max(1.3*dpr,1.6);
   ctx.lineCap='round';
@@ -1632,9 +1653,31 @@ function drawPlanisphere(){
     }
   });
   var iconR=R*0.024;
+  // Dimensioni leggermente superiori alla versione index (1).html.
+  // Se due pianeti sono troppo vicini in proiezione, riduci i simboli senza spostare le coordinate.
+  var PLANET_ICON_SCALE=1.12;
+  var PLANET_ICON_MIN_SCALE=0.28;
+  var planetFootprint={Mercury:1.0,Venus:1.65,Mars:1.45,Jupiter:1.70,Saturn:2.02,Uranus:1.08,Neptune:1.08};
+  var planetItems=items.filter(function(it){return it.type==='planet';});
+  planetItems.forEach(function(it){it.iconScale=PLANET_ICON_SCALE;});
+  var planetGap=2.4*dpr;
+  for(var pi=0;pi<planetItems.length;pi++){
+    for(var pj=pi+1;pj<planetItems.length;pj++){
+      var pa=planetItems[pi],pb=planetItems[pj];
+      var pd=Math.hypot(pa.x-pb.x,pa.y-pb.y);
+      var pSum=iconR*0.95*(planetFootprint[pa.key]||1.2)*pa.iconScale
+             +iconR*0.95*(planetFootprint[pb.key]||1.2)*pb.iconScale;
+      if(pd<pSum+planetGap){
+        var fitScale=(pd-planetGap)/(iconR*0.95*((planetFootprint[pa.key]||1.2)+(planetFootprint[pb.key]||1.2)));
+        fitScale=Math.max(PLANET_ICON_MIN_SCALE,Math.min(PLANET_ICON_SCALE,fitScale));
+        pa.iconScale=Math.min(pa.iconScale,fitScale);
+        pb.iconScale=Math.min(pb.iconScale,fitScale);
+      }
+    }
+  }
   items.forEach(function(it){
     if(it.type==='planet'){
-      var r=iconR*0.95*1.2;
+      var r=iconR*0.95*(it.iconScale||PLANET_ICON_SCALE);
       switch(it.key){
         case 'Mercury': drawMercuryIcon(ctx,it.x,it.y,r);break;
         case 'Venus':   drawVenusIcon(ctx,it.x,it.y,r);break;
@@ -1657,7 +1700,10 @@ function drawPlanisphere(){
     var blocker;
     if(it.type==='sun') blocker={x1:it.x-iconR*2.4,y1:it.y-iconR*2.4,x2:it.x+iconR*2.4,y2:it.y+iconR*2.4};
     else if(it.type==='moon') blocker={x1:it.x-iconR*1.9,y1:it.y-iconR*1.9,x2:it.x+iconR*1.9,y2:it.y+iconR*1.9};
-    else if(it.type==='planet') blocker={x1:it.x-iconR*1.5,y1:it.y-iconR*1.5,x2:it.x+iconR*1.5,y2:it.y+iconR*1.5};
+    else if(it.type==='planet'){
+      var pHalf=iconR*0.95*(it.iconScale||PLANET_ICON_SCALE)*(planetFootprint[it.key]||1.2)+2*dpr;
+      blocker={x1:it.x-pHalf,y1:it.y-pHalf,x2:it.x+pHalf,y2:it.y+pHalf};
+    }
     else {
       var sr = starDotRadius(it.R || 1.7, dpr) + (it.mag < 0 ? 9*dpr : 3*dpr);
       blocker={x1:it.x-sr,y1:it.y-sr,x2:it.x+sr,y2:it.y+sr};
@@ -1687,7 +1733,7 @@ function drawPlanisphere(){
     var baseFont = (it.type==='star') ? fontBase*0.9 : fontBase*1.05;
     var mults = (it.type==='star') ? fontScaleStar : fontScalePlanet;
     var anchorPad;
-    if(it.type==='planet') anchorPad=iconR*1.5;
+    if(it.type==='planet') anchorPad=iconR*0.95*(it.iconScale||PLANET_ICON_SCALE)*(planetFootprint[it.key]||1.2)+2*dpr;
     else if(it.type==='moon') anchorPad=iconR*2.2;
     else if(it.type==='sun') anchorPad=iconR*2.0;
     else anchorPad=starDotRadius(it.R || 1.7, dpr) + 3*dpr;
@@ -1803,7 +1849,7 @@ function drawPlanisphere(){
   if(note){
     var o=getSunState(obs,planisphereTime);
     var night=o.isNight?'Notte astronomica':o.isAstronomicalTwilight?'Crepuscolo astronomico':o.isNauticalTwilight?'Crepuscolo nautico':o.isCivilTwilight?'Crepuscolo civile':o.isDay?'Giorno':'Sole sotto l\'orizzonte';
-    note.textContent=night+' · '+items.length+' oggetti sopra l\'orizzonte';
+    note.textContent=night+' · '+items.length+' oggetti sopra l\'orizzonte · pianeti calcolati per data/ora selezionate, stelle dal catalogo di riferimento J2000';
   }
   planisphereCanvasReady=true;
 }
@@ -1861,18 +1907,9 @@ function initPlanisphere(){
     if(!info)return;
     if(!hit){info.innerHTML='Tocca un oggetto per vedere altezza, azimut e magnitudine all\'ora selezionata.';return;}
     var mass=hit.desc&&hit.desc.massRatio?'<br>Massa: <b>'+escapeHtml(hit.desc.massRatio)+'</b>':'';
-    var distText='';
-    if(hit.desc){
-      if(hit.type==='star' && typeof hit.desc.distLy==='number') distText='<br>Distanza: <b>'+formatDistanceLines(0,true,hit.desc.distLy).value+'</b>';
-      else if(hit.desc.body){try{var di=A.Illumination(hit.desc.body,planisphereTime);distText='<br>Distanza: <b>'+formatDistanceLines(di.geo_dist*KM_PER_AU,false).value+'</b>';}catch(e){}}
-    }
     var spInfo=hit.sp?' · Classe <b>'+hit.sp+'</b>':'';
     var rInfo=hit.R?' · R☉ <b>'+hit.R+'</b>':'';
-    var links='';
-    if(hit.desc&&hit.desc.url)links+=' <a href="'+hit.desc.url+'" target="_blank" rel="noopener" style="color:var(--cyan)">URL ↗</a>';
-    if(hit.desc&&hit.desc.simbad)links+=' <a href="'+hit.desc.simbad+'" target="_blank" rel="noopener" style="color:var(--cyan)">SIMBAD ↗</a>';
-    else if(hit.type==='planet'||hit.type==='moon'||hit.type==='sun')links+=' <span style="color:var(--muted-2)">SIMBAD: N/D</span>';
-    info.innerHTML='<div class="pi-main">'+escapeHtml(hit.name)+'</div>Alt <b>'+hit.alt.toFixed(1)+'°</b> · Az <b>'+Math.round(hit.az)+'° ('+compassDir(hit.az)+')</b> · Mag <b>'+Number(hit.mag).toFixed(2)+'</b>'+spInfo+rInfo+distText+mass+'<br><span style="display:inline-flex;gap:8px;flex-wrap:wrap;margin-top:5px">'+links+'</span><br><button type="button" class="btn-ui" id="planisphereOpenCard" style="margin-top:7px;min-height:34px;padding:6px 9px">Apri scheda</button>';
+    info.innerHTML='<div class="pi-main">'+escapeHtml(hit.name)+'</div>Alt <b>'+hit.alt.toFixed(1)+'°</b> · Az <b>'+Math.round(hit.az)+'° ('+compassDir(hit.az)+')</b> · Mag <b>'+Number(hit.mag).toFixed(2)+'</b>'+spInfo+rInfo+mass+'<br><button type="button" class="btn-ui" id="planisphereOpenCard" style="margin-top:7px;min-height:34px;padding:6px 9px">Apri scheda</button>';
     var b=document.getElementById('planisphereOpenCard');if(b)b.addEventListener('click',function(){openCelestialModal(hit.desc,planisphereTime);});
   });
   window.addEventListener('resize',function(){if(planisphereFrame)cancelAnimationFrame(planisphereFrame);planisphereFrame=requestAnimationFrame(function(){planisphereFrame=0;drawPlanisphere();});});
@@ -1894,8 +1931,8 @@ function computeMoonPenalty(target,obs,moonIllumFrac){
 }
 function resolveTarget(arg){
   if(typeof arg === 'string'){
-    if(arg === 'Moon')return {kind:'moon', name:'Luna', body:A.Body.Moon, key:'Moon', url:'https://it.wikipedia.org/wiki/Luna', simbad:null, mag:null, distLy:null, massRatio:MOON_MASS_RATIO};
-    if(arg === 'Sun')return {kind:'sun', name:'Sole', body:A.Body.Sun, key:'Sun', url:'https://it.wikipedia.org/wiki/Sole', simbad:null, mag:null, distLy:null, massRatio:'333.000 volte la Terra (1 M☉)'};
+    if(arg === 'Moon')return {kind:'moon', name:'Luna', body:A.Body.Moon, key:'Moon', url:null, simbad:null, mag:null, distLy:null, massRatio:MOON_MASS_RATIO};
+    if(arg === 'Sun')return {kind:'sun', name:'Sole', body:A.Body.Sun, key:'Sun', url:null, simbad:null, mag:null, distLy:null, massRatio:null};
     if(PLANET_DATA[arg])return {kind:'planet', name:PLANET_DATA[arg].name, body:A.Body[arg], key:arg, url:PLANET_DATA[arg].url, simbad:null, mag:null, distLy:null, massRatio:PLANET_DATA[arg].massRatio};
   }
   return arg;
@@ -2043,7 +2080,7 @@ function openCelestialModal(arg,atDate){
   if(isMoon){var phaseAngle=A.MoonPhase(now);var illumM = A.Illumination(A.Body.Moon, now);var fMoon=illumM.phase_fraction;moonImg='<div class="moon-phase-svg-wrap">'+moonPhaseSVG(fMoon,phaseAngle<180,170)+'</div>';moonCap='<div class="moon-phase-caption">Fase attuale · '+Math.round(fMoon*100)+'% illuminata</div>';}
   var distLine = distObj.value + (distObj.note ? ' <span style="color:var(--muted-2);font-size:0.9em">'+distObj.note+'</span>' : '');
   var massLine = massObj ? (massObj.value + (massObj.note ? ' <span style="color:var(--muted-2);font-size:0.9em">'+massObj.note+'</span>' : '')) : '';
-  var simbadRow = simbad ? '<div class="datarow"><span>SIMBAD</span><b><a href="'+simbad+'" target="_blank" rel="noopener" style="color:var(--cyan)">Apri ↗</a></b></div>' : ((desc.kind==='planet'||desc.kind==='moon'||desc.kind==='sun') ? '<div class="datarow"><span>SIMBAD</span><b style="color:var(--muted)">Non disponibile: SIMBAD esclude i corpi del Sistema Solare</b></div>' : '');
+  var simbadRow = simbad ? '<div class="datarow"><span>SIMBAD</span><b><a href="'+simbad+'" target="_blank" rel="noopener" style="color:var(--cyan)">Apri ↗</a></b></div>' : '';
   var html='<div class="modal-backdrop" id="modalBackdrop"><div class="modal-sheet">'
     +'<div class="mtop"><h3>'+escapeHtml(title)+'</h3><button type="button" class="mclose" id="modalClose">&times;</button></div>'
     +moonImg+moonCap
@@ -2091,6 +2128,7 @@ function startAR(arg){
   document.getElementById('arClose').addEventListener('click',stopAR);
   document.getElementById('arDebugToggle').addEventListener('click',function(){var d=document.getElementById('arDebug'); if(d) d.classList.toggle('hidden');});
   phonePitch=null; phoneHeading=null;
+  var sensorPermissionDenied=false;
   phoneRawAlpha=null; phoneRawBeta=null; phoneRawGamma=null;
   function onOrientation(e){
     phoneRawAlpha = (typeof e.alpha==='number')?e.alpha:null;
@@ -2098,7 +2136,7 @@ function startAR(arg){
     phoneRawGamma = (typeof e.gamma==='number')?e.gamma:null;
     if(e.webkitCompassHeading!==undefined && e.webkitCompassHeading!==null){
       phoneHeading=(e.webkitCompassHeading + 360) % 360;
-    } else if(e.alpha!==null && e.alpha!==undefined && e.absolute===true){
+    } else if(typeof e.alpha==='number' && (e.absolute===true || e.type==='deviceorientationabsolute')){
       var magHeading=((360-e.alpha) + 360) % 360;
       phoneHeading=(magHeading + OBS_MAG_DECL + 360) % 360;
     } else if(e.absolute!==true && phoneHeading===null){
@@ -2123,7 +2161,7 @@ function startAR(arg){
     setMsg('Richiesta autorizzazione fotocamera...');
     navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false})
     .then(function(stream){
-      arState.stream=stream;setMsg('Puntamento assistito attivo. Inquadra il cielo...');
+      arState.stream=stream;setMsg(sensorPermissionDenied?'Fotocamera attiva, ma i sensori sono bloccati. Consenti l’accesso a movimento e orientamento nelle impostazioni del sito, quindi riapri il puntamento.':'Fotocamera attiva. Attendo i dati di orientamento...');
       var video=document.createElement('video');video.setAttribute('playsinline','');video.autoplay=true;video.muted=true;video.srcObject=stream;
       root.insertBefore(video,root.firstChild);video.play().catch(function(){});
       var label=document.createElement('div');label.className='arlabel';root.appendChild(label);
@@ -2137,7 +2175,7 @@ function startAR(arg){
         var obs=new A.Observer(loc.lat,loc.lon,loc.elev);var now=new Date();var hor;
         if(desc.body){var eq=A.Equator(desc.body,now,obs,true,true);hor=A.Horizon(now,obs,eq.ra,eq.dec,'normal');}
         else{hor=fixedHorizon(desc,now,obs);}
-        if(phoneHeading===null){if(ticks>8)setMsg('In attesa della bussola... Calibra muovendo il telefono a forma di 8.');if(searchEl)searchEl.style.display='none';if(arrowEl)arrowEl.style.display='none';label.innerHTML='';return;}
+        if(phoneHeading===null){if(ticks>8)setMsg(sensorPermissionDenied?'Sensori non autorizzati o non disponibili. Apri le impostazioni del sito nel browser, abilita movimento/orientamento e ricarica Astro Alberto. In alternativa usa il Radar manuale.':'Nessun dato bussola ricevuto. Muovi il telefono a forma di 8 e verifica i permessi di movimento/orientamento del sito. Se il problema persiste, usa il Radar manuale.');if(searchEl)searchEl.style.display='none';if(arrowEl)arrowEl.style.display='none';label.innerHTML='';return;}
         if(hor.altitude<0){setMsg('<b>'+targetName+'</b> è sotto l\'orizzonte.');if(searchEl)searchEl.style.display='none';if(arrowEl)arrowEl.style.display='none';label.innerHTML='';return;}
         var effHeading = ((phoneHeading + arCalibAz) % 360 + 360) % 360;var effPitch = (phonePitch!==null ? phonePitch : 0) + arCalibAlt;
         var diffAz = ((hor.azimuth - effHeading + 540) % 360) - 180;var diffAlt = hor.altitude - effPitch;
@@ -2162,11 +2200,16 @@ function startAR(arg){
           label.innerHTML='';
         }
       },300);
-    }).catch(function(){setMsg('Permesso fotocamera non concesso o dispositivo occupato.');});
+    }).catch(function(){setMsg('Fotocamera non disponibile. Controlla il permesso della fotocamera e verifica di usare Astro Alberto tramite HTTPS.');});
   }
   if(typeof DeviceOrientationEvent!=='undefined' && typeof DeviceOrientationEvent.requestPermission==='function'){
-    DeviceOrientationEvent.requestPermission().then(function(res){if(res==='granted')startSensorsAndCamera();else setMsg('Permesso bussola negato.');}).catch(startSensorsAndCamera);
-  } else {startSensorsAndCamera();}
+    DeviceOrientationEvent.requestPermission().then(function(res){
+      if(res==='granted'){startSensorsAndCamera();}
+      else{sensorPermissionDenied=true;startSensorsAndCamera();}
+    }).catch(function(){sensorPermissionDenied=true;startSensorsAndCamera();});
+  } else {
+    startSensorsAndCamera();
+  }
 }
 function radarSVG(size, targets, phoneHeading, highlightName){
   var cx = size/2, cy = size/2, R = size/2 - 30;
@@ -2342,7 +2385,7 @@ function renderLandingSites(){
   var sCoord = 'font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted);margin-top:3px';
   var sGo = 'float:right;color:var(--amber);font-size:11px;font-weight:600';
   el.innerHTML = LUNAR_LANDING_SITES.map(function(s, idx){
-    var flag = s.country === 'USA' ? '🇺🇸' : s.country === 'URSS' ? '🇷🇺' : s.country === 'Cina' ? '🇨🇳' : s.country === 'India' ? '🇮🇳' : s.country === 'Giappone' ? '🇯🇵' : '🌍';
+    var flag = s.country.indexOf('USA') === 0 ? '🇺🇸' : s.country === 'URSS' ? '🇷🇺' : s.country === 'Cina' ? '🇨🇳' : s.country === 'India' ? '🇮🇳' : s.country === 'Giappone' ? '🇯🇵' : '🌍';
     return '<div class="globe-link site-link" style="'+sCard+'" data-globe-idx="'+idx+'">'
       + '<div style="'+sName+'">' + flag + ' ' + escapeHtml(s.name) + ' <span style="font-size:var(--fs-sm);color:var(--muted);font-weight:400">(' + s.year + ')</span> <span style="'+sGo+'">🌕 Vai al globo</span></div>'
       + '<div style="'+sCoord+'">Lat ' + s.lat.toFixed(2) + '° · Lon ' + s.lon.toFixed(2) + '°</div>'
@@ -2685,7 +2728,7 @@ function updateAstro(){
   var moonIsUpNow=moonHorNow.altitude>0;
   var moonObservable = moonIsUpNow;
   var moonIllumNow=A.Illumination(A.Body.Moon,now);
-  var moonMag=moonIllumNow.mag;
+  var moonMag=moonIllumNow.mag;moonObservable=moonIsUpNow&&isObservableUnderSun(sunState.alt,moonMag);
   var moonIllum=A.Illumination(A.Body.Moon,graphRef);
   var phaseAngle=A.MoonPhase(graphRef);
   var fMoon=moonIllum.phase_fraction;
@@ -3066,6 +3109,7 @@ function showCdnError(){
   var n=document.getElementById('nightTargets');if(n)n.innerHTML='<div class="section-note">In attesa del motore astronomico...</div>';
 }
 function init(){
+  try{if(screen.orientation&&screen.orientation.lock)screen.orientation.lock('portrait').catch(function(){});}catch(e){}
   if('serviceWorker' in navigator && window.isSecureContext){navigator.serviceWorker.register('sw.js').catch(function(){});}
   var deferredInstall=null,bi=document.getElementById('btnInstall');
   window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredInstall=e;if(bi)bi.style.display='inline-flex';});
@@ -3081,7 +3125,7 @@ function init(){
     return;
   }
   var onboardingShown=runOnboarding();
-  if(!onboardingShown){updateAstro();ensurePlanisphereClock(true);drawPlanisphere();fetchWeather();fetchKp();requestWakeLock();}
+  if(!onboardingShown){updateAstro();ensurePlanisphereClock(true);drawPlanisphere();fetchWeather();fetchKp();}requestWakeLock();
   document.getElementById('btnGps').addEventListener('click',acquireGps);
   document.getElementById('btnSearchCity').addEventListener('click',function(){var q=document.getElementById('locInput').value.trim();if(q.length>1)geocodeCity(q);});
   document.getElementById('locInput').addEventListener('keydown',function(e){if(e.key==='Enter'){var q=this.value.trim();if(q.length>1)geocodeCity(q);}});
