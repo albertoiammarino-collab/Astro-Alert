@@ -1788,7 +1788,7 @@ function drawPlanisphere(){
   var distMults=[1.6,2.4,3.4,4.6,6.0];
   var fontScalePlanet=[1.0,0.85,0.72,0.58];
   var fontScaleStar  =[0.9,0.75,0.62,0.52];
-  var fontBase=Math.max(11*dpr,w*0.020);
+  var fontBase=Math.max(7*dpr,w*0.020);
   var labelItems=items.filter(function(it){
     if(it.type==='star'){
       if(!it.label) return false;
@@ -1810,7 +1810,7 @@ function drawPlanisphere(){
     else anchorPad=starDotRadius(it.R || 1.7, dpr) + 3*dpr;
     var chosen=null;var bestScore=Infinity;
     for(var fi=0; fi<mults.length; fi++){
-      var fsize=Math.max(9*dpr, baseFont*mults[fi]);
+      var fsize=Math.max(6*dpr, baseFont*mults[fi]);
       ctx.font='700 '+fsize+'px sans-serif';
       var tw=ctx.measureText(it.name).width;
       var th=fsize*1.15;
@@ -1832,8 +1832,9 @@ function drawPlanisphere(){
       }
       if(bestScore<50)break;
     }
-    if(!chosen && it.type!=='star'){
-      var fsize=Math.max(8*dpr, baseFont*0.55);
+    if(!chosen){
+      if(it.type==='star') return;
+      var fsize=Math.max(6*dpr, baseFont*0.55);
       ctx.font='700 '+fsize+'px sans-serif';
       var tw=ctx.measureText(it.name).width;
       var th=fsize*1.15;
@@ -1844,7 +1845,8 @@ function drawPlanisphere(){
       for(var oi=0; oi<occupied.length; oi++){ if(overlaps(box,occupied[oi])) localScore+=200; }
       if(localScore<200){chosen={box:box,x:tx,y:ty,fsize:fsize};}
       else {return;}
-    } else if(!chosen){return;}
+    }
+    if(it.type === 'star' && bestScore >= 200) return;
     occupied.push(chosen.box);
     var anchorDist=Math.hypot(chosen.x-it.x, chosen.y-it.y);
     if(anchorDist > iconR*2.5){
