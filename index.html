@@ -9,7 +9,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AstroAlert">
-<meta name="application-name" content="AstroAlert">
+<meta name="application-name" content="Astro Alberto">
+<meta name="description" content="Astro Alberto, assistente per osservazione visuale con telescopio, planisfero, effemeridi e condizioni meteo">
 <title>Astro Alberto · osservazione visuale</title>
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -273,6 +274,7 @@ details.collapse > div{padding:10px var(--pad-x);border-top:1px solid var(--line
 .arview .artoggle{position:absolute;top:calc(16px + env(safe-area-inset-top));left:16px;background:rgba(0,0,0,0.65);border:1px solid rgba(255,255,255,0.4);color:#fff;width:44px;height:44px;border-radius:50%;font-size:19px;z-index:6;line-height:1;display:flex;align-items:center;justify-content:center}
 .arview .armsg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;text-align:center;font-size:var(--fs-md);padding:12px 24px;line-height:1.6;background:rgba(0,0,0,0.55);border-radius:8px;max-width:80vw;z-index:3}
 .arview .arlabel{position:absolute;bottom:calc(26px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;color:#fff;font-family:var(--mono);font-size:16px;text-shadow:0 2px 6px rgba(0,0,0,0.95);font-weight:700;z-index:3;padding:0 20px}
+.arview .arlabel::after{content:" · AR indicativa, verifica nell’oculare";display:block;font-size:10px;font-weight:500;margin-top:4px;color:rgba(255,255,255,.85)}
 .arview .search-circle{position:absolute;width:150px;height:150px;border:2px dashed rgba(242,184,75,0.85);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:2;transition:left .18s linear,top .18s linear,border-style .15s,border-color .15s,box-shadow .15s;animation:arPulse 1.4s ease-in-out infinite}
 .arview .search-circle::before,.arview .search-circle::after{content:"";position:absolute;background:rgba(242,184,75,0.55)}
 .arview .search-circle::before{left:50%;top:18%;width:1px;height:64%;transform:translateX(-50%)}
@@ -364,12 +366,12 @@ body.red-mode::after{content:"";position:fixed;inset:0;background:#f00;mix-blend
 <div class="perm-backdrop" id="permOverlay" style="display:none">
   <div class="perm-card">
     <h2>Benvenuto in AstroAlert</h2>
-    <div class="sub">Per funzionare al meglio, l'app ha bisogno di alcuni permessi. Sono tutti facoltativi tranne la posizione, che puoi anche impostare manualmente.</div>
-    <div class="perm-row"><div class="ico">📍</div><div class="txt"><div class="ttl">Posizione</div><div class="desc">Per calcolare effemeridi e meteo sulla tua località</div></div><div class="st wait" id="permStGeo">In attesa</div></div>
-    <div class="perm-row"><div class="ico">🔔</div><div class="txt"><div class="ttl">Notifiche</div><div class="desc">Solo su desktop — non utilizzate su Android</div></div><div class="st wait" id="permStNotif">In attesa</div></div>
-    <div class="perm-row"><div class="ico">📷</div><div class="txt"><div class="ttl">Fotocamera</div><div class="desc">Per il puntamento AR dei pianeti in tempo reale</div></div><div class="st wait" id="permStCam">In attesa</div></div>
+    <div class="sub">Puoi iniziare senza concedere permessi. Imposta una località manualmente, usa il GPS quando premi GPS e autorizza fotocamera e sensori soltanto quando avvii il puntamento AR.</div>
+    <div class="perm-row"><div class="ico">📍</div><div class="txt"><div class="ttl">Posizione</div><div class="desc">Facoltativo. Si richiede soltanto quando premi GPS</div></div><div class="st wait" id="permStGeo">In attesa</div></div>
+    <div class="perm-row"><div class="ico">🔔</div><div class="txt"><div class="ttl">Notifiche</div><div class="desc">Non necessarie per le funzioni astronomiche</div></div><div class="st wait" id="permStNotif">In attesa</div></div>
+    <div class="perm-row"><div class="ico">📷</div><div class="txt"><div class="ttl">Fotocamera</div><div class="desc">Si richiede soltanto quando avvii il puntamento AR</div></div><div class="st wait" id="permStCam">In attesa</div></div>
     <div class="perm-row" style="border-color:var(--red);background:rgba(231,76,60,0.06)"><div class="ico">🌙</div><div class="txt"><div class="ttl" style="color:var(--red)">Modalità Luce Rossa</div><div class="desc">Consigliata durante l'osservazione: preserva l'adattamento al buio dei tuoi occhi. Attivabile dal pulsante in alto.</div></div></div>
-    <button class="perm-btn" id="permGrant">Concedi tutti i permessi</button>
+    <button class="perm-btn" id="permGrant">Continua senza autorizzazioni</button>
     <button class="perm-skip" id="permSkip">Salta — configurerò dopo</button>
   </div>
 </div>
@@ -410,8 +412,8 @@ body.red-mode::after{content:"";position:fixed;inset:0;background:#f00;mix-blend
     <div class="card">
       <div class="card-head">METEO &amp; CONDIZIONI ATMOSFERICHE</div>
       <div class="grid">
-        <div><span class="label" id="mCloudsLabel">Nuvolosità riferimento:</span><span class="val" id="mCloudsLive">--%</span></div>
-        <div><span class="label">Media Buio Astronomico:</span><span class="val" id="mCloudsAvg">--%</span></div>
+        <div><span class="label" id="mCloudsLabel">Nuvolosità riferimento:</span><span class="val" id="mCloudsLive">N/D</span></div>
+        <div><span class="label">Media Buio Astronomico:</span><span class="val" id="mCloudsAvg">N/D</span></div>
         <div><span class="label">Temp ORA | Umidità:</span><span class="val" id="mTemp">--°C | --%</span></div>
         <div><span class="label">Punto di Rugiada ORA:</span><span class="val" id="mDew">--°C</span></div>
         <div><span class="label">Vento a terra (10 m):</span><span class="val" id="mWind10">-- km/h</span></div>
@@ -699,9 +701,8 @@ body.red-mode::after{content:"";position:fixed;inset:0;background:#f00;mix-blend
 <script>
 (function(){
 "use strict";
-/* ============================================================
-   JS ORIGINALE COMPLETO — INVARIATO
-   ============================================================ */
+/* Astro Alberto. Calcoli astronomici, interfaccia e sensori.
+   I dati non disponibili vengono indicati come N/D; le stime non sono presentate come certezze. */
 var A = (typeof Astronomy !== 'undefined') ? Astronomy : null;
 var loc = {lat:40.6947, lon:14.4803, elev:6, name:"Castellammare di Stabia"};
 var weatherLoaded = false;
@@ -709,7 +710,7 @@ var activeFilter = 'all';
 var weatherFetchToken = 0;
 var geocodeFetchToken = 0;
 var navBusy = false;
-var currentWeatherContext = {clouds:0, jetSpeed:null, jetAvailable:false};
+var currentWeatherContext = {clouds:null, jetSpeed:null, jetAvailable:false};
 var KM_PER_LY = 9.460730472e12;
 var KM_PER_AU = 149597870.7;
 var COMPASS = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSO","SO","OSO","O","ONO","NO","NNO"];
@@ -720,7 +721,7 @@ function safeGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
 function safeSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
 var arCalibAz  = parseFloat(safeGet('astroalert_ar_calib_az')  || '0') || 0;
 var arCalibAlt = parseFloat(safeGet('astroalert_ar_calib_alt') || '0') || 0;
-var OBS_TIMEZONE = (Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC');
+var OBS_TIMEZONE = 'Europe/Rome';
 
 function obsDateParts(d){
   var parts=new Intl.DateTimeFormat('en-CA',{timeZone:OBS_TIMEZONE,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(d);
@@ -772,23 +773,143 @@ function obsDateFmt(opts){
 
 var activeDate = obsNowActiveDate();
 
+var OBS_MAG_DECL = null;
+var OBS_MAG_DECL_STATE = 'in attesa';
+var declinationFetchToken = 0;
+var WMM_VALID_FROM = '2025-01-01';
+var WMM_VALID_TO = '2029-12-31';
 function magneticDeclination(lat, lon){
-  if(lat>=35 && lat<=48 && lon>=5 && lon<=20){return 4.5 + 0.05*(lat-42) - 0.10*(lon-12);}
-  if(lat>=35 && lat<=60 && lon>=-15 && lon<=30){return 2.5 + 0.03*(lat-48);}
-  return 0;
+  // Restituisce soltanto il dato NOAA già calcolato per la posizione attiva.
+  var a = Number(lat), b = Number(lon);
+  if (!Number.isFinite(a) || !Number.isFinite(b) || !Number.isFinite(Number(loc.lat)) || !Number.isFinite(Number(loc.lon))) return null;
+  if (Math.abs(a - Number(loc.lat)) > 0.002 || Math.abs(b - Number(loc.lon)) > 0.002) return null;
+  return Number.isFinite(OBS_MAG_DECL) ? OBS_MAG_DECL : null;
 }
-var OBS_MAG_DECL = magneticDeclination(loc.lat, loc.lon);
-function updateMagDecl(){ OBS_MAG_DECL = magneticDeclination(loc.lat, loc.lon); }
+function declinationCacheKey(lat, lon){
+  return 'astro_wmm2025_' + Number(lat).toFixed(3) + '_' + Number(lon).toFixed(3);
+}
+function parseDeclinationResponse(text, contentType){
+  if (!text || typeof text !== 'string') return null;
+  // Il servizio NOAA restituisce XML o CSV, a seconda del formato richiesto.
+  try {
+    if (/xml/i.test(contentType) || /^\s*</.test(text)) {
+      var xml = new DOMParser().parseFromString(text, 'application/xml');
+      if (!xml.querySelector('parsererror')) {
+        var nodes = Array.from(xml.getElementsByTagName('*'));
+        for (var i = 0; i < nodes.length; i++) {
+          var name = String(nodes[i].localName || nodes[i].nodeName).toLowerCase().replace(/[^a-z]/g, '');
+          if (name === 'declination' || name === 'declinationangle' || name === 'declinationdeg') {
+            var v = Number(String(nodes[i].textContent || '').trim().replace(',', '.'));
+            if (Number.isFinite(v) && Math.abs(v) <= 180) return v;
+          }
+        }
+      }
+    }
+  } catch (err) { /* prova il formato CSV */ }
+  var lines = text.trim().split(/\r?\n/).map(function(line){ return line.trim(); }).filter(Boolean);
+  if (lines.length >= 2) {
+    var headers = lines[0].split(/[;,]/).map(function(x){ return x.trim().toLowerCase().replace(/[^a-z]/g, ''); });
+    var idx = headers.findIndex(function(x){ return x === 'declination' || x === 'declinationdeg' || x === 'd'; });
+    if (idx >= 0) {
+      var cells = lines[lines.length - 1].split(/[;,]/).map(function(x){ return x.trim().replace(/^"|"$/g, ''); });
+      var n = Number(cells[idx].replace(',', '.'));
+      if (Number.isFinite(n) && Math.abs(n) <= 180) return n;
+    }
+  }
+  return null;
+}
+function fetchMagneticDeclination(){
+  var lat = Number(loc.lat), lon = Number(loc.lon);
+  var token = ++declinationFetchToken;
+  OBS_MAG_DECL = null;
+  OBS_MAG_DECL_STATE = 'calcolo online in corso';
+  var now = new Date();
+  var modelDate = now.toISOString().slice(0, 10);
+  if (modelDate < WMM_VALID_FROM || modelDate > WMM_VALID_TO) {
+    OBS_MAG_DECL_STATE = 'WMM2025 fuori validità. Aggiorna il modello';
+    try { updateAstroDebug(new A.Observer(loc.lat, loc.lon, loc.elev)); } catch (err) {}
+    return Promise.resolve();
+  }
+  var cacheKey = declinationCacheKey(lat, lon);
+  try {
+    var cached = JSON.parse(safeGet(cacheKey) || 'null');
+    if (cached && Number.isFinite(cached.value) && cached.value >= -180 && cached.value <= 180 && Date.now() - cached.savedAt < 30 * 86400000) {
+      OBS_MAG_DECL = cached.value;
+      OBS_MAG_DECL_STATE = 'ultimo dato WMM2025 salvato, ' + new Date(cached.savedAt).toLocaleDateString('it-IT');
+    }
+  } catch (err) { /* cache non disponibile */ }
+  var query = new URLSearchParams({
+    lat1: String(lat), lon1: String(lon), model: 'WMM', key: 'zNEw7',
+    startYear: String(now.getUTCFullYear()),
+    startMonth: String(now.getUTCMonth() + 1),
+    startDay: String(now.getUTCDate()), resultFormat: 'xml'
+  });
+  var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+  var timeoutId = controller ? setTimeout(function(){ controller.abort(); }, 12000) : null;
+  return fetch('https://www.ngdc.noaa.gov/geomag-web/calculators/calculateDeclination?' + query.toString(), {
+    cache:'no-store', signal:controller ? controller.signal : undefined
+  })
+    .then(function(res){ if (!res.ok) throw new Error('Servizio WMM non disponibile'); return res.text().then(function(text){ return {text:text, type:res.headers.get('content-type') || ''}; }); })
+    .then(function(result){
+      if (timeoutId) clearTimeout(timeoutId);
+      if (token !== declinationFetchToken) return;
+      var value = parseDeclinationResponse(result.text, result.type);
+      if (value === null) throw new Error('Risposta WMM non interpretabile');
+      OBS_MAG_DECL = value;
+      OBS_MAG_DECL_STATE = 'WMM2025 NOAA, aggiornato ' + now.toLocaleDateString('it-IT');
+      safeSet(cacheKey, JSON.stringify({value:value, savedAt:Date.now()}));
+      updateAstroDebug(new A.Observer(loc.lat, loc.lon, loc.elev));
+    })
+    .catch(function(){
+      if (timeoutId) clearTimeout(timeoutId);
+      if (token !== declinationFetchToken) return;
+      if (OBS_MAG_DECL === null) OBS_MAG_DECL_STATE = 'non disponibile. Puntamento AR non certificato';
+      updateAstroDebug(new A.Observer(loc.lat, loc.lon, loc.elev));
+    });
+}
+function updateMagDecl(){
+  OBS_MAG_DECL = null;
+  OBS_MAG_DECL_STATE = 'in attesa';
+  return fetchMagneticDeclination();
+}
 
 function sunAltThreshold(mag){
-  if(mag === null || mag === undefined || isNaN(mag)) return -0.833;
-  if(mag <= -3.5) return 90;
-  if(mag <= 0.5) return -0.833;
-  if(mag <= 2.0) return -6;
-  if(mag <= 4.0) return -12;
+  // Soglie conservative di visibilità indicative, non un modello fotometrico.
+  if (typeof mag !== 'number' || !Number.isFinite(mag)) return -18;
+  if (mag <= 0.5) return -0.833;
+  if (mag <= 2.0) return -6;
+  if (mag <= 4.0) return -12;
   return -18;
 }
-function isObservableUnderSun(sunAlt, mag){return sunAlt <= sunAltThreshold(mag);}
+function solarSeparationDegrees(target, obs, when){
+  if (!target || !obs || !(when instanceof Date) || !Number.isFinite(when.getTime())) return null;
+  try {
+    var body = null;
+    if (typeof target === 'string' && A.Body[target]) body = A.Body[target];
+    else if (target && target.body) body = target.body;
+    else if (target && target.key && A.Body[target.key]) body = A.Body[target.key];
+    var targetEq = body ? A.Equator(body, when, obs, true, true) : fixedEquatorial(target, when, obs);
+    var sunEq = A.Equator(A.Body.Sun, when, obs, true, true);
+    if (!targetEq || !sunEq || !Number.isFinite(targetEq.ra) || !Number.isFinite(targetEq.dec)) return null;
+    var ra1 = targetEq.ra * Math.PI / 12, dec1 = targetEq.dec * Math.PI / 180;
+    var ra2 = sunEq.ra * Math.PI / 12, dec2 = sunEq.dec * Math.PI / 180;
+    var cosSep = Math.sin(dec1) * Math.sin(dec2) + Math.cos(dec1) * Math.cos(dec2) * Math.cos(ra1 - ra2);
+    return Math.acos(Math.max(-1, Math.min(1, cosSep))) * 180 / Math.PI;
+  } catch (err) { return null; }
+}
+function isObservableUnderSun(sunAlt, mag, target, obs, when){
+  if (typeof sunAlt !== 'number' || !Number.isFinite(sunAlt)) return false;
+  if (typeof mag !== 'number' || !Number.isFinite(mag)) return false;
+  if (sunAlt > -0.833) return false;
+  var key = typeof target === 'string' ? target : (target && target.key ? target.key : null);
+  if (key && PLANET_DATA[key]) {
+    var separation = solarSeparationDegrees(target, obs, when);
+    if (separation === null && sunAlt > -12) return false;
+    var minimumElongation = {Mercury:12, Venus:10, Mars:5, Jupiter:5, Saturn:5, Uranus:15, Neptune:15}[key] || 8;
+    if (separation !== null && separation < minimumElongation) return false;
+  }
+  return sunAlt <= sunAltThreshold(mag);
+}
 
 var activeRadarCleanup = null;
 function compassDir(az){var i=Math.round(az/22.5)%16;if(i<0)i+=16;return COMPASS[i];}
@@ -933,7 +1054,7 @@ var LUNAR_MOUNTAINS = [
   {name:'Montes Riphaeus', nameIt:'Rifei', lat:-7.6, lon:-27.5, length:189, desc:'Resti di anelli di bacino'}
 ];
 
-var CONIT=(function(){var o={};'And:Andromeda,Ant:Macchina Pneumatica,Aps:Uccello del Paradiso,Aql:Aquila,Aqr:Acquario,Ara:Altare,Ari:Ariete,Aur:Auriga,Boo:Boote,CMa:Cane Maggiore,CMi:Cane Minore,CVn:Cani da Caccia,Cae:Bulino,Cam:Giraffa,Cap:Capricorno,Car:Carena,Cas:Cassiopea,Cen:Centauro,Cep:Cefeo,Cet:Balena,Cha:Camaleonte,Cir:Compasso,Cnc:Cancro,Col:Colomba,Com:Chioma di Berenice,CrA:Corona Australe,CrB:Corona Boreale,Crt:Cratere,Cru:Croce del Sud,Crv:Corvo,Cyg:Cigno,Del:Delfino,Dor:Dorado,Dra:Dragone,Equ:Cavallino,Eri:Eridano,For:Fornace,Gem:Gemelli,Gru:Gru,Her:Ercole,Hor:Orologio,Hya:Idra,Hyi:Idro,Ind:Indiano,LMi:Leone Minore,Lac:Lucertola,Leo:Leone,Lep:Lepre,Lib:Bilancia,Lup:Lupo,Lyn:Lince,Lyr:Lira,Men:Mensa,Mic:Microscopio,Mon:Unicorno,Mus:Mosca,Nor:Regolo,Oct:Ottante,Oph:Ofiuco,Ori:Orione,Pav:Pavone,Peg:Pegaso,Per:Perseo,Phe:Fenice,Pic:Pittore,PsA:Pesce Australe,Psc:Pesci,Pup:Poppa,Pyx:Bussola,Ret:Reticolo,Scl:Scultore,Sco:Scorpione,Sct:Scudo,Ser:Serpente,Sex:Sestante,Sge:Freccia,Sgr:Sagittario,Tau:Toro,Tel:Telescopio,TrA:Triangolo Australe,Tri:Triangolo,Tuc:Tucano,UMa:Orsa Maggiore,UMi:Orsa Minore,Vel:Vele,Vir:Vergine,Vol:Pesce Volante,Vul:Volpetta'.split(',').forEach(function(p){var q=p.split(':');o[q[0]]=q[1];});return o;})();
+var CONIT=(function(){var o={};'And:Andromeda,Ant:Macchina Pneumatica,Aps:Uccello del Paradiso,Aql:Aquila,Aqr:Acquario,Ara:Altare,Ari:Ariete,Aur:Auriga,Boo:Boote,CMa:Cane Maggiore,CMi:Cane Minore,CVn:Cani da Caccia,Cae:Bulino,Cam:Giraffa,Cap:Capricorno,Car:Carena,Cas:Cassiopea,Cen:Centauro,Cep:Cefeo,Cet:Balena,Cha:Camaleonte,Cir:Compasso,Cnc:Cancro,Col:Colomba,Com:Chioma di Berenice,CrA:Corona Australe,CrB:Corona Boreale,Crt:Cratere,Cru:Croce del Sud,Crv:Corvo,Cyg:Cigno,Del:Delfino,Dor:Dorado,Dra:Dragone,Equ:Cavallino,Eri:Eridano,For:Fornace,Gem:Gemelli,Gru:Gru,Her:Ercole,Hor:Orologio,Hya:Idra,Hyi:Idro,Ind:Indiano,LMi:Leone Minore,Lac:Lucertola,Leo:Leone,Lep:Lepre,Lib:Bilancia,Lup:Lupo,Lyn:Lince,Lyr:Lira,Men:Mensa,Mic:Microscopio,Mon:Unicorno,Mus:Mosca,Nor:Norma,Oct:Ottante,Oph:Ofiuco,Ori:Orione,Pav:Pavone,Peg:Pegaso,Per:Perseo,Phe:Fenice,Pic:Pittore,PsA:Pesce Australe,Psc:Pesci,Pup:Poppa,Pyx:Bussola,Ret:Reticolo,Scl:Scultore,Sco:Scorpione,Sct:Scudo,Ser:Serpente,Sex:Sestante,Sge:Freccia,Sgr:Sagittario,Tau:Toro,Tel:Telescopio,TrA:Triangolo Australe,Tri:Triangolo,Tuc:Tucano,UMa:Orsa Maggiore,UMi:Orsa Minore,Vel:Vele,Vir:Vergine,Vol:Pesce Volante,Vul:Volpetta'.split(',').forEach(function(p){var q=p.split(':');o[q[0]]=q[1];});return o;})();
 function CON(ra,dec){var c=A.Constellation(ra,dec);return {name:CONIT[c.symbol]||c.name,symbol:c.symbol};}
 function getFixedBody(obj){
   if(!obj || typeof obj.ra!=='number' || typeof obj.dec!=='number') return null;
@@ -955,41 +1076,77 @@ function fixedHorizon(obj,date,obs){
 }
 function absoluteCulmination(objOrBodyKey, obs, refTime, nightStart, nightEnd){
   var ref = refTime || new Date();
-  var body = null;
-  if(typeof objOrBodyKey === 'string'){ body = A.Body[objOrBodyKey]; }
-  else { body = getFixedBody(objOrBodyKey); }
-  if(!body) return null;
-  var searchStart = addHours(ref, -20);
-  var best = null, bestDiff = Infinity;
+  var body = typeof objOrBodyKey === 'string' ? A.Body[objOrBodyKey] : getFixedBody(objOrBodyKey);
+  if (!body) return null;
+
+  function horizonAt(time){
+    var eq = A.Equator(body, time, obs, true, true);
+    return A.Horizon(time, obs, eq.ra, eq.dec, 'normal');
+  }
+  function recordAt(time){
+    var h = horizonAt(time);
+    return {time:time, alt:h.altitude, az:h.azimuth};
+  }
+  var best = null;
   try {
-    var evt = A.SearchHourAngle(body, obs, 0, searchStart, 2);
+    var searchStart = addHours(ref, -20);
+    var evt = A.SearchHourAngle(body, obs, 0, searchStart, 3);
+    var candidates = [];
     var guard = 0;
-    while(evt && evt.time && guard < 6){
+    while (evt && evt.time && evt.time.date && guard < 7) {
       guard++;
       var t = evt.time.date;
-      if(t > addHours(ref, 30)) break;
-      var diff = Math.abs(t.getTime() - ref.getTime());
-      if(diff < bestDiff){
-        bestDiff = diff;
-        var alt, az;
-        if(evt.hor){ alt = evt.hor.altitude; az = evt.hor.azimuth; }
-        else { var h = A.Horizon(t, obs, evt.time.ra, evt.time.dec, 'normal'); alt = h.altitude; az = h.azimuth; }
-        best = { time: t, alt: alt, az: az };
+      if (Math.abs(t.getTime() - ref.getTime()) <= 36 * 3600000) {
+        candidates.push(evt.hor ? {time:t, alt:evt.hor.altitude, az:evt.hor.azimuth} : recordAt(t));
       }
-      try {
-        var nextEvt = A.SearchHourAngle(body, obs, 0, addHours(t, 0.5), 1);
-        if(!nextEvt || !nextEvt.time) break;
-        evt = nextEvt;
-      } catch(e){ break; }
+      if (t > addHours(ref, 36)) break;
+      evt = A.SearchHourAngle(body, obs, 0, addHours(t, 1), 3);
     }
-  } catch(e){}
-  if(best && nightStart && nightEnd){
-    best.inNightWindow = (best.time >= nightStart && best.time <= nightEnd);
-  } else if(best){
-    best.inNightWindow = null;
+    candidates.sort(function(a,b){ return Math.abs(a.time-ref)-Math.abs(b.time-ref); });
+    if (candidates.length) best = candidates[0];
+  } catch (err) { /* il campionamento sottostante è il ripiego */ }
+
+  // Ripiego indipendente da SearchHourAngle, importante per stelle circumpolari e oggetti Messier.
+  if (!best || !Number.isFinite(best.alt)) {
+    var start = addHours(ref, -30), stepMs = 10 * 60000, count = Math.floor(60 * 3600000 / stepMs);
+    var samples = [];
+    for (var i = 0; i <= count; i++) {
+      var time = new Date(start.getTime() + i * stepMs);
+      try { samples.push(recordAt(time)); } catch (err) { samples.push(null); }
+    }
+    var peaks = [];
+    for (var j = 1; j < samples.length - 1; j++) {
+      var prev = samples[j - 1], cur = samples[j], next = samples[j + 1];
+      if (prev && cur && next && cur.alt >= prev.alt && cur.alt >= next.alt) peaks.push(cur);
+    }
+    if (!peaks.length) {
+      samples.forEach(function(item){ if (item && (!best || item.alt > best.alt)) best = item; });
+    } else {
+      peaks.sort(function(a,b){ return Math.abs(a.time-ref)-Math.abs(b.time-ref); });
+      var peak = peaks[0];
+      var lo = new Date(peak.time.getTime() - stepMs), hi = new Date(peak.time.getTime() + stepMs);
+      // Ricerca aurea attorno al massimo campionato, risoluzione finale di pochi secondi.
+      var gr = (Math.sqrt(5) - 1) / 2;
+      var c = new Date(hi.getTime() - gr * (hi.getTime() - lo.getTime()));
+      var d = new Date(lo.getTime() + gr * (hi.getTime() - lo.getTime()));
+      var hc = recordAt(c), hd = recordAt(d);
+      for (var k = 0; k < 24; k++) {
+        if (hc.alt > hd.alt) {
+          hi = d; d = c; hd = hc;
+          c = new Date(hi.getTime() - gr * (hi.getTime() - lo.getTime())); hc = recordAt(c);
+        } else {
+          lo = c; c = d; hc = hd;
+          d = new Date(lo.getTime() + gr * (hi.getTime() - lo.getTime())); hd = recordAt(d);
+        }
+      }
+      best = hc.alt > hd.alt ? hc : hd;
+    }
   }
+  if (best && nightStart && nightEnd) best.inNightWindow = best.time >= nightStart && best.time <= nightEnd;
+  else if (best) best.inNightWindow = null;
   return best;
 }
+
 function observabilityQuality(culmAlt){
   if(culmAlt === null || culmAlt === undefined) return {key:'marginal', label:'N/D'};
   if(culmAlt >= 60) return {key:'excellent', label:'ECCELLENTE'};
@@ -1391,11 +1548,33 @@ function planisphereStarMassText(name){
     return c.label+': '+qualifier+earthMass(c.mass)+' volte la Terra ('+solarMass(c.mass)+' volte il Sole)';
   }).join('; ');
 }
+var PLANISPHERE_STAR_ALIASES = {
+  'Sirio':'Sirio A', 'Rigel':'Rigel A', 'Antares':'Antares A', 'Spica':'Spica A',
+  'Arturo':'Arturo', 'Vega':'Vega', 'Capella':'Capella', 'Betelgeuse':'Betelgeuse',
+  'Altair':'Altair', 'Aldebaran':'Aldebaran'
+};
+var PLANISPHERE_STAR_SIMBAD = {
+  'Sirio':'Sirius', 'Arturo':'Arcturus', 'Procione':'Procyon', 'Polluce':'Pollux',
+  'Regolo':'Regulus', 'Castore':'Castor', 'Fomalhaut':'Fomalhaut'
+};
+function simbadURL(identifier){
+  return 'https://simbad.cds.unistra.fr/simbad/sim-id?Ident=' + encodeURIComponent(identifier);
+}
 function planisphereDescForStar(s){
-  var full=null;
-  for(var i=0;i<STAR_CATALOG.length;i++){if(STAR_CATALOG[i].name===s.name){full=STAR_CATALOG[i];break;}}
-  var massText=planisphereStarMassText(s.name)||(full?full.massRatio:null);
-  return {kind:'star',name:s.name,ra:s.ra,dec:s.dec,mag:s.mag,distLy:full?full.distLy:null,massRatio:massText,url:full?full.url:('https://simbad.cds.unistra.fr/simbad/sim-id?Ident='+encodeURIComponent(s.name)),simbad:full?full.simbad:('https://simbad.cds.unistra.fr/simbad/sim-id?Ident='+encodeURIComponent(s.name))};
+  var lookupName = PLANISPHERE_STAR_ALIASES[s.name] || s.name;
+  var full = null;
+  for (var i = 0; i < STAR_CATALOG.length; i++) {
+    if (STAR_CATALOG[i].name === lookupName) { full = STAR_CATALOG[i]; break; }
+  }
+  var massText = planisphereStarMassText(s.name) || (full ? full.massRatio : null);
+  var simbadId = PLANISPHERE_STAR_SIMBAD[s.name] || lookupName.replace(/\s+[AB]$/, '');
+  return {
+    kind:'star', name:s.name, ra:s.ra, dec:s.dec, mag:s.mag,
+    distLy:full && typeof full.distLy === 'number' ? full.distLy : null,
+    massRatio:massText || 'Dato non disponibile nel catalogo',
+    url:full && full.url ? full.url : null,
+    simbad:full && full.simbad ? full.simbad : simbadURL(simbadId)
+  };
 }
 
 function drawSunIcon(ctx, x, y, r){
@@ -1727,8 +1906,8 @@ function drawPlanisphere(){
     }
   });
   var iconR=R*0.024;
-  var PLANET_ICON_SCALE=1.12;
-  var PLANET_ICON_MIN_SCALE=0.28;
+  var PLANET_ICON_SCALE=1.34;
+  var PLANET_ICON_MIN_SCALE=1.00;
   var planetFootprint={Mercury:1.0,Venus:1.65,Mars:1.45,Jupiter:1.70,Saturn:2.02,Uranus:1.08,Neptune:1.08};
   var planetItems=items.filter(function(it){return it.type==='planet';});
   planetItems.forEach(function(it){it.iconScale=PLANET_ICON_SCALE;});
@@ -1936,6 +2115,7 @@ function setRedMode(on){
 
 function switchTab(tabName){
   document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.tab === tabName); });
+  if (tabName === 'sky') requestWakeLock(); else if (!document.getElementById('arRoot')) releaseWakeLock();
   document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.toggle('active', p.dataset.tab === tabName); });
   try { window.scrollTo({top: 0, behavior: 'smooth'}); } catch(e){ window.scrollTo(0,0); }
   if(tabName === 'sky'){
@@ -1999,10 +2179,28 @@ function initPlanisphere(){
         mass='<div class="pi-mass-single"><b>Massa:</b> '+escapeHtml(hit.desc.massRatio)+'</div>';
       }
     }
-    var spInfo=hit.sp?' · Classe <b>'+hit.sp+'</b>':'';
-    var rInfo=hit.R?' · R☉ <b>'+hit.R+'</b>':'';
-    info.innerHTML='<div class="pi-main">'+escapeHtml(hit.name)+'</div>Alt <b>'+hit.alt.toFixed(1)+'°</b> · Az <b>'+Math.round(hit.az)+'° ('+compassDir(hit.az)+')</b> · Mag <b>'+Number(hit.mag).toFixed(2)+'</b>'+spInfo+rInfo+mass+'<br><button type="button" class="btn-ui" id="planisphereOpenCard" style="margin-top:7px;min-height:34px;padding:6px 9px;background:var(--panel-2);border:1px solid var(--line);color:var(--cyan);border-radius:6px;font-family:var(--mono);font-size:var(--fs-xs);">Apri scheda</button>';
-    var b=document.getElementById('planisphereOpenCard');if(b)b.addEventListener('click',function(){openCelestialModal(hit.desc,planisphereTime);});
+    var spInfo = hit.sp ? ' · Classe <b>'+escapeHtml(hit.sp)+'</b>' : '';
+    var rInfo = hit.R ? ' · R☉ <b>'+escapeHtml(hit.R)+'</b>' : '';
+    var distanceText = 'N/D';
+    try {
+      if (hit.desc && hit.desc.body) {
+        var bodyIllumination = A.Illumination(hit.desc.body, planisphereTime);
+        distanceText = formatDistanceLines(bodyIllumination.geo_dist * KM_PER_AU, false).value;
+      } else if (hit.desc && typeof hit.desc.distLy === 'number') {
+        distanceText = formatDistanceLines(0, true, hit.desc.distLy).value;
+      }
+    } catch (err) { distanceText = 'N/D'; }
+    var displayedMass = mass || '<div class="pi-mass-single"><b>Massa:</b> N/D nel catalogo</div>';
+    var sourceLinks = '';
+    if (hit.desc && hit.desc.url) sourceLinks += '<a href="'+escapeHtml(hit.desc.url)+'" target="_blank" rel="noopener">Scheda ↗</a>';
+    if (hit.desc && hit.desc.simbad) sourceLinks += '<a href="'+escapeHtml(hit.desc.simbad)+'" target="_blank" rel="noopener">SIMBAD ↗</a>';
+    info.innerHTML = '<div class="pi-main">'+escapeHtml(hit.name)+'</div>'
+      + 'Alt <b>'+hit.alt.toFixed(1)+'°</b> · Az <b>'+Math.round(hit.az)+'° ('+compassDir(hit.az)+')</b> · Mag <b>'+Number(hit.mag).toFixed(2)+'</b>'
+      + spInfo + rInfo + '<div class="pi-mass-single"><b>Distanza:</b> '+escapeHtml(distanceText)+'</div>'
+      + displayedMass + '<div class="astrolinks">'+sourceLinks+'</div>'
+      + '<button type="button" class="btn-ui" id="planisphereOpenCard" style="margin-top:7px;min-height:34px;padding:6px 9px;background:var(--panel-2);border:1px solid var(--line);color:var(--cyan);border-radius:6px;font-family:var(--mono);font-size:var(--fs-xs);">Apri scheda completa</button>';
+    var b = document.getElementById('planisphereOpenCard');
+    if (b) b.addEventListener('click', function(){ openCelestialModal(hit.desc, planisphereTime); });
   });
   window.addEventListener('resize',function(){if(planisphereFrame)cancelAnimationFrame(planisphereFrame);planisphereFrame=requestAnimationFrame(function(){planisphereFrame=0;drawPlanisphere();});});
   drawPlanisphere();
@@ -2036,13 +2234,26 @@ function computeMoonPenalty(target,obs,moonIllumFrac){
   return sepDeg<30?1:0;
 }
 function resolveTarget(arg){
-  if(typeof arg === 'string'){
-    if(arg === 'Moon')return {kind:'moon', name:'Luna', body:A.Body.Moon, key:'Moon', url:null, simbad:null, mag:null, distLy:null, massRatio:MOON_MASS_RATIO};
-    if(arg === 'Sun')return {kind:'sun', name:'Sole', body:A.Body.Sun, key:'Sun', url:null, simbad:null, mag:null, distLy:null, massRatio:null};
-    if(PLANET_DATA[arg])return {kind:'planet', name:PLANET_DATA[arg].name, body:A.Body[arg], key:arg, url:PLANET_DATA[arg].url, simbad:null, mag:null, distLy:null, massRatio:PLANET_DATA[arg].massRatio};
+  if (typeof arg === 'string') {
+    if (arg === 'Moon') return {
+      kind:'moon', name:'Luna', body:A.Body.Moon, key:'Moon',
+      url:'https://science.nasa.gov/moon/', simbad:simbadURL('Moon'), mag:null,
+      distLy:null, massRatio:MOON_MASS_RATIO
+    };
+    if (arg === 'Sun') return {
+      kind:'sun', name:'Sole', body:A.Body.Sun, key:'Sun',
+      url:'https://science.nasa.gov/sun/', simbad:simbadURL('Sun'), mag:null,
+      distLy:null, massRatio:'333.000 volte la Terra (1 volta il Sole)'
+    };
+    if (PLANET_DATA[arg]) return {
+      kind:'planet', name:PLANET_DATA[arg].name, body:A.Body[arg], key:arg,
+      url:PLANET_DATA[arg].url, simbad:simbadURL(arg), mag:null,
+      distLy:null, massRatio:PLANET_DATA[arg].massRatio
+    };
   }
   return arg;
 }
+
 function renderNightTargets(obs,tStart,tEnd,planetCandidates,moonInfo,sunState){
   var el=document.getElementById('nightTargets');
   if(!el)return;
@@ -2052,7 +2263,7 @@ function renderNightTargets(obs,tStart,tEnd,planetCandidates,moonInfo,sunState){
   planetCandidates.forEach(function(p){
     var absCulm = absoluteCulmination(p.key, obs, nightRef, tStart, tEnd);
     var cur=currentAltAz(A.Body[p.key],obs,now);
-    var observableNow=cur.isUp && isObservableUnderSun(sunState.alt, p.mag);
+    var observableNow=cur.isUp && isObservableUnderSun(sunState.alt, p.mag, p.key, obs, now);
     var culmAlt = absCulm ? absCulm.alt : p.maxAlt;
     var q = observabilityQuality(culmAlt);
     out.push({kind:'planet', name:p.name, alt:p.maxAlt, az:p.maxAz, time:p.maxTime, mag:p.mag,
@@ -2067,7 +2278,7 @@ function renderNightTargets(obs,tStart,tEnd,planetCandidates,moonInfo,sunState){
     if(b.alt>=15){
       var absCulm = absoluteCulmination(s, obs, nightRef, tStart, tEnd);
       var horNow=fixedHorizon(s,now,obs);
-      var observNow=horNow.altitude>0 && isObservableUnderSun(sunState.alt, s.mag);
+      var observNow=horNow.altitude>0 && isObservableUnderSun(sunState.alt, s.mag, s, obs, now);
       var culmAlt = absCulm ? absCulm.alt : b.alt;
       var q = observabilityQuality(culmAlt);
       out.push({kind:'star', name:s.name, alt:b.alt, az:b.az, time:b.time, mag:s.mag, fixedObj:s,
@@ -2085,12 +2296,12 @@ function renderNightTargets(obs,tStart,tEnd,planetCandidates,moonInfo,sunState){
     if(b.alt>=18){
       var absCulm = absoluteCulmination(m, obs, nightRef, tStart, tEnd);
       var horNow=fixedHorizon(m,now,obs);
-      var observNow=horNow.altitude>0 && isObservableUnderSun(sunState.alt, m.mag);
+      var observNow=horNow.altitude>0 && isObservableUnderSun(sunState.alt, m.mag, m, obs, now);
       var culmAlt = absCulm ? absCulm.alt : b.alt;
       var q = observabilityQuality(culmAlt);
       var simbadUrl='https://simbad.cds.unistra.fr/simbad/sim-id?Ident='+encodeURIComponent(m.id);
       var rec={kind:'deep', name:m.name, alt:b.alt, az:b.az, time:b.time, mag:m.mag, fixedObj:m,
-        distObj:formatDistanceLines(0,true,m.distLy), massObj:null,
+        distObj:formatDistanceLines(0,true,m.distLy), massObj:formatMassLines('Dato non disponibile nel catalogo'),
         url:m.url, extra:m.mag<=5?'25 mm (81x), poi 15 mm (135x)':'25 mm (81x), cielo buio e visione distolta',
         simbad:simbadUrl, source:'EQJ J2000 → equatoriale della data + SIMBAD',
         absCulm:absCulm, culmQuality:q.key, culmAlt:culmAlt,
@@ -2129,7 +2340,8 @@ function renderNightTargets(obs,tStart,tEnd,planetCandidates,moonInfo,sunState){
         + outsideNote
         + '</div>';
     } else {
-      culmHtml = '<div class="culm-block"><div class="culm-row"><span class="k">Picco stanotte:</span><span class="v">'+fmtTime(x.time)+' a <b>'+Math.round(x.alt)+'°</b></span></div></div>';
+      culmHtml = '<div class="culm-block"><div class="culm-row"><span class="k">Picco stanotte:</span><span class="v">'+fmtTime(x.time)+' a <b>'+Math.round(x.alt)+'°</b></span></div>'
+        + '<div class="culm-row"><span class="k">Culmina:</span><span class="v">N/D, evento non risolto</span></div></div>';
     }
 
     return '<div class="target-card" data-kind="'+x.kind+'" data-tidx="'+idx+'">'
@@ -2213,6 +2425,7 @@ function openCelestialModal(arg,atDate){
     if(desc.kind === 'star'){facts = "Stella del catalogo.";guide = "Inizia col 25mm (81x) per centrare, poi passa a 135x se il seeing lo permette. Barlow + 25mm (163x) è una buona alternativa.";}
     else{facts = "Oggetto del catalogo Messier.";guide = "Usa bassi ingrandimenti (25mm, 81x) per il campo, alza solo se il cielo è buio e trasparente.";}
   }
+  if (desc.kind === 'deep' && !massText) massText = 'Dato non disponibile nel catalogo';
   var massObj = formatMassLines(massText);
   var isMultiComponentStar = desc.kind === 'star' && typeof massText === 'string' && massText.indexOf(';') >= 0;
   var stellarMassComponents = '';
@@ -2243,7 +2456,7 @@ function openCelestialModal(arg,atDate){
   }
 
   var posTxt;
-  var observabilitySunOK = mag!==null && isObservableUnderSun(sunState.alt, mag);
+  var observabilitySunOK = mag!==null && isObservableUnderSun(sunState.alt, mag, desc, obs, now);
   if(horNow.altitude <= 0)posTxt = 'In questo momento si trova <b>sotto l\'orizzonte</b> (azimut '+compassDir(horNow.azimuth)+' '+Math.round(horNow.azimuth)+'°).';
   else if(!observabilitySunOK)posTxt = 'Geometricamente è a <b>'+Math.round(horNow.altitude)+'°</b> sopra l\'orizzonte verso <b>'+compassDir(horNow.azimuth)+'</b>, ma il cielo è <b>troppo luminoso per questa magnitudine</b>.';
   else posTxt = 'In questo momento è a <b>'+compassDir(horNow.azimuth)+'</b> ('+Math.round(horNow.azimuth)+'°), a <b>'+Math.round(horNow.altitude)+'°</b> sopra l\'orizzonte ed è <b>osservabile</b>.';
@@ -2264,6 +2477,8 @@ function openCelestialModal(arg,atDate){
       + '<div class="culm-row"><span class="k">Culmina a:</span><span class="v">'+fmtTime(absCulm.time)+' a <b>'+Math.round(absCulm.alt)+'°</b> <span class="culm-quality '+qClass+'">'+q.label+'</span></span></div>'
       + outsideNote
       + '</div>';
+  } else {
+    culmHtml = '<div class=\"culm-block outside\"><div class=\"culm-row\"><span class=\"k\">Culminazione:</span><span class=\"v\">N/D, dato non calcolabile</span></div></div>';
   }
 
   var massRowHtml = '';
@@ -2301,100 +2516,239 @@ function openCelestialModal(arg,atDate){
   document.getElementById('btnRadarFromModal').addEventListener('click',function(){openRadar(desc);});
 }
 function stopAR(){
-  if(arState.stream){arState.stream.getTracks().forEach(function(t){t.stop();});arState.stream=null;}
-  if(arState.headingHandler){window.removeEventListener('deviceorientationabsolute',arState.headingHandler,true);window.removeEventListener('deviceorientation',arState.headingHandler,true);arState.headingHandler=null;}
-  if(arState.timer){clearInterval(arState.timer);arState.timer=null;}
-  var v=document.getElementById('arRoot');if(v)v.remove();
+  if (arState.stream) {
+    arState.stream.getTracks().forEach(function(track){ try { track.stop(); } catch (err) {} });
+    arState.stream = null;
+  }
+  if (arState.headingHandler) {
+    window.removeEventListener('deviceorientationabsolute', arState.headingHandler, true);
+    window.removeEventListener('deviceorientation', arState.headingHandler, true);
+    arState.headingHandler = null;
+  }
+  if (arState.timer) { clearInterval(arState.timer); arState.timer = null; }
+  var root = document.getElementById('arRoot');
+  if (root) root.remove();
+  if (document.querySelector('.tab-btn.active[data-tab="sky"]')) requestWakeLock();
+  else releaseWakeLock();
 }
 function startAR(arg){
   var desc = resolveTarget(arg);
-  var root=document.createElement('div');root.className='arview';root.id='arRoot';
-  root.innerHTML='<button type="button" class="arclose" id="arClose">&times;</button>'
-    +'<button type="button" class="artoggle" id="arDebugToggle">🐞</button>'
-    +'<div class="ardebug hidden" id="arDebug"></div>'
-    +'<button type="button" class="arcalib" id="arCalibBtn">🎯 Sto puntando il bersaglio</button>'
-    +'<button type="button" class="arcalibreset" id="arCalibResetBtn">↺</button>'
-    +'<div class="armsg" id="arMsg">Avvio sensori e fotocamera...</div>'
-    +'<div class="search-circle" id="arSearch" style="display:none"></div>'
-    +'<div class="ar-arrow" id="arArrow" style="display:none"></div>';
+  var root = document.createElement('div');
+  root.className = 'arview'; root.id = 'arRoot';
+  root.innerHTML = '<button type="button" class="arclose" id="arClose" aria-label="Chiudi AR">&times;</button>'
+    + '<button type="button" class="artoggle" id="arDebugToggle" aria-label="Mostra diagnostica">🐞</button>'
+    + '<div class="ardebug hidden" id="arDebug"></div>'
+    + '<button type="button" class="arcalib" id="arCalibBtn">🎯 Calibra sul bersaglio</button>'
+    + '<button type="button" class="arcalibreset" id="arCalibResetBtn" aria-label="Azzera calibrazione">↺</button>'
+    + '<div class="armsg" id="arMsg">Avvio sensori e fotocamera...</div>'
+    + '<div class="search-circle" id="arSearch" style="display:none"></div>'
+    + '<div class="ar-arrow" id="arArrow" style="display:none"></div>';
   document.body.appendChild(root);
-  document.getElementById('arClose').addEventListener('click',stopAR);
-  document.getElementById('arDebugToggle').addEventListener('click',function(){var d=document.getElementById('arDebug'); if(d) d.classList.toggle('hidden');});
-  phonePitch=null; phoneHeading=null;
-  var sensorPermissionDenied=false;
-  phoneRawAlpha=null; phoneRawBeta=null; phoneRawGamma=null;
+  requestWakeLock();
+  document.getElementById('arClose').addEventListener('click', stopAR);
+  document.getElementById('arDebugToggle').addEventListener('click', function(){ var d=document.getElementById('arDebug'); if(d) d.classList.toggle('hidden'); });
+  phonePitch = null; phoneHeading = null;
+  phoneRawAlpha = null; phoneRawBeta = null; phoneRawGamma = null;
+  var sensorPermissionDenied = false;
+  var orientationSeen = false;
+  var headingSource = null;
+
+  function wrap360(value){ return ((value % 360) + 360) % 360; }
+  function clamp(value, min, max){ return Math.max(min, Math.min(max, value)); }
+  function setMsg(message){ var el=document.getElementById('arMsg'); if(el){ el.style.display='block'; el.textContent=message; } }
   function onOrientation(e){
-    phoneRawAlpha = (typeof e.alpha==='number')?e.alpha:null;
-    phoneRawBeta  = (typeof e.beta ==='number')?e.beta :null;
-    phoneRawGamma = (typeof e.gamma==='number')?e.gamma:null;
-    if(e.webkitCompassHeading!==undefined && e.webkitCompassHeading!==null){
-      phoneHeading=(e.webkitCompassHeading + 360) % 360;
-    } else if(typeof e.alpha==='number' && (e.absolute===true || e.type==='deviceorientationabsolute')){
-      var magHeading=((360-e.alpha) + 360) % 360;
-      phoneHeading=(magHeading + OBS_MAG_DECL + 360) % 360;
-    } else if(e.absolute!==true && phoneHeading===null){phoneHeading=null;}
-    if(typeof e.beta==='number' && !isNaN(e.beta)){var p = Math.abs(e.beta) - 90;if(p<-90) p=-90;if(p>90)  p=90;phonePitch=p;}
+    orientationSeen = true;
+    phoneRawAlpha = typeof e.alpha === 'number' ? e.alpha : null;
+    phoneRawBeta = typeof e.beta === 'number' ? e.beta : null;
+    phoneRawGamma = typeof e.gamma === 'number' ? e.gamma : null;
+
+    // Proietta l'asse ottico della fotocamera posteriore nel riferimento Est-Nord-Alto.
+    // La matrice usa alpha, beta e gamma: il solo 360-alpha non è corretto quando il telefono è inclinato.
+    var nextHeading = null;
+    var nextPitch = null;
+    var nextSource = null;
+    var hasTilt = typeof e.beta === 'number' && Number.isFinite(e.beta)
+      && typeof e.gamma === 'number' && Number.isFinite(e.gamma);
+    var alphaForMatrix = null;
+    var magneticInput = false;
+    if (hasTilt && typeof e.webkitCompassHeading === 'number' && Number.isFinite(e.webkitCompassHeading)) {
+      // Converte il bearing magnetico in angolo alpha equivalente, poi corregge l'azimut finale con WMM.
+      if (OBS_MAG_DECL !== null) {
+        alphaForMatrix = wrap360(360 - e.webkitCompassHeading) * Math.PI / 180;
+        magneticInput = true;
+        nextSource = 'magnetic-corrected';
+      }
+    } else if (hasTilt && typeof e.alpha === 'number' && Number.isFinite(e.alpha)
+      && (e.absolute === true || e.type === 'deviceorientationabsolute')) {
+      alphaForMatrix = e.alpha * Math.PI / 180;
+      nextSource = 'absolute';
+    }
+    if (alphaForMatrix !== null) {
+      var betaRad = e.beta * Math.PI / 180;
+      var gammaRad = e.gamma * Math.PI / 180;
+      var ca = Math.cos(alphaForMatrix), sa = Math.sin(alphaForMatrix);
+      var cb = Math.cos(betaRad), sb = Math.sin(betaRad);
+      var cg = Math.cos(gammaRad), sg = Math.sin(gammaRad);
+      // Vettore della fotocamera posteriore: componenti Est, Nord, Alto.
+      var east = -ca * sg - sa * sb * cg;
+      var north = -sa * sg + ca * sb * cg;
+      var up = -cb * cg;
+      var horizontal = Math.hypot(east, north);
+      if (Number.isFinite(east) && Number.isFinite(north) && Number.isFinite(up) && horizontal > 0.025) {
+        nextHeading = wrap360(Math.atan2(east, north) * 180 / Math.PI + (magneticInput ? OBS_MAG_DECL : 0));
+        nextPitch = Math.asin(Math.max(-1, Math.min(1, up))) * 180 / Math.PI;
+      }
+    }
+    // Mantiene l'ultimo orientamento assoluto valido; non inventa una bussola da eventi relativi.
+    if (nextHeading !== null && Number.isFinite(nextHeading) && nextPitch !== null && Number.isFinite(nextPitch)) {
+      phoneHeading = nextHeading;
+      phonePitch = nextPitch;
+      headingSource = nextSource;
+    } else if (e.absolute === true || e.type === 'deviceorientationabsolute'
+      || typeof e.webkitCompassHeading === 'number') {
+      phoneHeading = null;
+      phonePitch = null;
+      headingSource = null;
+    }
+    // Gli eventi relativi non sovrascrivono né invalidano l'ultimo orientamento assoluto valido.
+    var debug = document.getElementById('arDebug');
+    if (debug) debug.textContent = 'Sensori: ' + (orientationSeen ? 'ricezione dati' : 'in attesa')
+      + '\nalpha: ' + (phoneRawAlpha === null ? 'N/D' : phoneRawAlpha.toFixed(1) + '°')
+      + '\nbeta: ' + (phoneRawBeta === null ? 'N/D' : phoneRawBeta.toFixed(1) + '°')
+      + '\nheading geografico: ' + (phoneHeading === null ? 'N/D' : phoneHeading.toFixed(1) + '°')
+      + '\ninclinazione: ' + (phonePitch === null ? 'N/D' : phonePitch.toFixed(1) + '°')
+      + '\ndeclinazione WMM: ' + (OBS_MAG_DECL === null ? 'N/D' : OBS_MAG_DECL.toFixed(2) + '°');
   }
-  function setMsg(txt){var m=document.getElementById('arMsg');if(m){m.style.display='block';m.innerHTML=txt;}}
-  document.getElementById('arCalibBtn').addEventListener('click',function(){
-    if(phoneHeading===null || phonePitch===null){toast('Sensori non ancora pronti.',2000);return;}
-    var obs=new A.Observer(loc.lat,loc.lon,loc.elev);var now=new Date();var hor;
-    if(desc.body){var eq=A.Equator(desc.body,now,obs,true,true);hor=A.Horizon(now,obs,eq.ra,eq.dec,'normal');}
-    else{hor=fixedHorizon(desc,now,obs);}
-    var rawDiffAz = ((hor.azimuth - phoneHeading + 540)%360)-180;var rawDiffAlt = hor.altitude - phonePitch;
-    arCalibAz = rawDiffAz;arCalibAlt = rawDiffAlt;
-    safeSet('astroalert_ar_calib_az', arCalibAz.toFixed(3));safeSet('astroalert_ar_calib_alt', arCalibAlt.toFixed(3));
-    toast('Calibrazione: az '+arCalibAz.toFixed(1)+'° · alt '+arCalibAlt.toFixed(1)+'°',2800);
+
+  document.getElementById('arCalibBtn').addEventListener('click', function(){
+    if (phoneHeading === null || phonePitch === null || (headingSource === 'magnetic-corrected' && OBS_MAG_DECL === null)) {
+      toast('Calibrazione non disponibile: servono bussola e orientamento 3D affidabili. La bussola magnetica richiede WMM.', 3200);
+      return;
+    }
+    var observer = new A.Observer(loc.lat, loc.lon, loc.elev), now = new Date(), horizon;
+    if (desc.body) {
+      var eq = A.Equator(desc.body, now, observer, true, true);
+      horizon = A.Horizon(now, observer, eq.ra, eq.dec, 'normal');
+    } else horizon = fixedHorizon(desc, now, observer);
+    if (!horizon || !Number.isFinite(horizon.azimuth) || !Number.isFinite(horizon.altitude)) {
+      toast('Coordinate del bersaglio non disponibili.', 2500); return;
+    }
+    arCalibAz = ((horizon.azimuth - phoneHeading + 540) % 360) - 180;
+    arCalibAlt = horizon.altitude - phonePitch;
+    safeSet('astroalert_ar_calib_az', arCalibAz.toFixed(3));
+    safeSet('astroalert_ar_calib_alt', arCalibAlt.toFixed(3));
+    toast('Calibrazione registrata. Ripeti se il telefono si è spostato.', 2800);
   });
-  document.getElementById('arCalibResetBtn').addEventListener('click',function(){arCalibAz=0; arCalibAlt=0;safeSet('astroalert_ar_calib_az','0');safeSet('astroalert_ar_calib_alt','0');toast('Calibrazione azzerata.',2000);});
-  function startSensorsAndCamera(){
-    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){setMsg('Accesso alla fotocamera non disponibile.');return;}
-    setMsg('Richiesta autorizzazione fotocamera...');
-    navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false})
-    .then(function(stream){
-      arState.stream=stream;setMsg(sensorPermissionDenied?'Fotocamera attiva, ma sensori bloccati.':'Fotocamera attiva. Attendo i dati di orientamento...');
-      var video=document.createElement('video');video.setAttribute('playsinline','');video.autoplay=true;video.muted=true;video.srcObject=stream;
-      root.insertBefore(video,root.firstChild);video.play().catch(function(){});
-      var label=document.createElement('div');label.className='arlabel';root.appendChild(label);
-      var searchEl=document.getElementById('arSearch');var arrowEl=document.getElementById('arArrow');
-      if(searchEl)searchEl.style.display='block';
-      arState.headingHandler=onOrientation;
-      window.addEventListener('deviceorientationabsolute',onOrientation,true);window.addEventListener('deviceorientation',onOrientation,true);
-      var VFOV=65, HFOV=2*Math.atan(Math.tan(VFOV*Math.PI/360)*Math.min(1,root.clientWidth/Math.max(1,root.clientHeight)))*180/Math.PI, ticks=0;var LOCK_TOL=6;var targetName=desc.name;
-      arState.timer=setInterval(function(){
-        ticks++;
-        var obs=new A.Observer(loc.lat,loc.lon,loc.elev);var now=new Date();var hor;
-        if(desc.body){var eq=A.Equator(desc.body,now,obs,true,true);hor=A.Horizon(now,obs,eq.ra,eq.dec,'normal');}
-        else{hor=fixedHorizon(desc,now,obs);}
-        if(phoneHeading===null){if(ticks>8)setMsg(sensorPermissionDenied?'Sensori non autorizzati. Usa il Radar manuale.':'Nessun dato bussola. Muovi il telefono a forma di 8.');if(searchEl)searchEl.style.display='none';if(arrowEl)arrowEl.style.display='none';label.innerHTML='';return;}
-        if(hor.altitude<0){setMsg('<b>'+targetName+'</b> è sotto l\'orizzonte.');if(searchEl)searchEl.style.display='none';if(arrowEl)arrowEl.style.display='none';label.innerHTML='';return;}
-        var effHeading = ((phoneHeading + arCalibAz) % 360 + 360) % 360;var effPitch = (phonePitch!==null ? phonePitch : 0) + arCalibAlt;
-        var diffAz = ((hor.azimuth - effHeading + 540) % 360) - 180;var diffAlt = hor.altitude - effPitch;
-        var HALF_H=HFOV/2, HALF_V=VFOV/2;var cosAlt=Math.cos(hor.altitude*Math.PI/180);if(cosAlt<0.05)cosAlt=0.05;
-        var diffAzScaled=diffAz*cosAlt;var errTotal=Math.sqrt(diffAzScaled*diffAzScaled + diffAlt*diffAlt);var inFov=(errTotal < LOCK_TOL);
-        var rawX=50+(diffAzScaled/HALF_H)*45;var rawY=50-(diffAlt/HALF_V)*45;
-        var cx=Math.max(12,Math.min(88,rawX));var cy=Math.max(14,Math.min(86,rawY));
-        if(searchEl){searchEl.style.display='block';searchEl.style.left=cx+'%';searchEl.style.top=cy+'%';if(inFov)searchEl.classList.add('locked');else searchEl.classList.remove('locked');}
-        var msgEl=document.getElementById('arMsg');
-        if(inFov){if(msgEl)msgEl.style.display='none';if(arrowEl)arrowEl.style.display='none';label.innerHTML=targetName+' · '+Math.round(hor.altitude)+'°  <span style="color:var(--green);font-size:13px">ALLINEATO</span>';}
-        else{ if(msgEl)msgEl.style.display='none';var hints=[];
-          if(Math.abs(diffAz)>=HALF_H)hints.push(diffAz>0?'Gira a destra →':'← Gira a sinistra');
-          else if(Math.abs(diffAz)>=LOCK_TOL)hints.push(diffAz>0?'→ destra':'← sinistra');
-          if(Math.abs(diffAlt)>=HALF_V)hints.push(diffAlt>0?'↑ Alza':'↓ Abbassa');
-          else if(Math.abs(diffAlt)>=LOCK_TOL)hints.push(diffAlt>0?'↑ alza':'↓ abbassa');
-          if(arrowEl){arrowEl.style.display=hints.length?'block':'none';arrowEl.textContent=hints.join('   ');}
-          label.innerHTML='';
-        }
-      },300);
-    }).catch(function(){setMsg('Fotocamera non disponibile.');});
+  document.getElementById('arCalibResetBtn').addEventListener('click', function(){
+    arCalibAz = 0; arCalibAlt = 0;
+    safeSet('astroalert_ar_calib_az', '0'); safeSet('astroalert_ar_calib_alt', '0');
+    toast('Calibrazione azzerata.', 2000);
+  });
+
+  function requestOrientationPermission(){
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+      return DeviceOrientationEvent.requestPermission().then(function(result){
+        if (result !== 'granted') { sensorPermissionDenied = true; return false; }
+        return true;
+      }).catch(function(){ sensorPermissionDenied = true; return false; });
+    }
+    return Promise.resolve(true);
   }
-  if(typeof DeviceOrientationEvent!=='undefined' && typeof DeviceOrientationEvent.requestPermission==='function'){
-    DeviceOrientationEvent.requestPermission().then(function(res){
-      if(res==='granted'){startSensorsAndCamera();}
-      else{sensorPermissionDenied=true;startSensorsAndCamera();}
-    }).catch(function(){sensorPermissionDenied=true;startSensorsAndCamera();});
-  } else {startSensorsAndCamera();}
+  function startSensorsAndCamera(){
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setMsg('Fotocamera non disponibile in questo browser. Usa il Radar manuale.'); return;
+    }
+    setMsg('Richiesta autorizzazione fotocamera...');
+    navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}}, audio:false})
+      .then(function(stream){
+        arState.stream = stream;
+        var video = document.createElement('video');
+        video.setAttribute('playsinline', ''); video.autoplay = true; video.muted = true; video.srcObject = stream;
+        root.insertBefore(video, root.firstChild);
+        video.play().catch(function(){ setMsg('Fotocamera attiva. Tocca il video se non parte.'); });
+        var label = document.createElement('div'); label.className = 'arlabel'; root.appendChild(label);
+        var searchEl = document.getElementById('arSearch'), arrowEl = document.getElementById('arArrow');
+        if (searchEl) searchEl.style.display = 'block';
+        arState.headingHandler = onOrientation;
+        if (!sensorPermissionDenied) {
+          window.addEventListener('deviceorientationabsolute', onOrientation, true);
+          window.addEventListener('deviceorientation', onOrientation, true);
+        }
+        var ticks = 0, lockTolerance = 5;
+        // Il campo visivo è una stima: varia tra telefoni e fotocamere.
+        var verticalFov = 55;
+        function refreshFov(){
+          var videoRatio = video.videoWidth && video.videoHeight ? video.videoWidth / video.videoHeight : root.clientWidth / Math.max(1, root.clientHeight);
+          var horizontalFov = 2 * Math.atan(Math.tan(verticalFov * Math.PI / 360) * videoRatio) * 180 / Math.PI;
+          return {horizontal:horizontalFov, vertical:verticalFov};
+        }
+        arState.timer = setInterval(function(){
+          ticks++;
+          var observer = new A.Observer(loc.lat, loc.lon, loc.elev), now = new Date(), horizon;
+          if (desc.body) {
+            var eq = A.Equator(desc.body, now, observer, true, true);
+            horizon = A.Horizon(now, observer, eq.ra, eq.dec, 'normal');
+          } else horizon = fixedHorizon(desc, now, observer);
+          if (phoneHeading === null || phonePitch === null || (headingSource === 'magnetic-corrected' && OBS_MAG_DECL === null)) {
+            if (searchEl) { searchEl.style.display = 'none'; searchEl.classList.remove('locked'); }
+            if (arrowEl) arrowEl.style.display = 'none';
+            label.textContent = '';
+            if (ticks === 2 || ticks % 10 === 0) {
+              if (sensorPermissionDenied) setMsg('Permesso sensori negato. La fotocamera resta attiva, ma per il puntamento usa il Radar manuale.');
+              else if (phoneHeading === null && OBS_MAG_DECL === null) setMsg('Bussola o declinazione WMM non disponibili. Usa il Radar manuale.');
+              else setMsg('In attesa di bussola e inclinometro. Muovi il telefono lentamente.');
+            }
+            return;
+          }
+          if (!horizon || !Number.isFinite(horizon.azimuth) || !Number.isFinite(horizon.altitude)) {
+            setMsg('Posizione del bersaglio non disponibile.'); return;
+          }
+          var msg = document.getElementById('arMsg');
+          if (horizon.altitude < 0) {
+            setMsg(desc.name + ' è sotto l’orizzonte.');
+            if (searchEl) { searchEl.style.display='none'; searchEl.classList.remove('locked'); }
+            if (arrowEl) arrowEl.style.display='none'; label.textContent=''; return;
+          }
+          var effectiveHeading = wrap360(phoneHeading + arCalibAz);
+          var effectivePitch = clamp(phonePitch + arCalibAlt, -90, 90);
+          var diffAz = ((horizon.azimuth - effectiveHeading + 540) % 360) - 180;
+          var diffAlt = horizon.altitude - effectivePitch;
+          var fov = refreshFov();
+          var cosAlt = Math.max(0.05, Math.cos(horizon.altitude * Math.PI / 180));
+          var diffAzScaled = diffAz * cosAlt;
+          var totalError = Math.sqrt(diffAzScaled * diffAzScaled + diffAlt * diffAlt);
+          var aligned = totalError <= lockTolerance;
+          var x = 50 + (diffAzScaled / (fov.horizontal / 2)) * 45;
+          var y = 50 - (diffAlt / (fov.vertical / 2)) * 45;
+          if (searchEl) {
+            searchEl.style.display = 'block';
+            searchEl.style.left = clamp(x, 12, 88) + '%';
+            searchEl.style.top = clamp(y, 14, 86) + '%';
+            searchEl.classList.toggle('locked', aligned);
+          }
+          if (msg) msg.style.display = 'none';
+          if (aligned) {
+            if (arrowEl) arrowEl.style.display = 'none';
+            label.textContent = desc.name + ' · alt ' + Math.round(horizon.altitude) + '° · allineamento indicativo';
+          } else {
+            var hints = [];
+            if (Math.abs(diffAz) >= fov.horizontal / 2) hints.push(diffAz > 0 ? 'Ruota a destra →' : '← Ruota a sinistra');
+            else if (Math.abs(diffAz) >= lockTolerance) hints.push(diffAz > 0 ? '→ destra' : '← sinistra');
+            if (Math.abs(diffAlt) >= fov.vertical / 2) hints.push(diffAlt > 0 ? '↑ Alza' : '↓ Abbassa');
+            else if (Math.abs(diffAlt) >= lockTolerance) hints.push(diffAlt > 0 ? '↑ alza' : '↓ abbassa');
+            if (arrowEl) { arrowEl.style.display = hints.length ? 'block' : 'none'; arrowEl.textContent = hints.join('   '); }
+            label.textContent = '';
+          }
+        }, 300);
+      })
+      .catch(function(){ setMsg('Fotocamera negata o non disponibile. Controlla i permessi del sito e usa il Radar manuale.'); });
+  }
+  requestOrientationPermission().then(function(granted){
+    if (!granted) sensorPermissionDenied = true;
+    startSensorsAndCamera();
+  });
 }
+
 function radarSVG(size, targets, phoneHeading, highlightName){
   var cx = size/2, cy = size/2, R = size/2 - 30;
   var svg = '<svg viewBox="0 0 '+size+' '+size+'" width="'+size+'" height="'+size+'">';
@@ -2773,7 +3127,7 @@ function showMoonGlobeInfo(item){
 }
 function updateEyepieceAdvice(){
   var rows=document.querySelectorAll('table.eyepiece-table tr.ep-row');
-  var cloudy=weatherLoaded && currentWeatherContext.clouds>70;
+  var cloudy=weatherLoaded && typeof currentWeatherContext.clouds==='number' && currentWeatherContext.clouds>70;
   rows.forEach(function(row){
     row.classList.toggle('warn-row',cloudy);
     var oldBadge=row.querySelector('.ep-badge');if(oldBadge)oldBadge.remove();
@@ -2803,6 +3157,8 @@ function updateAstroDebug(obs){
   lines.push(padLabel('Ora locale:') + fmtLocalDateTime(now));
   lines.push(padLabel('Osservatore:') + 'Lat. ' + loc.lat.toFixed(4) + '°   Lon. ' + loc.lon.toFixed(4) + '°   Elev. ' + loc.elev + ' m');
   lines.push(padLabel('Località:') + loc.name);
+  var declinationText = OBS_MAG_DECL === null ? 'N/D (' + OBS_MAG_DECL_STATE + ')' : (OBS_MAG_DECL >= 0 ? '+' : '') + OBS_MAG_DECL.toFixed(2) + '° (' + OBS_MAG_DECL_STATE + ')';
+  lines.push(padLabel('Declinazione:') + declinationText + ' · <a href="https://www.ncei.noaa.gov/products/world-magnetic-model" target="_blank" rel="noopener">WMM / NOAA</a>');
   lines.push('');
   var sunLabel;
   if(sunState.isDay) sunLabel = '<span class="day">GIORNO</span> (Sole alt='+sunState.alt.toFixed(2)+'°)';
@@ -2839,7 +3195,7 @@ function updateAstro(){
   var moonIsUpNow=moonHorNow.altitude>0;
   var moonIllumNow=A.Illumination(A.Body.Moon,now);
   var moonMag=moonIllumNow.mag;
-  var moonObservable=moonIsUpNow&&isObservableUnderSun(sunState.alt,moonMag);
+  var moonObservable=moonIsUpNow&&isObservableUnderSun(sunState.alt,moonMag,'Moon',obs,now);
   var moonIllum=A.Illumination(A.Body.Moon,graphRef);
   var phaseAngle=A.MoonPhase(graphRef);
   var fMoon=moonIllum.phase_fraction;
@@ -2905,7 +3261,7 @@ function updateAstro(){
     var isGeomUpNow=cur.isUp;
     var illumNow=A.Illumination(body,now);
     var magNow=illumNow.mag;
-    var isObservableNow=isGeomUpNow && isObservableUnderSun(sunState.alt, magNow);
+    var isObservableNow=isGeomUpNow && isObservableUnderSun(sunState.alt, magNow, pKey, obs, now);
     var nowRow;
     if(!isGeomUpNow) nowRow='<div class="nowpos dimtxt">Ora: sotto l\'orizzonte ('+Math.round(cur.hor.altitude)+'°)</div>';
     else if(!isObservableNow) nowRow='<div class="nowpos dimtxt">Ora: geometricamente '+Math.round(cur.hor.altitude)+'° ('+compassDir(cur.hor.azimuth)+') ma cielo troppo luminoso per mag '+magNow.toFixed(1)+'</div>';
@@ -3020,99 +3376,148 @@ function computeNightIdxRange(hTimeArr,obs,anchorDate,dayOffsetFallback){
   }catch(e){return [];}
 }
 function fetchWeather(){
-  var dayOffset=obsDaysFromToday(activeDate);
-  var nocache=new Date().getTime();
-  var myToken=++weatherFetchToken;
-  navBusy=true;updateNavButtons();
-  var url="https://api.open-meteo.com/v1/forecast?latitude="+loc.lat.toFixed(4)+"&longitude="+loc.lon.toFixed(4)
-    +"&current=temperature_2m,relative_humidity_2m,dew_point_2m,cloud_cover,wind_speed_10m"
-    +"&hourly=temperature_2m,relative_humidity_2m,dew_point_2m,cloud_cover,wind_speed_10m,wind_speed_850hPa,wind_speed_250hPa"
-    +"&timezone=auto&past_days=1&forecast_days=4&_nc="+nocache;
-  fetch(url).then(function(res){if(!res.ok)throw new Error();return res.json();}).then(function(data){
-    if(data.timezone){
-      var oldTimezone=OBS_TIMEZONE;
-      OBS_TIMEZONE=data.timezone;
-      if(oldTimezone!==OBS_TIMEZONE && dayOffset===0){ activeDate=obsNowActiveDate(); }
-    }
-    if(myToken!==weatherFetchToken)return;
-    var curr=data.current||{},h=data.hourly||{};
-    var refIdx=findHourlyIndex(h.time,dayOffset===0?new Date():obsNoon(activeDate));
-    if(refIdx<0 && h.time&&h.time.length)refIdx=Math.min(h.time.length-1,Math.max(0,h.time.length-1));
-    function valAt(arr,idx){if(!arr||idx<0||idx>=arr.length)return null;return arr[idx];}
-    var currentClouds,currentTemp,currentRh,currentDew,currentWind10;
-    if(dayOffset===0){
-      currentClouds=curr.cloud_cover!==undefined?Math.round(curr.cloud_cover):0;
-      currentTemp=curr.temperature_2m!==undefined?curr.temperature_2m.toFixed(1):"--";
-      currentRh=curr.relative_humidity_2m!==undefined?Math.round(curr.relative_humidity_2m):"--";
-      currentDew=curr.dew_point_2m!==undefined?curr.dew_point_2m.toFixed(1):"--";
-      currentWind10=curr.wind_speed_10m!==undefined?Math.round(curr.wind_speed_10m):"--";
-    }else{
-      try{
-        var obsR2=new A.Observer(loc.lat,loc.lon,loc.elev);var darkR2=getAstroDarkWindow(obsR2,activeDate);
-        if(darkR2.start&&darkR2.end){var midD2=new Date((darkR2.start.getTime()+darkR2.end.getTime())/2);var midI=findHourlyIndex(h.time,midD2);if(midI>=0)refIdx=midI;}
-      }catch(e){}
-      var cT=valAt(h.temperature_2m,refIdx),cR=valAt(h.relative_humidity_2m,refIdx),cD=valAt(h.dew_point_2m,refIdx),cC=valAt(h.cloud_cover,refIdx),cW=valAt(h.wind_speed_10m,refIdx);
-      currentClouds=cC!==null?Math.round(cC):0;
-      currentTemp=cT!==null?cT.toFixed(1):"--";
-      currentRh=cR!==null?Math.round(cR):"--";
-      currentDew=cD!==null?cD.toFixed(1):"--";
-      currentWind10=cW!==null?Math.round(cW):"--";
-    }
-    var wind850=valAt(h.wind_speed_850hPa,refIdx);var wJet=valAt(h.wind_speed_250hPa,refIdx);
-    wind850=wind850!==null?Math.round(wind850):null;
-    wJet=wJet!==null?Math.round(wJet):null;
-    var nightIdx;
-    try{
-      var obsN=new A.Observer(loc.lat,loc.lon,loc.elev);
-      nightIdx=computeNightIdxRange(h.time,obsN,activeDate,dayOffset);
-    }catch(e){nightIdx=[];}
-    var cSum=0,cCount=0;
-    nightIdx.forEach(function(i){var v=valAt(h.cloud_cover,i);if(v!==null){cSum+=v;cCount++;}});
-    var avgClouds=cCount>0?Math.round(cSum/cCount):0;
-    currentWeatherContext.clouds=currentClouds;
-    currentWeatherContext.jetSpeed=wJet!==null?wJet:null;
-    currentWeatherContext.jetAvailable=wJet!==null;
-    document.getElementById('mCloudsLive').textContent=currentClouds+"%";var cloudsLabel=document.getElementById('mCloudsLabel');if(cloudsLabel)cloudsLabel.textContent=dayOffset===0?'Nuvolosità ORA (modello):':'Nuvolosità notte selezionata:';
-    document.getElementById('mCloudsAvg').textContent=(cCount>0?avgClouds+"%":"--");
-    document.getElementById('mTemp').textContent=currentTemp+"°C | "+currentRh+"%";
-    document.getElementById('mDew').textContent=currentDew+"°C";
-    document.getElementById('mWind10').textContent=currentWind10+" km/h";
-    document.getElementById('mWind850').textContent=wind850!==null?(wind850+" km/h"):"--";
-    document.getElementById('mJet').textContent=wJet!==null?(wJet+" km/h"):"--";
-    var delta=parseFloat(currentTemp)-parseFloat(currentDew);
-    var condEl=document.getElementById('mCond');
-    if(condEl){if(!isNaN(delta))condEl.innerHTML='<span class="tag wait">Δ aria-rugiada '+delta.toFixed(1)+'°C</span>';else condEl.textContent='N/D';}
-    var seeEl=document.getElementById('mSeeing');
-    if(seeEl)seeEl.innerHTML='<span class="tag wait">Non stimabile dai soli dati meteo mostrati</span>';
-    weatherLoaded=true;navBusy=false;
-    updateEyepieceAdvice();
-    updateAstro();
-  }).catch(function(){
-    if(myToken!==weatherFetchToken)return;
-    document.getElementById('mSeeing').textContent="Dati meteo live non disponibili";
-    weatherLoaded=true;navBusy=false;
-    updateEyepieceAdvice();
-    updateAstro();
-  });
+  var dayOffset = obsDaysFromToday(activeDate);
+  var myToken = ++weatherFetchToken;
+  var requestedLocation = Number(loc.lat).toFixed(4) + ',' + Number(loc.lon).toFixed(4);
+  navBusy = true;
+  updateNavButtons();
+
+  var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + encodeURIComponent(loc.lat.toFixed(4))
+    + '&longitude=' + encodeURIComponent(loc.lon.toFixed(4))
+    + '&current=temperature_2m,relative_humidity_2m,dew_point_2m,cloud_cover,wind_speed_10m'
+    + '&hourly=temperature_2m,relative_humidity_2m,dew_point_2m,cloud_cover,wind_speed_10m,wind_speed_850hPa,wind_speed_250hPa'
+    + '&timezone=auto&past_days=1&forecast_days=4';
+
+  function validNumber(value){
+    var n = typeof value === 'number' ? value : Number(value);
+    return value !== null && value !== undefined && value !== '' && Number.isFinite(n) ? n : null;
+  }
+  function at(arr, idx){ return Array.isArray(arr) && idx >= 0 && idx < arr.length ? validNumber(arr[idx]) : null; }
+  function showNum(value, digits){ return value === null ? 'N/D' : value.toFixed(digits); }
+  function displayWeatherUnavailable(message){
+    currentWeatherContext.clouds = null;
+    currentWeatherContext.jetSpeed = null;
+    currentWeatherContext.jetAvailable = false;
+    ['mCloudsLive','mCloudsAvg','mTemp','mDew','mWind10','mWind850','mJet'].forEach(function(id){
+      var el = document.getElementById(id); if (el) el.textContent = id === 'mTemp' ? 'N/D | N/D' : 'N/D';
+    });
+    var cond = document.getElementById('mCond'); if (cond) cond.textContent = 'N/D';
+    var seeing = document.getElementById('mSeeing'); if (seeing) seeing.textContent = message;
+  }
+
+  fetch(url, {cache:'no-store'})
+    .then(function(res){ if (!res.ok) throw new Error('HTTP ' + res.status); return res.json(); })
+    .then(function(data){
+      if (myToken !== weatherFetchToken) return;
+      if (requestedLocation !== Number(loc.lat).toFixed(4) + ',' + Number(loc.lon).toFixed(4)) return;
+
+      if (data.timezone && data.timezone !== OBS_TIMEZONE) {
+        OBS_TIMEZONE = data.timezone;
+        if (dayOffset === 0) activeDate = obsNowActiveDate();
+      }
+      var current = data.current || {};
+      var hourly = data.hourly || {};
+      var referenceDate = dayOffset === 0 ? new Date() : obsNoon(activeDate);
+      var refIdx = findHourlyIndex(hourly.time, referenceDate);
+      // Nessun fallback all'ultima riga: un'ora diversa non è un dato valido per l'ora richiesta.
+      var clouds, temp, humidity, dew, wind10;
+      if (dayOffset === 0) {
+        clouds = validNumber(current.cloud_cover);
+        temp = validNumber(current.temperature_2m);
+        humidity = validNumber(current.relative_humidity_2m);
+        dew = validNumber(current.dew_point_2m);
+        wind10 = validNumber(current.wind_speed_10m);
+      } else {
+        try {
+          var observer = new A.Observer(loc.lat, loc.lon, loc.elev);
+          var dark = getAstroDarkWindow(observer, activeDate);
+          if (dark.start && dark.end) {
+            var middle = new Date((dark.start.getTime() + dark.end.getTime()) / 2);
+            var middleIndex = findHourlyIndex(hourly.time, middle);
+            if (middleIndex >= 0) refIdx = middleIndex;
+          }
+        } catch (err) { /* lascia l'indice calcolato in precedenza */ }
+        clouds = at(hourly.cloud_cover, refIdx);
+        temp = at(hourly.temperature_2m, refIdx);
+        humidity = at(hourly.relative_humidity_2m, refIdx);
+        dew = at(hourly.dew_point_2m, refIdx);
+        wind10 = at(hourly.wind_speed_10m, refIdx);
+      }
+      var wind850 = at(hourly.wind_speed_850hPa, refIdx);
+      var jet = at(hourly.wind_speed_250hPa, refIdx);
+      var nightIndices = [];
+      try { nightIndices = computeNightIdxRange(hourly.time, new A.Observer(loc.lat, loc.lon, loc.elev), activeDate, dayOffset); }
+      catch (err) { nightIndices = []; }
+      var sumClouds = 0, countClouds = 0;
+      nightIndices.forEach(function(idx){ var value = at(hourly.cloud_cover, idx); if (value !== null) { sumClouds += value; countClouds++; } });
+      var avgClouds = countClouds ? Math.round(sumClouds / countClouds) : null;
+
+      currentWeatherContext.clouds = clouds === null ? null : Math.round(clouds);
+      currentWeatherContext.jetSpeed = jet === null ? null : Math.round(jet);
+      currentWeatherContext.jetAvailable = jet !== null;
+      var setText = function(id, value){ var el = document.getElementById(id); if (el) el.textContent = value; };
+      setText('mCloudsLive', clouds === null ? 'N/D' : Math.round(clouds) + '%');
+      setText('mCloudsAvg', avgClouds === null ? 'N/D' : avgClouds + '%');
+      setText('mTemp', showNum(temp,1) + '°C | ' + (humidity === null ? 'N/D' : Math.round(humidity)) + '%');
+      setText('mDew', showNum(dew,1) + '°C');
+      setText('mWind10', wind10 === null ? 'N/D' : Math.round(wind10) + ' km/h');
+      setText('mWind850', wind850 === null ? 'N/D' : Math.round(wind850) + ' km/h');
+      setText('mJet', jet === null ? 'N/D' : Math.round(jet) + ' km/h');
+      var cloudsLabel = document.getElementById('mCloudsLabel');
+      if (cloudsLabel) cloudsLabel.textContent = dayOffset === 0 ? 'Nuvolosità ORA (modello):' : 'Nuvolosità notte selezionata:';
+      var delta = temp !== null && dew !== null ? temp - dew : null;
+      var cond = document.getElementById('mCond');
+      if (cond) cond.innerHTML = delta === null ? 'N/D' : '<span class="tag wait">Δ aria-rugiada ' + delta.toFixed(1) + '°C</span>';
+      var seeing = document.getElementById('mSeeing');
+      if (seeing) seeing.innerHTML = '<span class="tag wait">Seeing non stimabile dai soli dati meteo mostrati</span>';
+      weatherLoaded = true;
+      navBusy = false;
+      updateEyepieceAdvice();
+      updateAstro();
+    })
+    .catch(function(){
+      if (myToken !== weatherFetchToken) return;
+      displayWeatherUnavailable('Dati meteo non disponibili');
+      weatherLoaded = false;
+      navBusy = false;
+      updateEyepieceAdvice();
+      updateAstro();
+    });
 }
+
+var kpFetchToken = 0;
 function fetchKp(){
-  fetch("https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json").then(function(res){if(!res.ok)throw new Error();return res.json();}).then(function(rows){
-    var last=rows[rows.length-1];
-    var kp=parseFloat(last.Kp!==undefined?last.Kp:last[1]);
-    document.getElementById('mKp').textContent=isNaN(kp)?"N/D":kp.toFixed(1);
-  }).catch(function(){document.getElementById('mKp').textContent="N/D";});
+  var token = ++kpFetchToken;
+  fetch('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json', {cache:'no-store'})
+    .then(function(res){ if (!res.ok) throw new Error('NOAA Kp non disponibile'); return res.json(); })
+    .then(function(rows){
+      if (token !== kpFetchToken) return;
+      if (!Array.isArray(rows) || rows.length < 2) throw new Error('Risposta NOAA vuota');
+      var dataRow = rows[rows.length - 1];
+      var kp = Array.isArray(dataRow) ? Number(dataRow[1]) : Number(dataRow.Kp);
+      var el = document.getElementById('mKp');
+      if (el) el.textContent = Number.isFinite(kp) ? kp.toFixed(1) : 'N/D';
+    })
+    .catch(function(){ if (token === kpFetchToken) { var el = document.getElementById('mKp'); if (el) el.textContent = 'N/D'; } });
 }
+
 function updateLocLabel(){
-  var el=document.getElementById('locLabel');
-  el.innerHTML='<span class="online-dot" id="onlineDot"></span>'+loc.lat.toFixed(4)+"° N, "+loc.lon.toFixed(4)+"° E · "+escapeHtml(loc.name);
+  var el = document.getElementById('locLabel');
+  if (!el) return;
+  var latHemisphere = loc.lat < 0 ? 'S' : 'N';
+  var lonHemisphere = loc.lon < 0 ? 'O' : 'E';
+  el.innerHTML = '<span class="online-dot" id="onlineDot"></span>'
+    + Math.abs(loc.lat).toFixed(4) + '° ' + latHemisphere + ', '
+    + Math.abs(loc.lon).toFixed(4) + '° ' + lonHemisphere + ' · ' + escapeHtml(loc.name);
   updateOnlineDot();
 }
+
 function geocodeCity(query){
   var resEl=document.getElementById('locResults');
   resEl.innerHTML='<div class="loc-item">Ricerca coordinate in corso...</div>';
   var myToken=++geocodeFetchToken;
   var url="https://geocoding-api.open-meteo.com/v1/search?name="+encodeURIComponent(query)+"&count=4&language=it&format=json";
-  fetch(url).then(function(r){return r.json();}).then(function(data){
+  fetch(url).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(function(data){
     if(myToken!==geocodeFetchToken)return;
     if(!data.results||!data.results.length){resEl.innerHTML='<div class="loc-item">Nessuna località trovata.</div>';return;}
     resEl.innerHTML=data.results.map(function(item,idx){
@@ -3138,18 +3543,31 @@ function geocodeCity(query){
   }).catch(function(){if(myToken!==geocodeFetchToken)return;resEl.innerHTML='<div class="loc-item">Errore di connessione.</div>';});
 }
 function acquireGps(){
-  if(!navigator.geolocation)return;
-  var btn=document.getElementById('btnGps');var prev=btn.innerHTML;btn.innerHTML='<span class="hdr-btn-icon">⏳</span><span>...</span>';
+  if (!navigator.geolocation) { toast('Il browser non supporta la geolocalizzazione. Inserisci la città manualmente.', 3500); return; }
+  var btn = document.getElementById('btnGps');
+  var previous = btn ? btn.innerHTML : '';
+  if (btn) btn.innerHTML = '<span class="hdr-btn-icon">⏳</span><span>GPS</span>';
   navigator.geolocation.getCurrentPosition(function(pos){
-    loc.lat=pos.coords.latitude;loc.lon=pos.coords.longitude;loc.elev=(typeof pos.coords.altitude==='number')?pos.coords.altitude:6;
-    loc.name="Posizione GPS";
-    updateMagDecl();
+    loc.lat = pos.coords.latitude;
+    loc.lon = pos.coords.longitude;
+    loc.elev = Number.isFinite(pos.coords.altitude) ? pos.coords.altitude : 6;
+    loc.name = 'Posizione GPS';
     updateLocLabel();
-    btn.innerHTML=prev;
-    weatherLoaded=false;
-    updateAstro();ensurePlanisphereClock(true);drawPlanisphere();fetchWeather();
-  },function(){btn.innerHTML=prev;},{timeout:6000});
+    updateMagDecl();
+    if (btn) btn.innerHTML = previous;
+    weatherLoaded = false;
+    updateAstro(); ensurePlanisphereClock(true); drawPlanisphere(); fetchWeather();
+    toast('Posizione aggiornata.', 1800);
+  }, function(error){
+    if (btn) btn.innerHTML = previous;
+    var message = 'Posizione non disponibile.';
+    if (error && error.code === 1) message = 'Permesso GPS negato. Attivalo nelle impostazioni del browser oppure inserisci la città.';
+    else if (error && error.code === 2) message = 'Il dispositivo non riesce a determinare la posizione.';
+    else if (error && error.code === 3) message = 'Ricerca GPS scaduta. Riprova all’aperto.';
+    toast(message, 4500);
+  }, {timeout:10000, enableHighAccuracy:true, maximumAge:60000});
 }
+
 var permState={geo:'wait',notif:'wait',cam:'wait'};
 function setPermState(kind,state){
   permState[kind]=state;
@@ -3199,35 +3617,36 @@ function shouldShowOnboarding(){
   return false;
 }
 function runOnboarding(){
-  if(!shouldShowOnboarding())return false;
-  document.getElementById('permOverlay').style.display='flex';
-  if(isAndroid()){var sn=document.getElementById('permStNotif');if(sn){sn.textContent='N/A';sn.className='st na';}}
-  if(!window.isSecureContext){
-    var btn=document.getElementById('permGrant');
-    btn.disabled=true;btn.textContent='Non disponibile senza HTTPS';
-    document.getElementById('permSkip').textContent='Chiudi e configura dopo';
-  }
-  document.getElementById('permGrant').addEventListener('click',function(){
-    var btn=this;btn.disabled=true;btn.textContent='Richiesta in corso...';
-    requestGeolocationPermission()
-    .then(function(){return requestNotificationPermission();})
-    .then(function(){return requestCameraPermission();})
-    .then(function(){
-      safeSet('astroalert_onboarded','1');
-      document.getElementById('permOverlay').style.display='none';
-      weatherLoaded=false;
-      updateAstro();ensurePlanisphereClock(true);drawPlanisphere();fetchWeather();fetchKp();
-      toast('Permessi configurati!',2500);
-    });
-  });
-  document.getElementById('permSkip').addEventListener('click',function(){
-    safeSet('astroalert_onboarded','1');
-    document.getElementById('permOverlay').style.display='none';
-    weatherLoaded=false;
-    updateAstro();ensurePlanisphereClock(true);drawPlanisphere();fetchWeather();fetchKp();
-  });
+  if (!shouldShowOnboarding()) return false;
+  var overlay = document.getElementById('permOverlay');
+  if (!overlay) return false;
+  overlay.style.display = 'flex';
+  var grant = document.getElementById('permGrant');
+  var skip = document.getElementById('permSkip');
+  if (isAndroid()) setPermState('notif', 'na');
+  if (grant) grant.addEventListener('click', function(){
+    safeSet('astroalert_onboarded', '1');
+    overlay.style.display = 'none';
+    toast('Pronto. I permessi verranno richiesti solo quando servono.', 2800);
+    startAppData();
+  }, {once:true});
+  if (skip) skip.addEventListener('click', function(){
+    safeSet('astroalert_onboarded', '1');
+    overlay.style.display = 'none';
+    startAppData();
+  }, {once:true});
   return true;
 }
+function startAppData(){
+  weatherLoaded = false;
+  updateAstro();
+  ensurePlanisphereClock(true);
+  drawPlanisphere();
+  fetchWeather();
+  fetchKp();
+  updateMagDecl();
+}
+
 window.resetAstroAlertOnboarding=function(){
   try{localStorage.removeItem('astroalert_onboarded');}catch(e){}
   toast('Onboarding resettato. Ricarico...',1500);
@@ -3241,13 +3660,31 @@ function updateOnlineDot(){
 window.addEventListener('online',updateOnlineDot);
 window.addEventListener('offline',updateOnlineDot);
 var wakeLock=null;
-function requestWakeLock(){if(!('wakeLock' in navigator))return;try{navigator.wakeLock.request('screen').then(function(w){wakeLock=w;}).catch(function(){});}catch(e){}}
-function releaseWakeLock(){if(wakeLock){try{wakeLock.release();}catch(e){}wakeLock=null;}}
-document.addEventListener('visibilitychange',function(){if(document.hidden){releaseWakeLock();}else if(!wakeLock){requestWakeLock();}});
+function requestWakeLock(){
+  if (!('wakeLock' in navigator) || wakeLock) return;
+  if (document.hidden) return;
+  try {
+    navigator.wakeLock.request('screen').then(function(lock){
+      wakeLock = lock;
+      lock.addEventListener('release', function(){ if (wakeLock === lock) wakeLock = null; });
+    }).catch(function(){ /* supporto non disponibile: l'app continua a funzionare */ });
+  } catch (err) { /* Wake Lock è facoltativo */ }
+}
+function releaseWakeLock(){
+  if (!wakeLock) return;
+  var lock = wakeLock;
+  wakeLock = null;
+  try { lock.release(); } catch (err) { /* il lock può essere già stato rilasciato */ }
+}
+document.addEventListener('visibilitychange', function(){
+  if (document.hidden) releaseWakeLock();
+  else if (document.getElementById('arRoot') || document.querySelector('.tab-btn.active[data-tab="sky"]')) requestWakeLock();
+});
+
 function checkSecureContext(){
   if(window.isSecureContext)return true;
   var banner=document.createElement('div');banner.className='secure-warn';
-  banner.innerHTML='<b>Contesto non sicuro</b> ('+location.protocol+'//'+location.hostname+').<br>GPS, fotocamera e notifiche <b>non funzioneranno</b>.<br>Apri da <b>https://</b> o <b>http://localhost</b>.';
+  banner.innerHTML='<b>Contesto non sicuro</b> ('+location.protocol+'//'+location.hostname+').<br>GPS, fotocamera e sensori richiedono un contesto sicuro.<br>Apri l’app da <b>HTTPS</b>.';
   document.body.insertBefore(banner,document.body.firstChild);
   return false;
 }
@@ -3281,8 +3718,8 @@ function init(){
     setTimeout(function(){if(typeof Astronomy!=='undefined')location.reload();else showCdnError();},4000);
     return;
   }
-  var onboardingShown=runOnboarding();
-  if(!onboardingShown){updateAstro();ensurePlanisphereClock(true);drawPlanisphere();fetchWeather();fetchKp();}requestWakeLock();
+  var onboardingShown = runOnboarding();
+  if (!onboardingShown) { updateAstro(); ensurePlanisphereClock(true); drawPlanisphere(); fetchWeather(); fetchKp(); updateMagDecl(); }
   document.getElementById('btnGps').addEventListener('click',acquireGps);
   document.getElementById('btnSearchCity').addEventListener('click',function(){var q=document.getElementById('locInput').value.trim();if(q.length>1)geocodeCity(q);});
   document.getElementById('locInput').addEventListener('keydown',function(e){if(e.key==='Enter'){var q=this.value.trim();if(q.length>1)geocodeCity(q);}});
